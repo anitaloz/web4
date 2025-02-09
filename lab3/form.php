@@ -44,39 +44,15 @@
                         <div class="lnks order-2 order-sm-1 col-md-6">
                             <h2> Маркированный список гиперссылок</h2>
                             <ul>
-                    
-                                <li> <a href="http://kubsu.ru/" target="_blank">Абсолютная гиперссылка на главную страницу сайта kubsu.ru</a> </li>
-                                <li> <a href="https://kubsu.ru/" target="_blank">Абсолютная гиперссылка на главную сайта kubsu.ru в протоколе https;</a></li>
                                 <li> <a href="https://kubsu.ru/"> 
                                     <img class="px-sm-2 pt-sm-2 pb-sm-2" src="MyProjects/Project1/static/images/саурон.jpg" alt="саурон" style width="200"></a></li>
-                                <li> <a href="MyProjects/Project1/about/p10.html" target="_blank"> Сокращенная ссылка на внутреннюю страницу;</a></li>
-                                <li> <a href="index.php" target="_blank"> Сокращенная ссылку на главную страницу;</a></li>
                                 <li><a href="#Form">Ссылка на форму</a></li>
-                                <li> <a href="http://example.com/search?query=books&sort=asc&page=2" target="_blank">Ссылка с тремя параметрами в URL:http://example.com/search?query=books&sort=asc&page=2;</a></li>
-                                <li> <a href="https://www.example.com/products?cat=electronics&id=456" target="_blank"> Ссылка с параметром id: https://www.example.com/products?cat=electronics&id=456;</a></li>
-                                <li> <a href="./p9.html" target="_blank"> Относительная ссылка на страницу в текущем каталоге></a></li>
-                                <li> <a href="./about/p10.html" target="_blank">Относительная ссылка в каталоге about> </a></li>
-                                <li> <a href="../p11.html" target="_blank"> Относительная ссылка на страницу в каталоге уровнем выше текущего</a></li>
-                                <li> <a href="../../p12.html" target="_blank"> Относительная ссылка на страницу в каталоге на два уровня выше текущего</a></li>
-                                <li> <p> Для получения доп информации перейдите на <a href="https://kubsu.ru/"> веб-сайт</a></p></li>
-                                <li> <a href="https://ru.wikipedia.org/wiki/HTML#:~:text=23%5D.-,%D0%A1%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0%20HTML%2D%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0,-%5B%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D1%82%D1%8C%20%7C">Перейти к этому разделу</a></li>
                                 <li> <map name="knopka">
-                                <area shape="rect" coords="0,0,109,56" href="https://kubsu.ru/" alt="Подсказка">                            <area shape="circle" coords="221,32,20" href="https://ru.wikipedia.org/wiki/HTML#:~:text=23%5D.-,Структура%20HTML-документа,-%5Bправить%20%7C/" alt="Подсказка">
+                                <area shape="rect" coords="0,0,109,56" href="https://kubsu.ru/" alt="Подсказка">                            
+                                <area shape="circle" coords="221,32,20" href="https://ru.wikipedia.org/wiki/HTML#:~:text=23%5D.-,Структура%20HTML-документа,-%5Bправить%20%7C/" alt="Подсказка">
                                     </map>
                                     <img class="sau px-sm-2 pt-sm-2 pb-sm-2" src="MyProjects/Project1/static/images/ss1.jpg" alt="Кнопка" usemap="#knopka">
                                 </li>
-                                <li> <a href="">Пустой href</a></li>
-                                <li> <a id="ex"> https://kubsu.ru/</a></li>
-                                <li> <a href="index.html" target="_blank" rel="nofollow"> Запрет  поисковикам</a></li>
-                                <li><a href="index.html" target="_blank" rel="noindex">ссылка запрещенная для индексации поисковиками</a></li>
-                                <li><!--noindex--> часть страницы, индексирования которой нужно запретить<!--/noindex--></li>
-                                <li><ol>
-                                        <li><a href="https://kubsu.ru/" title="Кубгу"> Cсылка1</a></li>
-                                        <li><a href="https://kubsu.ru/" title="Кубгу"> Ссылка2</a></li>
-                                        <li><a href="https://kubsu.ru/" title="Кубгу"> Ссылка3</a></li>
-                                    </ol>
-                                </li> 
-                                <li> <a href="ftp://user:pass123@tavalik.ru/Temp/file.txt" target="_blank"> ссылкa на файл на сервере FTP с авторизацией;</a></li>
                             </ul>
                         </div>
                         <div class="t1 order-1 order-sm-2 px-sm-0 col-md-6">

@@ -43,12 +43,13 @@
                         <p class="first_t px-sm-3"> Есть только один властелин кольца, он один способен подчинять его себе. И он не делится властью.</p>
                         <div class="lnks order-2 order-sm-1 col-md-6">
                             <h2> Маркированный список гиперссылок</h2>
+                            <p> Ссылки были удалены за ненадобностью.
                             <ul>
-                                <li> <a href="https://kubsu.ru/"> 
+                                <li> <a href="#Form"> 
                                     <img class="px-sm-2 pt-sm-2 pb-sm-2" src="MyProjects/Project1/static/images/саурон.jpg" alt="саурон" style width="200"></a></li>
                                 <li><a href="#Form">Ссылка на форму</a></li>
                                 <li> <map name="knopka">
-                                <area shape="rect" coords="0,0,109,56" href="https://kubsu.ru/" alt="Подсказка">                            
+                                <area shape="rect" coords="0,0,109,56" href="#Form" alt="Подсказка">                            
                                 <area shape="circle" coords="221,32,20" href="https://ru.wikipedia.org/wiki/HTML#:~:text=23%5D.-,Структура%20HTML-документа,-%5Bправить%20%7C/" alt="Подсказка">
                                     </map>
                                     <img class="sau px-sm-2 pt-sm-2 pb-sm-2" src="MyProjects/Project1/static/images/ss1.jpg" alt="Кнопка" usemap="#knopka">

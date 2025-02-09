@@ -13,7 +13,7 @@
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     
     <link rel="icon" href="око1.ico" type="image/x-icon">
-    <link rel="stylesheet" href="/static/styles/style.css">
+    <link rel="stylesheet" href="MyProjects/Project1/stati/styles/style.css">
 
 </head>
 <body>
@@ -21,7 +21,7 @@
         <div class="row d-flex mx-sm-0 mb-sm-2">
             <header>
                 <div id="fir">
-                    <img id="logo" src="static/images/око.jpg" alt="Логотип" />
+                    <img id="logo" src="MyProjects/Project1/stati/images/око.jpg" alt="Логотип" />
                     <h1 class="name">SAURON</h1>
                 </div>
             </header>
@@ -49,13 +49,13 @@
                                 <li> <a href="https://kubsu.ru/" target="_blank">Абсолютная гиперссылка на главную сайта kubsu.ru в протоколе https;</a></li>
                                 <li> <a href="https://kubsu.ru/"> 
                                     <img class="px-sm-2 pt-sm-2 pb-sm-2" src="саурон.jpg" alt="саурон" style width="200"></a></li>
-                                <li> <a href="/Lab1/MyProjects/Project1/about/p10.html" target="_blank"> Сокращенная ссылка на внутреннюю страницу;</a></li>
+                                <li> <a href="/Lab1/MyProjects/Project1/MyProjects/Project1/about/p10.html" target="_blank"> Сокращенная ссылка на внутреннюю страницу;</a></li>
                                 <li> <a href="/Lab1/MyProjects/Project1/index.html" target="_blank"> Сокращенная ссылку на главную страницу;</a></li>
                                 <li><a href="#Form">Ссылка на форму</a></li>
                                 <li> <a href="http://example.com/search?query=books&sort=asc&page=2" target="_blank">Ссылка с тремя параметрами в URL:http://example.com/search?query=books&sort=asc&page=2;</a></li>
                                 <li> <a href="https://www.example.com/products?cat=electronics&id=456" target="_blank"> Ссылка с параметром id: https://www.example.com/products?cat=electronics&id=456;</a></li>
                                 <li> <a href="./p9.html" target="_blank"> Относительная ссылка на страницу в текущем каталоге></a></li>
-                                <li> <a href="./about/p10.html" target="_blank">Относительная ссылка в каталоге about> </a></li>
+                                <li> <a href="./MyProjects/Project1/about/p10.html" target="_blank">Относительная ссылка в каталоге MyProjects/Project1/about> </a></li>
                                 <li> <a href="../p11.html" target="_blank"> Относительная ссылка на страницу в каталоге уровнем выше текущего</a></li>
                                 <li> <a href="../../p12.html" target="_blank"> Относительная ссылка на страницу в каталоге на два уровня выше текущего</a></li>
                                 <li> <p> Для получения доп информации перейдите на <a href="https://kubsu.ru/"> веб-сайт</a></p></li>

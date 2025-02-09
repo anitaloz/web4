@@ -29,9 +29,9 @@
             <div class="container-fluid mt-3 mb-sm-2 px-0 mx-sm-2">
                 <nav class="">
                     <ul class="px-3 mx-sm-2">
-                        <li> <a class="px-sm-2" href="rings.html">Кольца </a></li>
-                        <li> <a class="px-sm-2" href="followers.html"> Последователи </a></li>
-                        <li> <a class="px-sm-2" href="bio.html"> Биография</a></li>
+                        <li> <a class="px-sm-2" href="MyProjects/Project1/rings.html">Кольца </a></li>
+                        <li> <a class="px-sm-2" href="MyProjects/Project1/followers.html"> Последователи </a></li>
+                        <li> <a class="px-sm-2" href="MyProjects/Project1/bio.html"> Биография</a></li>
                     </ul>
                 </nav>
             </div>
@@ -49,8 +49,8 @@
                                 <li> <a href="https://kubsu.ru/" target="_blank">Абсолютная гиперссылка на главную сайта kubsu.ru в протоколе https;</a></li>
                                 <li> <a href="https://kubsu.ru/"> 
                                     <img class="px-sm-2 pt-sm-2 pb-sm-2" src="MyProjects/Project1/static/images/саурон.jpg" alt="саурон" style width="200"></a></li>
-                                <li> <a href="/Lab1/MyProjects/Project1/about/p10.html" target="_blank"> Сокращенная ссылка на внутреннюю страницу;</a></li>
-                                <li> <a href="/Lab1/MyProjects/Project1/index.html" target="_blank"> Сокращенная ссылку на главную страницу;</a></li>
+                                <li> <a href="MyProjects/Project1/about/p10.html" target="_blank"> Сокращенная ссылка на внутреннюю страницу;</a></li>
+                                <li> <a href="index.php" target="_blank"> Сокращенная ссылку на главную страницу;</a></li>
                                 <li><a href="#Form">Ссылка на форму</a></li>
                                 <li> <a href="http://example.com/search?query=books&sort=asc&page=2" target="_blank">Ссылка с тремя параметрами в URL:http://example.com/search?query=books&sort=asc&page=2;</a></li>
                                 <li> <a href="https://www.example.com/products?cat=electronics&id=456" target="_blank"> Ссылка с параметром id: https://www.example.com/products?cat=electronics&id=456;</a></li>

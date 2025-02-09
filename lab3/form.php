@@ -13,7 +13,7 @@
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     
     <link rel="icon" href="око1.ico" type="image/x-icon">
-    <link rel="stylesheet" href="static/styles/style.css">
+    <link rel="stylesheet" href="MyProjects/Project1/static/styles/style.css">
 
 </head>
 <body>

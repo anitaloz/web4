@@ -48,7 +48,7 @@
                                 <li> <a href="http://kubsu.ru/" target="_blank">Абсолютная гиперссылка на главную страницу сайта kubsu.ru</a> </li>
                                 <li> <a href="https://kubsu.ru/" target="_blank">Абсолютная гиперссылка на главную сайта kubsu.ru в протоколе https;</a></li>
                                 <li> <a href="https://kubsu.ru/"> 
-                                    <img class="px-sm-2 pt-sm-2 pb-sm-2" src="саурон.jpg" alt="саурон" style width="200"></a></li>
+                                    <img class="px-sm-2 pt-sm-2 pb-sm-2" src="MyProjects/Project1/static/images/саурон.jpg" alt="саурон" style width="200"></a></li>
                                 <li> <a href="/Lab1/MyProjects/Project1/about/p10.html" target="_blank"> Сокращенная ссылка на внутреннюю страницу;</a></li>
                                 <li> <a href="/Lab1/MyProjects/Project1/index.html" target="_blank"> Сокращенная ссылку на главную страницу;</a></li>
                                 <li><a href="#Form">Ссылка на форму</a></li>
@@ -63,7 +63,7 @@
                                 <li> <map name="knopka">
                                 <area shape="rect" coords="0,0,109,56" href="https://kubsu.ru/" alt="Подсказка">                            <area shape="circle" coords="221,32,20" href="https://ru.wikipedia.org/wiki/HTML#:~:text=23%5D.-,Структура%20HTML-документа,-%5Bправить%20%7C/" alt="Подсказка">
                                     </map>
-                                    <img class="sau px-sm-2 pt-sm-2 pb-sm-2" src="ss1.jpg" alt="Кнопка" usemap="#knopka">
+                                    <img class="sau px-sm-2 pt-sm-2 pb-sm-2" src="MyProjects/Project1/static/images/ss1.jpg" alt="Кнопка" usemap="#knopka">
                                 </li>
                                 <li> <a href="">Пустой href</a></li>
                                 <li> <a id="ex"> https://kubsu.ru/</a></li>

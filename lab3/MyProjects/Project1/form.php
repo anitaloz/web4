@@ -127,7 +127,7 @@
                 </div>
         
                 <div id="Form"><h2>Форма</h2></div>
-                <form class="pl-sm-3" action="../../"
+                <form class="pl-sm-3" action=""
                     method="POST">
                     <label>
                         ФИО:<br />

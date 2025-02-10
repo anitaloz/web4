@@ -57,7 +57,7 @@ if(empty($_POST['field-name-4']))
   $errors=TRUE;
 }
 
-if (empty($_POST['field-date']) || !is_numeric($_POST['field-date']) || !preg_match('/^\d+$/', $_POST['field-date'])) {
+if (empty($_POST['field-date'])) {
   print('Заполните дату.<br/>');
   $errors = TRUE;
 }

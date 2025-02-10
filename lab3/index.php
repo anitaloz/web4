@@ -36,7 +36,7 @@ if(!preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
   $errors =TRUE;
 }
 $_POST['field-tel']=trim($_POST['field-tel']);
-if(!preg_match('/[^0-9]/', $_POST['field-tel'])) {
+if(!preg_match('/^[0-9+]+$/', $_POST['field-tel'])) {
   print('Телефон должен содержать толко цифры.<br/>');
   $errors= TRUE;
 }

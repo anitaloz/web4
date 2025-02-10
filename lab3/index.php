@@ -26,7 +26,7 @@ if (empty($_POST['field-name-1'])) {
   $errors = TRUE;
 }
 
-if(mb_strlen($_POST['field-name-1'], 'UTF-8')>150) {
+if(strlen($_POST['field-name-1'])>150) {
   print('Длина ФИО не должна превышать 150 символов.<br/>');
   $errors = TRUE;
 }

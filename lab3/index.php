@@ -20,13 +20,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 // Проверяем ошибки.
 $errors = FALSE;
-if (empty($_POST['fio'])) {
-  print('Заполните имя.<br/>');
+$_POST['field-name-1']=trim($_POST['field-name-1']);
+if (empty($_POST['field-name-1'])) {
+  print('Заполните ФИО.<br/>');
   $errors = TRUE;
 }
 
-if (empty($_POST['year']) || !is_numeric($_POST['year']) || !preg_match('/^\d+$/', $_POST['year'])) {
-  print('Заполните год.<br/>');
+if(mb_strlen($_POST['field-name-1'], 'UTF-8')>150) {
+  print('Длина ФИО не должна превышать 150 символов.<br/>');
+  $errors = TRUE;
+}
+
+if(!preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
+  print('ФИО должно содержать только буквы (русские и английские) и пробелы.<br/>');
+  $errors =TRUE;
+}
+$_POST['field-tel']=trim($_POST['field-tel']);
+if(!preg_match('/[^0-9]/', $_POST['field-tel'])) {
+  print('Телефон должен содержать толко цифры.<br/>');
+  $errors= TRUE;
+}
+
+if(!isset($_POST['radio-group-1']) || empty($_POST['radio-group-1'])) {
+  print('Выберите пол.<br/>');
+  $errors= TRUE;
+}
+$_POST['field-email']=trim($_POST['field-email']);
+if (!filter_var(($_POST['field-email']), FILTER_VALIDATE_EMAIL)) {
+  print('Email введен некорректно.<br/>');
+  $errors=TRUE;
+}
+
+if(empty($_POST['field-name-4']))
+{
+  print('Выберите хотя бы один язык программирования.<br/>');
+  $errors=TRUE;
+}
+
+if (empty($_POST['field-date']) || !is_numeric($_POST['field-date']) || !preg_match('/^\d+$/', $_POST['field-date'])) {
+  print('Заполните дату.<br/>');
   $errors = TRUE;
 }
 

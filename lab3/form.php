@@ -113,7 +113,7 @@
                     </label><br />
                     <label>
                         Номер телефона:<br />
-                        <input name="field-email"
+                        <input name="field-tel"
                         value=""
                         type="tel" />
                     </label><br />
@@ -131,10 +131,10 @@
                     </label><br />
                     Пол:<br />
                     <label><input type="radio" checked="checked"
-                    name="radio-group-1" value="Значение1" />
+                    name="radio-group-1" value="1" />
                     Женский</label>
                     <label><input type="radio"
-                    name="radio-group-1" value="Значение2" />
+                    name="radio-group-1" value="2" />
                     Мужской</label><br />
                     <label>
                         Любимый язык программирования:

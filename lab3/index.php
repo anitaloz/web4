@@ -81,11 +81,22 @@ $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
 
 // Подготовленный запрос. Не именованные метки.
 try {
-  
-  $stmt = $db->prepare("INSERT INTO person SET bdate = ?");
-  $stmt->execute([$_POST['field-date']]);
-  $stmt = $db->prepare("INSERT INTO person SET fio = ?");
-  $stmt->execute([$_POST['field-name-1']]);
+  print_r([$_POST['field-date']]);
+  print([$_POST['field-date']][0]);
+  $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
+  $stmt->bindParam(':fio', $fio);
+  $stmt->bindParam(':tel', $tel);
+  $stmt->bindParam(':email', $email);
+  $stmt->bindParam(':bdate', $bdate);
+  $stmt->bindParam(':gender', $gender);
+  $stmt->bindParam(':biography', $biography);
+  $fio = ([$_POST['field-date']][0]);
+  $tel = ([$_POST['field-tel']][0]);
+  $email = ([$_POST['field-email']][0]);
+  $bdate = ([$_POST['field-date']][0]);
+  $gender = ([$_POST['radio-group-1']][0]);
+  $biography = ([$_POST['field-name-2']][0]);
+  $stmt->execute();
 }
 catch(PDOException $e){
   print('Error : ' . $e->getMessage());

@@ -36,6 +36,7 @@ if(!preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
   $errors =TRUE;
 }
 $_POST['field-tel']=trim($_POST['field-tel']);
+$_POST['field-tel']=trim($_POST['field-tel']);
 if(!preg_match('/^[0-9+]+$/', $_POST['field-tel'])) {
   print('Телефон должен содержать толко цифры.<br/>');
   $errors= TRUE;
@@ -45,6 +46,7 @@ if(!isset($_POST['radio-group-1']) || empty($_POST['radio-group-1'])) {
   print('Выберите пол.<br/>');
   $errors= TRUE;
 }
+$_POST['field-email']=trim($_POST['field-email']);
 $_POST['field-email']=trim($_POST['field-email']);
 if (!filter_var(($_POST['field-email']), FILTER_VALIDATE_EMAIL)) {
   print('Email введен некорректно.<br/>');
@@ -91,11 +93,11 @@ try {
   $stmt->bindParam(':bdate', $bdate);
   $stmt->bindParam(':gender', $gender);
   $stmt->bindParam(':biography', $biography);
-  $fio = ([$_POST['field-name-1']][0]);
-  $tel = ([$_POST['field-tel']][0]);
-  $email = ([$_POST['field-email']][0]);
-  $bdate = ([$_POST['field-date']][0]);
-  $gender = ([$_POST['radio-group-1']][0]);
+  $fio = ($_POST['field-name-1']);
+  $tel = ($_POST['field-tel']);
+  $email = ($_POST['field-email']);
+  $bdate = ($_POST['field-date']);
+  $gender = ($_POST['radio-group-1']);
   $biography = ($_POST['field-name-2']);
   $stmt->execute();
   $lastInsertId = $db->lastInsertId();

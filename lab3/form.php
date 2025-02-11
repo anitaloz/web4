@@ -131,10 +131,10 @@
                     </label><br />
                     Пол:<br />
                     <label><input type="radio" checked="checked"
-                    name="radio-group-1" value="1" />
+                    name="radio-group-1" value="Женский" />
                     Женский</label>
                     <label><input type="radio"
-                    name="radio-group-1" value="2" />
+                    name="radio-group-1" value="Мужской" />
                     Мужской</label><br />
                     <label>
                         Любимый язык программирования:

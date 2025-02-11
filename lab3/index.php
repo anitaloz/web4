@@ -9,7 +9,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // В суперглобальном массиве $_GET PHP хранит все параметры, переданные в текущем запросе через URL.
   if (!empty($_GET['save'])) {
     // Если есть параметр save, то выводим сообщение пользователю.
-    print('Спасибо, результаты сохранены.');
+    $message = "Данные сохранены!";
+    function displayAlert($message) {
+      echo "<script>";
+      echo "function showAlert(message) { alert(message); }";
+      echo "showAlert('" . htmlspecialchars($message) . "');";
+      echo "</script>";
+    }
+
+    displayAlert($message);
   }
   // Включаем содержимое файла form.php.
   include('form.php');
@@ -62,7 +70,10 @@ if (empty($_POST['field-date'])) {
   $errors = TRUE;
 }
 
-
+if(!isset($_POST['check-1']) || empty($_POST['check-1'])) {
+  print('Выберите пол.<br/>');
+  $errors= TRUE;
+}
 // *************
 // Тут необходимо проверить правильность заполнения всех остальных полей.
 // *************

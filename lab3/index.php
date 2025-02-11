@@ -78,9 +78,7 @@ $user = 'u68598'; // Заменить на ваш логин uXXXXX
 $pass = '8795249'; // Заменить на пароль
 $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
-foreach($_POST['field-name-4'] as $lang) {
-  print(' '.$lang);
-}
+
 //  Именованные метки.
 try {
   $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
@@ -97,6 +95,12 @@ try {
   $gender = ([$_POST['radio-group-1']][0]);
   $biography = ([$_POST['field-name-2']][0]);
   $stmt->execute();
+  foreach($_POST['field-name-4'] as $lang) {
+    $stmt = $db->prepare("INSERT INTO perslang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
+    $stmt->bindParam(':pers_id', PDO::lastInsertId());
+    $stmt->bindParam(':lang_id', $lang);
+    $stmt->execute();
+  }
 }
 catch(PDOException $e){
   print('Error : ' . $e->getMessage());
@@ -104,14 +108,10 @@ catch(PDOException $e){
 }
 
 // try {
-
-//   foreach(([$_POST['field-name-4']]) as $lang) {
+//   foreach($_POST['field-name-4'] as $lang) {
 //     $stmt = $db->prepare("INSERT INTO perslang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
 //     $stmt->bindParam(':pers_id', PDO::lastInsertId());
-//     $stmt->bindParam(':lan_id', $lang_id);
-
-//     $pers_id = PDO::lastInsertId();
-//     $lan_id = ([$_POST['field-tel']][0]);
+//     $stmt->bindParam(':lang_id', $lang);
 //     $stmt->execute();
 //   }
 // }

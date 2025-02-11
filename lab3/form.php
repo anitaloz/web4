@@ -141,17 +141,17 @@
                         <br />
                         <select name="field-name-4[]"
                         multiple="multiple">
-                        <option value="Значение1">Pascal</option>
-                        <option value="Значение2" selected="selected">C
-                        <option value="Значение3" selected="selected">C++
-                        <option value="Значение3" selected="selected">JavaScript
-                        <option value="Значение3" selected="selected">PHP
-                        <option value="Значение3" selected="selected">Python
-                        <option value="Значение3" selected="selected">Java
-                        <option value="Значение3" selected="selected">Haskel
-                        <option value="Значение3" selected="selected">Clojure
-                        <option value="Значение3" selected="selected">Prolog
-                        <option value="Значение3" selected="selected">Scala
+                        <option value="1">Pascal</option>
+                        <option value="2" selected="selected">C
+                        <option value="3" selected="selected">C++
+                        <option value="4" selected="selected">JavaScript
+                        <option value="5" selected="selected">PHP
+                        <option value="6" selected="selected">Python
+                        <option value="7" selected="selected">Java
+                        <option value="8" selected="selected">Haskel
+                        <option value="9" selected="selected">Clojure
+                        <option value="10" selected="selected">Prolog
+                        <option value="11" selected="selected">Scala
                         </select>
                     </label><br />
                     <label>

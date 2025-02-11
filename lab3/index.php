@@ -95,11 +95,13 @@ try {
   $gender = ([$_POST['radio-group-1']][0]);
   $biography = ([$_POST['field-name-2']][0]);
   $stmt->execute();
+  $lastInsertId = $pdo->lastInsertId();
   foreach($_POST['field-name-4'] as $lang) {
-    $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-    $stmt->bindParam(':pers_id', $pdo->lastInsertId());
-    $stmt->bindParam(':lang_id', $lang);
-    $stmt->execute();
+    //$stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
+    print($lastInsertId);
+    // $stmt->bindParam(':pers_id', $pa);
+    // $stmt->bindParam(':lang_id', $lang);
+    // $stmt->execute();
   }
 }
 catch(PDOException $e){

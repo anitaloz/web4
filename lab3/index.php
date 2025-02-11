@@ -81,8 +81,6 @@ $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
 
 // Подготовленный запрос. Не именованные метки.
 try {
-  print_r([$_POST['field-date']]);
-  print([$_POST['field-date']][0]);
   $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
   $stmt->bindParam(':fio', $fio);
   $stmt->bindParam(':tel', $tel);
@@ -90,7 +88,7 @@ try {
   $stmt->bindParam(':bdate', $bdate);
   $stmt->bindParam(':gender', $gender);
   $stmt->bindParam(':biography', $biography);
-  $fio = ([$_POST['field-date']][0]);
+  $fio = ([$_POST['field-name-1']][0]);
   $tel = ([$_POST['field-tel']][0]);
   $email = ([$_POST['field-email']][0]);
   $bdate = ([$_POST['field-date']][0]);

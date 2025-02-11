@@ -97,11 +97,10 @@ try {
   $stmt->execute();
   $lastInsertId = $db->lastInsertId();
   foreach($_POST['field-name-4'] as $lang) {
-    //$stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-    print($lastInsertId);
-    // $stmt->bindParam(':pers_id', $pa);
-    // $stmt->bindParam(':lang_id', $lang);
-    // $stmt->execute();
+    $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
+    $stmt->bindParam(':pers_id', $lastInsertId);
+    $stmt->bindParam(':lang_id', $lang);
+    $stmt->execute();
   }
 }
 catch(PDOException $e){

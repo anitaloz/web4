@@ -78,7 +78,7 @@ $user = 'u68598'; // Заменить на ваш логин uXXXXX
 $pass = '8795249'; // Заменить на пароль
 $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
-foreach(([$_POST['field-name-4']]) as $lang) {
+foreach($_POST['field-name-4'] as $lang) {
   print(' '.$lang);
 }
 //  Именованные метки.
@@ -108,10 +108,10 @@ catch(PDOException $e){
 //   foreach(([$_POST['field-name-4']]) as $lang) {
 //     $stmt = $db->prepare("INSERT INTO perslang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
 //     $stmt->bindParam(':pers_id', PDO::lastInsertId());
-//     $stmt->bindParam(':tel', $);
+//     $stmt->bindParam(':lan_id', $lang_id);
 
-//     $fio = ([$_POST['field-name-1']][0]);
-//     $tel = ([$_POST['field-tel']][0]);
+//     $pers_id = PDO::lastInsertId();
+//     $lan_id = ([$_POST['field-tel']][0]);
 //     $stmt->execute();
 //   }
 // }
@@ -140,4 +140,4 @@ $stmt->execute();
 // Делаем перенаправление.
 // Если запись не сохраняется, но ошибок не видно, то можно закомментировать эту строку чтобы увидеть ошибку.
 // Если ошибок при этом не видно, то необходимо настроить параметр display_errors для PHP.
-header('Location: ?save=1');
+//header('Location: ?save=1');

@@ -78,7 +78,9 @@ $user = 'u68598'; // Заменить на ваш логин uXXXXX
 $pass = '8795249'; // Заменить на пароль
 $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
-
+foreach(([$_POST['field-name-4']]) as $lang) {
+  print(' '.$lang);
+}
 //  Именованные метки.
 try {
   $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
@@ -100,9 +102,7 @@ catch(PDOException $e){
   print('Error : ' . $e->getMessage());
   exit();
 }
-foreach(([$_POST['field-name-4']]) as $lang) {
-  print(' '.$lang);
-}
+
 // try {
 
 //   foreach(([$_POST['field-name-4']]) as $lang) {

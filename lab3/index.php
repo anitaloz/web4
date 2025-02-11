@@ -81,8 +81,8 @@ $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
 
 // Подготовленный запрос. Не именованные метки.
 try {
-  $stmt = $db->prepare("INSERT INTO application SET name = ?");
-  $stmt->execute([$_POST['fio']]);
+  $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio,:tel, :email, :bdate, :gender, :biography)");
+  $stmt -> execute(['fio'=>([$_POST['field-name-1']]), 'tel'=>([$_POST['field-tel']]), 'email'=>([$_POST['field-email']]), 'bdate'=>([$_POST['field-date']]), 'gender'=>([$_POST['radio-group1']]), 'biography'=>([$_POST['field-name-2']])]); 
 }
 catch(PDOException $e){
   print('Error : ' . $e->getMessage());

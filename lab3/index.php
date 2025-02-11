@@ -83,6 +83,8 @@ $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
 try {
   $stmt = $db->prepare("INSERT INTO person SET fio = ?");
   $stmt->execute([$_POST['field-name-1']]);
+  $stmt = $db->prepare("INSERT INTO person SET bdate = ?");
+  $stmt->execute([$_POST['field-date']]);
 }
 catch(PDOException $e){
   print('Error : ' . $e->getMessage());

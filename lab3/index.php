@@ -93,7 +93,7 @@ try {
   $email = ([$_POST['field-email']][0]);
   $bdate = ([$_POST['field-date']][0]);
   $gender = ([$_POST['radio-group-1']][0]);
-  $biography = ([$_POST['field-name-2']][0]);
+  $biography = ($_POST['field-name-2']);
   $stmt->execute();
   $lastInsertId = $db->lastInsertId();
   foreach($_POST['field-name-4'] as $lang) {
@@ -141,4 +141,4 @@ $stmt->execute();
 // Делаем перенаправление.
 // Если запись не сохраняется, но ошибок не видно, то можно закомментировать эту строку чтобы увидеть ошибку.
 // Если ошибок при этом не видно, то необходимо настроить параметр display_errors для PHP.
-//header('Location: ?save=1');
+header('Location: ?save=1');

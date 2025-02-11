@@ -79,7 +79,7 @@ $pass = '8795249'; // Заменить на пароль
 $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
-// Подготовленный запрос. Не именованные метки.
+//  Именованные метки.
 try {
   $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
   $stmt->bindParam(':fio', $fio);
@@ -100,10 +100,29 @@ catch(PDOException $e){
   print('Error : ' . $e->getMessage());
   exit();
 }
+foreach(([$_POST['field-name-4']]) as $lang) {
+  print(' '.$lang);
+}
+// try {
+
+//   foreach(([$_POST['field-name-4']]) as $lang) {
+//     $stmt = $db->prepare("INSERT INTO perslang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
+//     $stmt->bindParam(':pers_id', PDO::lastInsertId());
+//     $stmt->bindParam(':tel', $);
+
+//     $fio = ([$_POST['field-name-1']][0]);
+//     $tel = ([$_POST['field-tel']][0]);
+//     $stmt->execute();
+//   }
+// }
+// catch(PDOException $e){
+//   print('Error : ' . $e->getMessage());
+//   exit();
+// }
 
 //  stmt - это "дескриптор состояния".
  
-//  Именованные метки.
+
 //$stmt = $db->prepare("INSERT INTO test (label,color) VALUES (:label,:color)");
 //$stmt -> execute(['label'=>'perfect', 'color'=>'green']);
  

@@ -113,18 +113,6 @@ catch(PDOException $e){
   exit();
 }
 
-// try {
-//   foreach($_POST['field-name-4'] as $lang) {
-//     $stmt = $db->prepare("INSERT INTO perslang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-//     $stmt->bindParam(':pers_id', PDO::lastInsertId());
-//     $stmt->bindParam(':lang_id', $lang);
-//     $stmt->execute();
-//   }
-// }
-// catch(PDOException $e){
-//   print('Error : ' . $e->getMessage());
-//   exit();
-// }
 
 //  stmt - это "дескриптор состояния".
  

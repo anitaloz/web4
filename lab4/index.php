@@ -29,6 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Выводим сообщение.
     $messages[] = '<div>Заполните имя.</div>';
   }
+  if ($errors['fio']==2) {
+    // Удаляем куки, указывая время устаревания в прошлом.
+    setcookie('fio_error', '', 100000);
+    setcookie('fio_value', '', 100000);
+    // Выводим сообщение.
+    $messages[] = '<div>ФИО не должно превышать 150 символов</div>';
+    print_r($messages);
+  }
   // TODO: тут выдать сообщения об ошибках в других полях.
 
   // Складываем предыдущие значения полей в массив, если есть.
@@ -52,17 +60,20 @@ else{
     setcookie('fio_error', '1', 0);
     $errors = TRUE;
   }
-  setcookie('fio_value', $_POST['fio'], time() + 12*30 * 24 * 60 * 60);
 
   if(strlen($_POST['field-name-1'])>150) {
-    print('Длина ФИО не должна превышать 150 символов.<br/>');
+    setcookie('fio_error', '2', 0);
     $errors = TRUE;
   }
+
 
   if(!preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
     print('ФИО должно содержать только буквы (русские и английские) и пробелы.<br/>');
     $errors =TRUE;
   }
+  
+  setcookie('fio_value', $_POST['fio'], time() + 12*30 * 24 * 60 * 60);
+
   $_POST['field-tel']=trim($_POST['field-tel']);
   $_POST['field-tel']=trim($_POST['field-tel']);
   if(!preg_match('/^[0-9+]+$/', $_POST['field-tel'])) {

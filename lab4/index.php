@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $errors = array();
   $errors['fio'] = !empty($_COOKIE['fio_error']);
   $errors['field-tel'] = !empty($_COOKIE['field-tel_error']);
+  $errors['field-email'] = !empty($_COOKIE['field-email_error']);
   // TODO: аналогично все поля.
 
   // Выдаем сообщения об ошибках.
@@ -62,12 +63,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Выводим сообщение.
     $messages[] = '<div>Телефон должен содержать только цифры и знак +</div>';
   }
+
+  if ($errors['field-email']) {
+    // Удаляем куки, указывая время устаревания в прошлом.
+    setcookie('field-email_error', '', 100000);
+    setcookie('field-email_value', '', 100000);
+    // Выводим сообщение.
+    $messages[] = '<div>Email введен некорректно</div>';
+  }
   // TODO: тут выдать сообщения об ошибках в других полях.
 
   // Складываем предыдущие значения полей в массив, если есть.
   $values = array();
   $values['fio'] = empty($_COOKIE['fio_value']) ? '' : $_COOKIE['fio_value'];
   $values['field-tel'] = empty($_COOKIE['field-tel_value']) ? '' : $_COOKIE['field-tel_value'];
+  $values['field-email'] = empty($_COOKIE['field-email_value']) ? '' : $_COOKIE['field-email_value'];
   // TODO: аналогично все поля.
 
   // Включаем содержимое файла form.php.
@@ -109,12 +119,14 @@ else {
   //   print('Выберите пол.<br/>');
   //   $errors= TRUE;
   // }
+
   // $_POST['field-email']=trim($_POST['field-email']);
   // $_POST['field-email']=trim($_POST['field-email']);
-  // if (!filter_var(($_POST['field-email']), FILTER_VALIDATE_EMAIL)) {
-  //   print('Email введен некорректно.<br/>');
-  //   $errors=TRUE;
-  // }
+  if (!filter_var(($_POST['field-email']), FILTER_VALIDATE_EMAIL)) {
+    setcookie('field-email_error', '1');
+    $errors = TRUE;
+  }
+  setcookie('field-email_value', $_POST['field-tel'], time() + 12 * 30 * 24 * 60 * 60);
 
   // if(empty($_POST['field-name-4']))
   // {
@@ -146,6 +158,7 @@ else {
     // Удаляем Cookies с признаками ошибок.
     setcookie('fio_error', '', 100000);
     setcookie('field-tel_error', '', 100000);
+    setcookie('field-email_error', '', 100000);
     // TODO: тут необходимо удалить остальные Cookies.
   }
 

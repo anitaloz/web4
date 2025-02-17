@@ -138,12 +138,12 @@ if (!empty($messages)) {
                         email:<br />
                         <input name="field-email"
                         <?php if ($errors['field-email']) {print 'class="error"';} ?> value="<?php print $values['field-email']; ?>"
-                        type="email" />
+                         />
                     </label><br />
                     <label>
                         Дата рождения:<br />
                         <input name="field-date"
-                        value=""
+                        <?php if ($errors['field-date']) {print 'class="error"';} ?> value="<?php print $values['field-date']; ?>"
                         type="date" />
                     </label><br />
                     Пол:<br />

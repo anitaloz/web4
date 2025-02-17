@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $errors['fio'] = !empty($_COOKIE['fio_error']);
   $errors['field-tel'] = !empty($_COOKIE['field-tel_error']);
   $errors['field-email'] = !empty($_COOKIE['field-email_error']);
+  $errors['field-date'] = !empty($_COOKIE['field-date_error']);
   // TODO: аналогично все поля.
 
   // Выдаем сообщения об ошибках.
@@ -71,6 +72,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Выводим сообщение.
     $messages[] = '<div>Email введен некорректно</div>';
   }
+
+  if ($errors['field-date']) {
+    // Удаляем куки, указывая время устаревания в прошлом.
+    setcookie('field-date_error', '', 100000);
+    setcookie('field-date_value', '', 100000);
+    // Выводим сообщение.
+    $messages[] = '<div>Заполните дату</div>';
+  }
   // TODO: тут выдать сообщения об ошибках в других полях.
 
   // Складываем предыдущие значения полей в массив, если есть.
@@ -78,6 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $values['fio'] = empty($_COOKIE['fio_value']) ? '' : $_COOKIE['fio_value'];
   $values['field-tel'] = empty($_COOKIE['field-tel_value']) ? '' : $_COOKIE['field-tel_value'];
   $values['field-email'] = empty($_COOKIE['field-email_value']) ? '' : $_COOKIE['field-email_value'];
+  $values['field-date'] = empty($_COOKIE['field-date_value']) ? '' : $_COOKIE['field-date_value'];
   // TODO: аналогично все поля.
 
   // Включаем содержимое файла form.php.
@@ -115,6 +125,7 @@ else {
     $errors = TRUE;
   }
   setcookie('field-tel_value', $_POST['field-tel'], time() + 12 * 30 * 24 * 60 * 60);
+
   // if(!isset($_POST['radio-group-1']) || empty($_POST['radio-group-1'])) {
   //   print('Выберите пол.<br/>');
   //   $errors= TRUE;
@@ -134,10 +145,11 @@ else {
   //   $errors=TRUE;
   // }
 
-  // if (empty($_POST['field-date'])) {
-  //   print('Заполните дату.<br/>');
-  //   $errors = TRUE;
-  // }
+  if (empty($_POST['field-date'])) {
+    setcookie('field-date_error', '1');
+    $errors = TRUE;
+  }
+  setcookie('field-date_value', $_POST['field-date'], time() + 12 * 30 * 24 * 60 * 60);
 
   // if(!isset($_POST['check-1']) || empty($_POST['check-1'])) {
   //   print('Ознакомьтесь с контрактом.<br/>');
@@ -159,6 +171,7 @@ else {
     setcookie('fio_error', '', 100000);
     setcookie('field-tel_error', '', 100000);
     setcookie('field-email_error', '', 100000);
+    setcookie('field-date_error', '', 100000);
     // TODO: тут необходимо удалить остальные Cookies.
   }
 

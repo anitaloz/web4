@@ -111,6 +111,20 @@
                 <div id="Form"><h2>Форма</h2></div>
                 <form class="pl-sm-3" action=""
                     method="POST">
+                    <?php
+if (!empty($messages)) {
+  print('<div id="messages">');
+  // Выводим все сообщения.
+  foreach ($messages as $message) {
+    print($message);
+  }
+  print('</div>');
+}
+
+// Далее выводим форму отмечая элементы с ошибками классом error
+// и задавая начальные значения элементов ранее сохраненными.
+?>
+
                     <label>
                         ФИО:<br />
                         <input name="fio" <?php if ($errors['fio']) {print 'class="error"';} ?> value="<?php print $values['fio']; ?>" />

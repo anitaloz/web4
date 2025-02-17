@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // TODO: аналогично все поля.
 
   // Выдаем сообщения об ошибках.
-  if ($errors['fio'] && $_COOKIE['fio_error']=='1') {
+  if ($errors['fio'] && $_COOKIE['fio_error']==1) {
     // Удаляем куки, указывая время устаревания в прошлом.
     setcookie('fio_error', '', 100000);
     setcookie('fio_value', '', 100000);

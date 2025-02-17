@@ -35,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     setcookie('fio_value', '', 100000);
     // Выводим сообщение.
     $messages[] = '<div>ФИО должно содержать только буквы (русские и английские) и пробелы.</div>';
-    
   }
   print_r($messages);
   print_r($_COOKIE['fio_error']);
@@ -65,14 +64,16 @@ else{
   //   setcookie('fio_error', '2');
   //   $errors = TRUE;
   // }
-  if(!preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
-      setcookie('fio_error', '2', 0);
-      $errors = TRUE;
-    }
+  
   if (empty($_POST['field-name-1'])) {
       setcookie('fio_error', '1', 0);
       $errors = TRUE;
   }
+  if(!empty($_POST['field-name-1']) && !preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
+      setcookie('fio_error', '2', 0);
+      $errors = TRUE;
+    }
+
 
   
   setcookie('fio_value', $_POST['fio'], time() + 12*30 * 24 * 60 * 60);

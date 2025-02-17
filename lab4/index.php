@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 // Проверяем ошибки.
 else{
-  setcookie('fio_error', '0', 0)
+  setcookie('fio_error', '0', 0);
   $errors = FALSE;
   $_POST['field-name-1']=trim($_POST['field-name-1']);
   // if (empty($_POST['field-name-1'])) {

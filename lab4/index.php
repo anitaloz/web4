@@ -18,11 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $messages[] = 'Спасибо, результаты сохранены.';
     }
   $errors = array();
-  $errors['fio'] = !empty($_COOKIE['fio_error']);
+  $errors['fio'] = $_COOKIE['fio_error'];
   // TODO: аналогично все поля.
 
   // Выдаем сообщения об ошибках.
-  if ($errors['fio']) {
+  if ($errors['fio']==1) {
     // Удаляем куки, указывая время устаревания в прошлом.
     setcookie('fio_error', '', 100000);
     setcookie('fio_value', '', 100000);
@@ -49,10 +49,10 @@ else{
   $errors = FALSE;
   $_POST['field-name-1']=trim($_POST['field-name-1']);
   if (empty($_POST['field-name-1'])) {
-    setcookie('fio_error', '1', time() + 24 * 60 * 60);
+    setcookie('fio_error', '1', 0);
     $errors = TRUE;
   }
-  setcookie('fio_value', $_POST['fio'], time() + 30 * 24 * 60 * 60);
+  setcookie('fio_value', $_POST['fio'], time() + 12*30 * 24 * 60 * 60);
 
   if(strlen($_POST['field-name-1'])>150) {
     print('Длина ФИО не должна превышать 150 символов.<br/>');

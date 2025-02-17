@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Выводим сообщение.
     $messages[] = '<div>Заполните имя.</div>';
   }
-  if ($errors['fio'] && $_COOKIE['fio_error']==2) {
+  if ($errors['fio'] && $_COOKIE['fio_error']==1) {
     // Удаляем куки, указывая время устаревания в прошлом.
     setcookie('fio_error', '', 100000);
     setcookie('fio_value', '', 100000);

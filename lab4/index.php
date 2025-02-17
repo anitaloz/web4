@@ -62,14 +62,14 @@ else{
   
 
   if(strlen($_POST['field-name-1'])>10) {
-    setcookie('fio_error', '2', 0);
+    setcookie('fio_error', '2');
     $errors = TRUE;
   }
-  
-  if (empty($_POST['field-name-1'])) {
-      setcookie('fio_error', '1', 0);
-      $errors = TRUE;
-    }
+
+  // if (empty($_POST['field-name-1'])) {
+  //     setcookie('fio_error', '1');
+  //     $errors = TRUE;
+  // }
 
   if(!preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
     print('ФИО должно содержать только буквы (русские и английские) и пробелы.<br/>');

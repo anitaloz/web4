@@ -61,21 +61,20 @@ else{
   $_POST['field-name-1']=trim($_POST['field-name-1']);
   
 
-  if(strlen($_POST['field-name-1'])>10) {
-    setcookie('fio_error', '2');
-    $errors = TRUE;
-  }
-
-  // if (empty($_POST['field-name-1'])) {
-  //     setcookie('fio_error', '1');
-  //     $errors = TRUE;
+  // if(strlen($_POST['field-name-1'])>10) {
+  //   setcookie('fio_error', '2');
+  //   $errors = TRUE;
   // }
 
-  if(!preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
-    print('ФИО должно содержать только буквы (русские и английские) и пробелы.<br/>');
-    $errors =TRUE;
+  if (empty($_POST['field-name-1'])) {
+      setcookie('fio_error', '1', time()+60*60*24);
+      $errors = TRUE;
   }
-  
+
+  if(!preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
+    setcookie('fio_error', '2', time()+60*60*24);
+    $errors = TRUE;
+}
   setcookie('fio_value', $_POST['fio'], time() + 12*30 * 24 * 60 * 60);
 
   $_POST['field-tel']=trim($_POST['field-tel']);

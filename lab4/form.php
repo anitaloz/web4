@@ -131,8 +131,8 @@ if (!empty($messages)) {
                     </label><br />
                     <label>
                         Номер телефона:<br />
-                        <input name="field-tel"
-                        value=""
+                        <input name="field-tel"  <?php if ($errors['field-tel']) {print 'class="error"';} ?> value="<?php print $values['field-tel']; ?>"
+                        
                         type="tel" />
                     </label><br />
                     <label>

@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     setcookie('fio_error', '', 100000);
     setcookie('fio_value', '', 100000);
     // Выводим сообщение.
-    $messages[] = '<div class="error">Заполните имя.</div>';
+    $messages[] = '<div>Заполните имя.</div>';
   }
 
   if ($errors['fio'] AND $_COOKIE['fio_error']==2) {
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     setcookie('fio_error', '', 100000);
     setcookie('fio_value', '', 100000);
     // Выводим сообщение.
-    $messages[] = '<div class="error">ФИО должно содержать не более 150 символов.</div>';
+    $messages[] = '<div>ФИО должно содержать не более 150 символов.</div>';
   }
 
   if ($errors['fio'] AND $_COOKIE['fio_error']==3) {
@@ -51,13 +51,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     setcookie('fio_error', '', 100000);
     setcookie('fio_value', '', 100000);
     // Выводим сообщение.
-    $messages[] = '<div class="error">ФИО должно содержать только буквы (русские и английские) и пробелы.</div>';
+    $messages[] = '<div>ФИО должно содержать только буквы (русские и английские) и пробелы.</div>';
+  }
+  $errors['field-tel'] = !empty($_COOKIE['field-tel']);
+  if ($errors['field-tel'] AND $_COOKIE['field-tel_error']==1) {
+    // Удаляем куки, указывая время устаревания в прошлом.
+    setcookie('field-tel_error', '', 100000);
+    setcookie('field-tel_value', '', 100000);
+    // Выводим сообщение.
+    $messages[] = '<div>Телефон должен содержать только цифры и знак +</div>';
   }
   // TODO: тут выдать сообщения об ошибках в других полях.
 
   // Складываем предыдущие значения полей в массив, если есть.
   $values = array();
   $values['fio'] = empty($_COOKIE['fio_value']) ? '' : $_COOKIE['fio_value'];
+  $values['field-tel'] = empty($_COOKIE['field-tel_value']) ? '' : $_COOKIE['field-tel_value'];
   // TODO: аналогично все поля.
 
   // Включаем содержимое файла form.php.
@@ -71,30 +80,30 @@ else {
   $errors = FALSE;
   if (empty($_POST['fio'])) {
     // Выдаем куку на день с флажком об ошибке в поле fio.
-    setcookie('fio_error', '1', time() + 24 * 60 * 60);
+    setcookie('fio_error', '1');
     $errors = TRUE;
   }
 
   if(!empty($_POST['fio']) && strlen($_POST['fio'])>150) {
-    setcookie('fio_error', '2', time() + 24 * 60 * 60);
+    setcookie('fio_error', '2');
     $errors = TRUE;
   }
   
   if(!empty($_POST['fio']) && !preg_match('/^[а-яА-Яa-zA-Z ]+$/u', $_POST['fio'])) {
-    setcookie('fio_error', '3', time() + 24 * 60 * 60);
+    setcookie('fio_error', '3');
     $errors = TRUE;
   }
 
-  // Сохраняем ранее введенное в форму значение на месяц.
-  setcookie('fio_value', $_POST['fio'], time() + 30 * 24 * 60 * 60);
+  // Сохраняем ранее введенное в форму значение на год.
+  setcookie('fio_value', $_POST['fio'], time() + 12 * 30 * 24 * 60 * 60);
 
   // $_POST['field-tel']=trim($_POST['field-tel']);
-  // $_POST['field-tel']=trim($_POST['field-tel']);
-  // if(!preg_match('/^[0-9+]+$/', $_POST['field-tel'])) {
-  //   print('Телефон должен содержать толко цифры.<br/>');
-  //   $errors= TRUE;
-  // }
-
+  $_POST['field-tel']=trim($_POST['field-tel']);
+  if(!preg_match('/^[0-9+]+$/', $_POST['field-tel'])) {
+    setcookie('field-tel_error', '1');
+    $errors = TRUE;
+  }
+  setcookie('field-tel_value', $_POST['field-tel'], time() + 12 * 30 * 24 * 60 * 60);
   // if(!isset($_POST['radio-group-1']) || empty($_POST['radio-group-1'])) {
   //   print('Выберите пол.<br/>');
   //   $errors= TRUE;
@@ -135,6 +144,7 @@ else {
   else {
     // Удаляем Cookies с признаками ошибок.
     setcookie('fio_error', '', 100000);
+    setcookie('field-tel_error', '', 100000);
     // TODO: тут необходимо удалить остальные Cookies.
   }
 

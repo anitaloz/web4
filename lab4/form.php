@@ -150,7 +150,7 @@ if (!empty($messages)) {
                     <label><input type="radio" checked="checked"
                     name="radio-group-1" <?php if ($errors['radio-group-1']) {print 'class="error"';} ?> value="Женский" />
                     Женский</label>
-                    <label><input type="radio"
+                    <label><input type="radio" checked="checked"
                     name="radio-group-1" <?php if ($errors['radio-group-1']) {print 'class="error"';} ?> value="Мужской" />
                     Мужской</label><br />
                     <label>

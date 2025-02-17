@@ -148,10 +148,10 @@ if (!empty($messages)) {
                     </label><br />
                     Пол:<br />
                     <label><input type="radio" checked="checked"
-                    name="radio-group-1" value="Женский" />
+                    name="radio-group-1" <?php if ($errors['radio-group-1']) {print 'class="error"';} ?> value="Женский" />
                     Женский</label>
                     <label><input type="radio"
-                    name="radio-group-1" value="Мужской" />
+                    name="radio-group-1" <?php if ($errors['radio-group-1']) {print 'class="error"';} ?> value="Мужской" />
                     Мужской</label><br />
                     <label>
                         Любимый язык программирования:

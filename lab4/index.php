@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $messages[] = 'Спасибо, результаты сохранены.';
     }
   $errors = array();
-  $errors['fio'] = $_COOKIE['fio_error'];
+  $errors['fio'] = ($_COOKIE['fio_error']);
   // TODO: аналогично все поля.
 
   // Выдаем сообщения об ошибках.
@@ -55,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 // Проверяем ошибки.
 else{
+  setcookie('fio_error', '0', 0)
   $errors = FALSE;
   $_POST['field-name-1']=trim($_POST['field-name-1']);
   // if (empty($_POST['field-name-1'])) {

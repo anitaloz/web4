@@ -62,6 +62,7 @@ else{
     setcookie('fio_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
+  setcookie('fio_value', $_POST['fio'], time() + 30 * 24 * 60 * 60);
 
   if(strlen($_POST['field-name-1'])>150) {
     print('Длина ФИО не должна превышать 150 символов.<br/>');

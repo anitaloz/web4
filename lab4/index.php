@@ -75,7 +75,7 @@ else {
     $errors = TRUE;
   }
 
-  if(!empty($_POST['fio']) && strlen($_POST['fiщ'])>150) {
+  if(!empty($_POST['fio']) && strlen($_POST['fio'])>150) {
     setcookie('fio_error', '2', time() + 24 * 60 * 60);
     $errors = TRUE;
   }

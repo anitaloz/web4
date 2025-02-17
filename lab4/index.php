@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // TODO: аналогично все поля.
 
   // Выдаем сообщения об ошибках.
-  if ($errors['fio'] ) {
+  if ($errors['fio']) {
     // Удаляем куки, указывая время устаревания в прошлом.
     setcookie('fio_error', '', 100000);
     setcookie('fio_value', '', 100000);
@@ -72,44 +72,41 @@ else{
   //     setcookie('fio_error', '1', 0);
   //     $errors = TRUE;
   //   }
-
-
-  
   setcookie('fio_value', $_POST['fio'], time() + 12*30 * 24 * 60 * 60);
 
-  $_POST['field-tel']=trim($_POST['field-tel']);
-  $_POST['field-tel']=trim($_POST['field-tel']);
-  if(!preg_match('/^[0-9+]+$/', $_POST['field-tel'])) {
-    print('Телефон должен содержать толко цифры.<br/>');
-    $errors= TRUE;
-  }
+  // $_POST['field-tel']=trim($_POST['field-tel']);
+  // $_POST['field-tel']=trim($_POST['field-tel']);
+  // if(!preg_match('/^[0-9+]+$/', $_POST['field-tel'])) {
+  //   print('Телефон должен содержать толко цифры.<br/>');
+  //   $errors= TRUE;
+  // }
 
-  if(!isset($_POST['radio-group-1']) || empty($_POST['radio-group-1'])) {
-    print('Выберите пол.<br/>');
-    $errors= TRUE;
-  }
-  $_POST['field-email']=trim($_POST['field-email']);
-  $_POST['field-email']=trim($_POST['field-email']);
-  if (!filter_var(($_POST['field-email']), FILTER_VALIDATE_EMAIL)) {
-    print('Email введен некорректно.<br/>');
-    $errors=TRUE;
-  }
+  // if(!isset($_POST['radio-group-1']) || empty($_POST['radio-group-1'])) {
+  //   print('Выберите пол.<br/>');
+  //   $errors= TRUE;
+  // }
+  // $_POST['field-email']=trim($_POST['field-email']);
+  // $_POST['field-email']=trim($_POST['field-email']);
+  // if (!filter_var(($_POST['field-email']), FILTER_VALIDATE_EMAIL)) {
+  //   print('Email введен некорректно.<br/>');
+  //   $errors=TRUE;
+  // }
 
-  if(empty($_POST['field-name-4']))
-  {
-    print('Выберите хотя бы один язык программирования.<br/>');
-    $errors=TRUE;
-  }
+  // if(empty($_POST['field-name-4']))
+  // {
+  //   print('Выберите хотя бы один язык программирования.<br/>');
+  //   $errors=TRUE;
+  // }
 
-  if (empty($_POST['field-date'])) {
-    print('Заполните дату.<br/>');
-    $errors = TRUE;
-  }
+  // if (empty($_POST['field-date'])) {
+  //   print('Заполните дату.<br/>');
+  //   $errors = TRUE;
+  // }
 
-  if(!isset($_POST['check-1']) || empty($_POST['check-1'])) {
-    print('Ознакомьтесь с контрактом.<br/>');
-    $errors= TRUE;
-  }
+  // if(!isset($_POST['check-1']) || empty($_POST['check-1'])) {
+  //   print('Ознакомьтесь с контрактом.<br/>');
+  //   $errors= TRUE;
+  // }
   // *************
   // Тут необходимо проверить правильность заполнения всех остальных полей.
   // *************

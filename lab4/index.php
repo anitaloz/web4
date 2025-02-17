@@ -131,39 +131,39 @@ else {
 
   // Сохранение в БД.
   // ...
-  $user = 'u68598'; // Заменить на ваш логин uXXXXX
-  $pass = '8795249'; // Заменить на пароль
-  $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
-    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
+  // $user = 'u68598'; // Заменить на ваш логин uXXXXX
+  // $pass = '8795249'; // Заменить на пароль
+  // $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
+  //   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
-  //  Именованные метки.
-  try {
-    $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
-    $stmt->bindParam(':fio', $fio);
-    $stmt->bindParam(':tel', $tel);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':bdate', $bdate);
-    $stmt->bindParam(':gender', $gender);
-    $stmt->bindParam(':biography', $biography);
-    $fio = ($_POST['field-name-1']);
-    $tel = ($_POST['field-tel']);
-    $email = ($_POST['field-email']);
-    $bdate = ($_POST['field-date']);
-    $gender = ($_POST['radio-group-1']);
-    $biography = ($_POST['field-name-2']);
-    $stmt->execute();
-    $lastInsertId = $db->lastInsertId();
-    foreach($_POST['field-name-4'] as $lang) {
-      $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-      $stmt->bindParam(':pers_id', $lastInsertId);
-      $stmt->bindParam(':lang_id', $lang);
-      $stmt->execute();
-    }
-  }
-  catch(PDOException $e){
-    print('Error : ' . $e->getMessage());
-    exit();
-  }
+  // //  Именованные метки.
+  // try {
+  //   $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
+  //   $stmt->bindParam(':fio', $fio);
+  //   $stmt->bindParam(':tel', $tel);
+  //   $stmt->bindParam(':email', $email);
+  //   $stmt->bindParam(':bdate', $bdate);
+  //   $stmt->bindParam(':gender', $gender);
+  //   $stmt->bindParam(':biography', $biography);
+  //   $fio = ($_POST['field-name-1']);
+  //   $tel = ($_POST['field-tel']);
+  //   $email = ($_POST['field-email']);
+  //   $bdate = ($_POST['field-date']);
+  //   $gender = ($_POST['radio-group-1']);
+  //   $biography = ($_POST['field-name-2']);
+  //   $stmt->execute();
+  //   $lastInsertId = $db->lastInsertId();
+  //   foreach($_POST['field-name-4'] as $lang) {
+  //     $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
+  //     $stmt->bindParam(':pers_id', $lastInsertId);
+  //     $stmt->bindParam(':lang_id', $lang);
+  //     $stmt->execute();
+  //   }
+  // }
+  // catch(PDOException $e){
+  //   print('Error : ' . $e->getMessage());
+  //   exit();
+  // }
 
   // Сохраняем куку с признаком успешного сохранения.
   setcookie('save', '1');

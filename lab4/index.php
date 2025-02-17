@@ -63,7 +63,7 @@ else{
   // }
 
   if(strlen($_POST['field-name-1'])>10) {
-    setcookie('fio_error', '2', 0);
+    setcookie('fio_error', '1', 0);
     $errors = TRUE;
   }
 

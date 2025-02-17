@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // TODO: аналогично все поля.
 
   // Выдаем сообщения об ошибках.
-  if ($errors['fio']) {
+  if ($errors['fio'] && $_COOKIE['fio_error']=='1') {
     // Удаляем куки, указывая время устаревания в прошлом.
     setcookie('fio_error', '', 100000);
     setcookie('fio_value', '', 100000);
@@ -56,6 +56,16 @@ else {
   if (empty($_POST['fio'])) {
     // Выдаем куку на день с флажком об ошибке в поле fio.
     setcookie('fio_error', '1', time() + 24 * 60 * 60);
+    $errors = TRUE;
+  }
+
+  if(strlen($_POST['field-name-1'])>150) {
+    setcookie('fio_error', '2', time() + 24 * 60 * 60);
+    $errors = TRUE;
+  }
+  
+  if(!preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
+    setcookie('fio_error', '3', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
   // Сохраняем ранее введенное в форму значение на месяц.

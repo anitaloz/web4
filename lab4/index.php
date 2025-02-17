@@ -55,11 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 // Проверяем ошибки.
 else{
   $errors = FALSE;
-  $_POST['field-name-1']=trim($_POST['field-name-1']);
-  if (empty($_POST['field-name-1'])) {
-    setcookie('fio_error', '1', 0);
-    $errors = TRUE;
-  }
+  // $_POST['field-name-1']=trim($_POST['field-name-1']);
+  // if (empty($_POST['field-name-1'])) {
+  //   setcookie('fio_error', '1', 0);
+  //   $errors = TRUE;
+  // }
 
   if(strlen($_POST['field-name-1'])>150) {
     setcookie('fio_error', '2', 0);
@@ -72,7 +72,7 @@ else{
     $errors =TRUE;
   }
   
-  setcookie('fio_value', $_POST['fio'], time() + 12*30 * 24 * 60 * 60);
+  //setcookie('fio_value', $_POST['fio'], time() + 12*30 * 24 * 60 * 60);
 
   $_POST['field-tel']=trim($_POST['field-tel']);
   $_POST['field-tel']=trim($_POST['field-tel']);

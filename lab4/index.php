@@ -22,14 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // TODO: аналогично все поля.
 
   // Выдаем сообщения об ошибках.
-  if ($errors['fio'] && $_COOKIE['fio_error']==2 ) {
+  if ($errors['fio'] && $_COOKIE['fio_error']==1 ) {
     // Удаляем куки, указывая время устаревания в прошлом.
     setcookie('fio_error', '', 100000);
     setcookie('fio_value', '', 100000);
     // Выводим сообщение.
     $messages[] = '<div>Заполните имя.</div>';
   }
-  if ($errors['fio'] && $_COOKIE['fio_error']==1) {
+  if ($errors['fio'] && $_COOKIE['fio_error']==2) {
     // Удаляем куки, указывая время устаревания в прошлом.
     setcookie('fio_error', '', 100000);
     setcookie('fio_value', '', 100000);
@@ -64,14 +64,14 @@ else{
   //   $errors = TRUE;
   // }
   
-  // if (empty($_POST['field-name-1'])) {
-  //     setcookie('fio_error', '1', 0);
-  //     $errors = TRUE;
-  // }
-  if(!empty($_POST['field-name-1']) && !preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
+  if (empty($_POST['field-name-1'])) {
       setcookie('fio_error', '1', 0);
       $errors = TRUE;
-    }
+  }
+  // if(!empty($_POST['field-name-1']) && !preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
+  //     setcookie('fio_error', '1', 0);
+  //     $errors = TRUE;
+  //   }
 
 
   

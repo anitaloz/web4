@@ -30,21 +30,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // TODO: аналогично все поля.
 
   // Выдаем сообщения об ошибках.
-  if ($errors['fio'] AND $_COOKIE['fio_error']==1) {
-    // Удаляем куки, указывая время устаревания в прошлом.
-    setcookie('fio_error', '', 100000);
-    setcookie('fio_value', '', 100000);
-    // Выводим сообщение.
-    $messages[] = '<div class="error">Заполните имя.</div>';
-  }
-
-  // if ($errors['fio'] AND $_COOKIE['fio_error']==3) {
+  // if ($errors['fio'] AND $_COOKIE['fio_error']==1) {
   //   // Удаляем куки, указывая время устаревания в прошлом.
   //   setcookie('fio_error', '', 100000);
   //   setcookie('fio_value', '', 100000);
   //   // Выводим сообщение.
-  //   $messages[] = '<div class="error">ФИО должно содержать только буквы (русские и английские) и пробелы.</div>';
+  //   $messages[] = '<div class="error">Заполните имя.</div>';
   // }
+
+  if ($errors['fio'] AND $_COOKIE['fio_error']==3) {
+    // Удаляем куки, указывая время устаревания в прошлом.
+    setcookie('fio_error', '', 100000);
+    setcookie('fio_value', '', 100000);
+    // Выводим сообщение.
+    $messages[] = '<div class="error">ФИО должно содержать только буквы (русские и английские) и пробелы.</div>';
+  }
   // TODO: тут выдать сообщения об ошибках в других полях.
 
   // Складываем предыдущие значения полей в массив, если есть.
@@ -61,21 +61,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 else {
   // Проверяем ошибки.
   $errors = FALSE;
-  if (empty($_POST['fio'])) {
-    // Выдаем куку на день с флажком об ошибке в поле fio.
-    setcookie('fio_error', '1', time() + 24 * 60 * 60);
-    $errors = TRUE;
-  }
+  // if (empty($_POST['fio'])) {
+  //   // Выдаем куку на день с флажком об ошибке в поле fio.
+  //   setcookie('fio_error', '1', time() + 24 * 60 * 60);
+  //   $errors = TRUE;
+  // }
 
   // if(!empty($_POST['fio']) && strlen($_POST['field-name-1'])>150) {
   //   setcookie('fio_error', '2', time() + 24 * 60 * 60);
   //   $errors = TRUE;
   // }
   
-  // if(!preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
-  //   setcookie('fio_error', '3', time() + 24 * 60 * 60);
-  //   $errors = TRUE;
-  // }
+  if(!preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
+    setcookie('fio_error', '3', time() + 24 * 60 * 60);
+    $errors = TRUE;
+  }
   // Сохраняем ранее введенное в форму значение на месяц.
   setcookie('fio_value', $_POST['fio'], time() + 30 * 24 * 60 * 60);
 

@@ -30,15 +30,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // TODO: аналогично все поля.
 
   // Выдаем сообщения об ошибках.
-  // if ($errors['fio'] AND $_COOKIE['fio_error']==1) {
-  //   // Удаляем куки, указывая время устаревания в прошлом.
-  //   setcookie('fio_error', '', 100000);
-  //   setcookie('fio_value', '', 100000);
-  //   // Выводим сообщение.
-  //   $messages[] = '<div class="error">Заполните имя.</div>';
-  // }
-
   if ($errors['fio'] AND $_COOKIE['fio_error']==1) {
+    // Удаляем куки, указывая время устаревания в прошлом.
+    setcookie('fio_error', '', 100000);
+    setcookie('fio_value', '', 100000);
+    // Выводим сообщение.
+    $messages[] = '<div class="error">Заполните имя.</div>';
+  }
+
+  if ($errors['fio'] AND $_COOKIE['fio_error']==2) {
+    // Удаляем куки, указывая время устаревания в прошлом.
+    setcookie('fio_error', '', 100000);
+    setcookie('fio_value', '', 100000);
+    // Выводим сообщение.
+    $messages[] = '<div class="error">ФИО должно содержать не более 150 символов.</div>';
+  }
+
+  if ($errors['fio'] AND $_COOKIE['fio_error']==3) {
     // Удаляем куки, указывая время устаревания в прошлом.
     setcookie('fio_error', '', 100000);
     setcookie('fio_value', '', 100000);
@@ -61,19 +69,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 else {
   // Проверяем ошибки.
   $errors = FALSE;
-  // if (empty($_POST['fio'])) {
-  //   // Выдаем куку на день с флажком об ошибке в поле fio.
-  //   setcookie('fio_error', '1', time() + 24 * 60 * 60);
-  //   $errors = TRUE;
-  // }
-
-  // if(!empty($_POST['fio']) && strlen($_POST['field-name-1'])>150) {
-  //   setcookie('fio_error', '2', time() + 24 * 60 * 60);
-  //   $errors = TRUE;
-  // }
-  
-  if(!preg_match('/^[а-яА-Яa-zA-Z ]+$/u', $_POST['field-name-1'])) {
+  if (empty($_POST['fio'])) {
+    // Выдаем куку на день с флажком об ошибке в поле fio.
     setcookie('fio_error', '1', time() + 24 * 60 * 60);
+    $errors = TRUE;
+  }
+
+  if(!empty($_POST['fio']) && strlen($_POST['fiщ'])>150) {
+    setcookie('fio_error', '2', time() + 24 * 60 * 60);
+    $errors = TRUE;
+  }
+  
+  if(!empty($_POST['fio']) && !preg_match('/^[а-яА-Яa-zA-Z ]+$/u', $_POST['fio'])) {
+    setcookie('fio_error', '3', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
 

@@ -60,12 +60,12 @@ else{
   $errors = FALSE;
   $_POST['field-name-1']=trim($_POST['field-name-1']);
   if (empty($_POST['field-name-1'])) {
-    setcookie('fio_error', '1', 0);
+    setcookie('fio_error', '2', 0);
     $errors = TRUE;
   }
 
   if(strlen($_POST['field-name-1'])>10) {
-    setcookie('fio_error', '2', 0);
+    setcookie('fio_error', '1', 0);
     $errors = TRUE;
   }
 

@@ -72,7 +72,7 @@ else {
     $errors = TRUE;
   }
   
-  if(!empty($_POST['fio']) && !preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
+  if(!preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
     setcookie('fio_error', '3', time() + 24 * 60 * 60);
     $errors = TRUE;
   }

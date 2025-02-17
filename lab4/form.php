@@ -113,7 +113,7 @@
                     method="POST">
                     <label>
                         ФИО:<br />
-                        <input name="field-name-1" <?php if ($errors['fio']) {print 'class="error"';} ?> value="<?php print $values['fio']; ?>" />
+                        <input name="fio" <?php if ($errors['fio']) {print 'class="error"';} ?> value="<?php print $values['fio']; ?>" />
                     </label><br />
                     <label>
                         Номер телефона:<br />

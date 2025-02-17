@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     setcookie('fio_error', '', 100000);
     setcookie('fio_value', '', 100000);
     // Выводим сообщение.
-    $messages[] = '<div>Заполните имя.</div>';
+    //$messages[] = '<div>Заполните имя.</div>';
   }
   if ($errors['fio']=='2') {
     // Удаляем куки, указывая время устаревания в прошлом.
@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     
   }
   print_r($messages);
+  print_r($_COOKIE['fio_error']);
   // TODO: тут выдать сообщения об ошибках в других полях.
 
   // Складываем предыдущие значения полей в массив, если есть.

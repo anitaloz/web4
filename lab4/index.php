@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     setcookie('fio_error', '', 100000);
     setcookie('fio_value', '', 100000);
     // Выводим сообщение.
-    $messages[] = '<div class="error">Заполните имя.</div>';
+    $messages[] = '<div>Заполните имя.</div>';
   }
   // TODO: тут выдать сообщения об ошибках в других полях.
 

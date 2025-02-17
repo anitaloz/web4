@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     setcookie('fio_error', '', 100000);
     setcookie('fio_value', '', 100000);
     // Выводим сообщение.
-    //$messages[] = '<div>Заполните имя.</div>';
+    $messages[] = '<div>Заполните имя.</div>';
   }
   if ($errors['fio']=='2') {
     // Удаляем куки, указывая время устаревания в прошлом.
@@ -56,26 +56,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 // Проверяем ошибки.
 else{
-  setcookie('fio_error', '0', 0);
+  //setcookie('fio_error', '0', 0);
   $errors = FALSE;
   $_POST['field-name-1']=trim($_POST['field-name-1']);
-  if (empty($_POST['field-name-1'])) {
+  
+
+  if(strlen($_POST['field-name-1'])>10) {
     setcookie('fio_error', '2', 0);
     $errors = TRUE;
   }
-
-  if(strlen($_POST['field-name-1'])>10) {
-    setcookie('fio_error', '1', 0);
-    $errors = TRUE;
-  }
-
+  
+  if (empty($_POST['field-name-1'])) {
+      setcookie('fio_error', '1', 0);
+      $errors = TRUE;
+    }
 
   if(!preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
     print('ФИО должно содержать только буквы (русские и английские) и пробелы.<br/>');
     $errors =TRUE;
   }
   
-  //setcookie('fio_value', $_POST['fio'], time() + 12*30 * 24 * 60 * 60);
+  setcookie('fio_value', $_POST['fio'], time() + 12*30 * 24 * 60 * 60);
 
   $_POST['field-tel']=trim($_POST['field-tel']);
   $_POST['field-tel']=trim($_POST['field-tel']);

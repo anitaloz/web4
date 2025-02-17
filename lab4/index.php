@@ -126,7 +126,7 @@ else {
     setcookie('field-email_error', '1');
     $errors = TRUE;
   }
-  setcookie('field-email_value', $_POST['field-tel'], time() + 12 * 30 * 24 * 60 * 60);
+  setcookie('field-email_value', $_POST['field-email'], time() + 12 * 30 * 24 * 60 * 60);
 
   // if(empty($_POST['field-name-4']))
   // {

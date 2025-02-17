@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   //   $messages[] = '<div class="error">Заполните имя.</div>';
   // }
 
-  if ($errors['fio'] AND $_COOKIE['fio_error']==3) {
+  if ($errors['fio'] AND $_COOKIE['fio_error']==1) {
     // Удаляем куки, указывая время устаревания в прошлом.
     setcookie('fio_error', '', 100000);
     setcookie('fio_value', '', 100000);
@@ -73,7 +73,7 @@ else {
   // }
   
   if(!preg_match('/^[а-яА-Яa-zA-Z ]+$/u', $_POST['field-name-1'])) {
-    setcookie('fio_error', '3', time() + 24 * 60 * 60);
+    setcookie('fio_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
 

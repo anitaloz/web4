@@ -72,10 +72,11 @@ else {
   //   $errors = TRUE;
   // }
   
-  if(!preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
+  if(!preg_match('/^[а-яА-Яa-zA-Z ]+$/u', $_POST['field-name-1'])) {
     setcookie('fio_error', '3', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
+
   // Сохраняем ранее введенное в форму значение на месяц.
   setcookie('fio_value', $_POST['fio'], time() + 30 * 24 * 60 * 60);
 

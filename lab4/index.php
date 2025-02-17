@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // Складываем признак ошибок в массив.
   $errors = array();
   $errors['fio'] = !empty($_COOKIE['fio_error']);
-  $errors['field-tel'] = !empty($_COOKIE['field-tel']);
+  $errors['field-tel'] = !empty($_COOKIE['field-tel_error']);
   // TODO: аналогично все поля.
 
   // Выдаем сообщения об ошибках.
@@ -54,8 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Выводим сообщение.
     $messages[] = '<div>ФИО должно содержать только буквы (русские и английские) и пробелы.</div>';
   }
-
-  
 
   if ($errors['field-tel']) {
     // Удаляем куки, указывая время устаревания в прошлом.
@@ -101,7 +99,7 @@ else {
   setcookie('fio_value', $_POST['fio'], time() + 12 * 30 * 24 * 60 * 60);
 
   // $_POST['field-tel']=trim($_POST['field-tel']);
-  $_POST['field-tel']=trim($_POST['field-tel']);
+  //$_POST['field-tel']=trim($_POST['field-tel']);
   if(!preg_match('/^[0-9+]+$/', $_POST['field-tel'])) {
     setcookie('field-tel_error', '1');
     $errors = TRUE;

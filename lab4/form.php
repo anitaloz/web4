@@ -137,7 +137,7 @@ if (!empty($messages)) {
                     <label>
                         email:<br />
                         <input name="field-email"
-                        value=""
+                        <?php if ($errors['field-email']) {print 'class="error"';} ?> value="<?php print $values['field-email']; ?>"
                         type="email" />
                     </label><br />
                     <label>

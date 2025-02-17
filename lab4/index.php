@@ -1,4 +1,10 @@
 <?php
+/**
+ * Реализовать проверку заполнения обязательных полей формы в предыдущей
+ * с использованием Cookies, а также заполнение формы по умолчанию ранее
+ * введенными значениями.
+ */
+
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
@@ -18,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $messages[] = 'Спасибо, результаты сохранены.';
   }
 
+  // Складываем признак ошибок в массив.
   $errors = array();
   $errors['fio'] = !empty($_COOKIE['fio_error']);
   // TODO: аналогично все поля.
@@ -28,16 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     setcookie('fio_error', '', 100000);
     setcookie('fio_value', '', 100000);
     // Выводим сообщение.
-    $messages[] = '<div>Заполните имя.</div>';
+    $messages[] = '<div class="error">Заполните имя.</div>';
   }
-  // if ($errors['fio'] && $_COOKIE['fio_error']==2) {
-  //   // Удаляем куки, указывая время устаревания в прошлом.
-  //   setcookie('fio_error', '', 100000);
-  //   setcookie('fio_value', '', 100000);
-  //   // Выводим сообщение.
-  //   $messages[] = '<div>ФИО должно содержать только буквы (русские и английские) и пробелы.</div>';
-  // }
-  // print_r($messages);
   // TODO: тут выдать сообщения об ошибках в других полях.
 
   // Складываем предыдущие значения полей в массив, если есть.
@@ -50,70 +49,60 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // сообщений, полей с ранее заполненными данными и признаками ошибок.
   include('form.php');
 }
-
-// Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в БД.
-
-// Проверяем ошибки.
-else{
-  //setcookie('fio_error', '0', 0);
+// Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.
+else {
+  // Проверяем ошибки.
   $errors = FALSE;
-  
-
-  // if(strlen($_POST['field-name-1'])>10) {
-  //   setcookie('fio_error', '2');
-  //   $errors = TRUE;
-  // }
-  
-  if (empty($_POST['field-name-1'])) {
+  if (empty($_POST['fio'])) {
+    // Выдаем куку на день с флажком об ошибке в поле fio.
     setcookie('fio_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
-  // if(!empty($_POST['field-name-1']) && !preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
-  //     setcookie('fio_error', '1', 0);
-  //     $errors = TRUE;
-  //   }
-  setcookie('fio_value', $_POST['fio'], time() + 12*30 * 24 * 60 * 60);
+  // Сохраняем ранее введенное в форму значение на месяц.
+  setcookie('fio_value', $_POST['fio'], time() + 30 * 24 * 60 * 60);
 
-  // $_POST['field-tel']=trim($_POST['field-tel']);
-  // $_POST['field-tel']=trim($_POST['field-tel']);
-  // if(!preg_match('/^[0-9+]+$/', $_POST['field-tel'])) {
-  //   print('Телефон должен содержать толко цифры.<br/>');
-  //   $errors= TRUE;
-  // }
+  $_POST['field-tel']=trim($_POST['field-tel']);
+  $_POST['field-tel']=trim($_POST['field-tel']);
+  if(!preg_match('/^[0-9+]+$/', $_POST['field-tel'])) {
+    print('Телефон должен содержать толко цифры.<br/>');
+    $errors= TRUE;
+  }
 
-  // if(!isset($_POST['radio-group-1']) || empty($_POST['radio-group-1'])) {
-  //   print('Выберите пол.<br/>');
-  //   $errors= TRUE;
-  // }
-  // $_POST['field-email']=trim($_POST['field-email']);
-  // $_POST['field-email']=trim($_POST['field-email']);
-  // if (!filter_var(($_POST['field-email']), FILTER_VALIDATE_EMAIL)) {
-  //   print('Email введен некорректно.<br/>');
-  //   $errors=TRUE;
-  // }
+  if(!isset($_POST['radio-group-1']) || empty($_POST['radio-group-1'])) {
+    print('Выберите пол.<br/>');
+    $errors= TRUE;
+  }
+  $_POST['field-email']=trim($_POST['field-email']);
+  $_POST['field-email']=trim($_POST['field-email']);
+  if (!filter_var(($_POST['field-email']), FILTER_VALIDATE_EMAIL)) {
+    print('Email введен некорректно.<br/>');
+    $errors=TRUE;
+  }
 
-  // if(empty($_POST['field-name-4']))
-  // {
-  //   print('Выберите хотя бы один язык программирования.<br/>');
-  //   $errors=TRUE;
-  // }
+  if(empty($_POST['field-name-4']))
+  {
+    print('Выберите хотя бы один язык программирования.<br/>');
+    $errors=TRUE;
+  }
 
-  // if (empty($_POST['field-date'])) {
-  //   print('Заполните дату.<br/>');
-  //   $errors = TRUE;
-  // }
+  if (empty($_POST['field-date'])) {
+    print('Заполните дату.<br/>');
+    $errors = TRUE;
+  }
 
-  // if(!isset($_POST['check-1']) || empty($_POST['check-1'])) {
-  //   print('Ознакомьтесь с контрактом.<br/>');
-  //   $errors= TRUE;
-  // }
-  // *************
-  // Тут необходимо проверить правильность заполнения всех остальных полей.
-  // *************
+  if(!isset($_POST['check-1']) || empty($_POST['check-1'])) {
+    print('Ознакомьтесь с контрактом.<br/>');
+    $errors= TRUE;
+  }
+
+// *************
+// TODO: тут необходимо проверить правильность заполнения всех остальных полей.
+// Сохранить в Cookie признаки ошибок и значения полей.
+// *************
 
   if ($errors) {
+    // При наличии ошибок перезагружаем страницу и завершаем работу скрипта.
     header('Location: index.php');
-    // При наличии ошибок завершаем работу скрипта.
     exit();
   }
   else {
@@ -122,9 +111,8 @@ else{
     // TODO: тут необходимо удалить остальные Cookies.
   }
 
-
-  // Сохранение в базу данных.
-
+  // Сохранение в БД.
+  // ...
   $user = 'u68598'; // Заменить на ваш логин uXXXXX
   $pass = '8795249'; // Заменить на пароль
   $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
@@ -158,6 +146,10 @@ else{
     print('Error : ' . $e->getMessage());
     exit();
   }
+
+  // Сохраняем куку с признаком успешного сохранения.
   setcookie('save', '1');
+
+  // Делаем перенаправление.
   header('Location: index.php');
 }

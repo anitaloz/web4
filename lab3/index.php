@@ -2,7 +2,39 @@
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
+function emailExists($email, $conn) {
+  // 1. Подготовка SQL запроса для проверки существования email.
+  // Используем подготовленные выражения для предотвращения SQL-инъекций.
+  $sql = "SELECT COUNT(*) FROM users WHERE email = ?";
+  $stmt = $conn->prepare($sql);
 
+  // Проверка, успешно ли подготовлен запрос.
+  if ($stmt === false) {
+    // Обработка ошибки подготовки запроса.  Важно для отладки.
+    error_log("Ошибка подготовки запроса: " . $conn->error);
+    return true; // Или false, в зависимости от того, как вы хотите обрабатывать ошибки БД.
+  }
+
+  // 2. Привязка параметра к запросу.  's' означает, что параметр - строка.
+  $stmt->bind_param("s", $email);
+
+  // 3. Выполнение запроса.
+  if (!$stmt->execute()) {
+    // Обработка ошибки выполнения запроса. Важно для отладки.
+    error_log("Ошибка выполнения запроса: " . $stmt->error);
+    return true; // Или false, в зависимости от того, как вы хотите обрабатывать ошибки БД.
+  }
+
+  // 4. Получение результата запроса.
+  $stmt->bind_result($count);
+  $stmt->fetch();
+
+  // 5. Закрытие подготовленного выражения.
+  $stmt->close();
+
+  // 6. Возврат true, если email найден в базе, иначе false.
+  return $count > 0;
+}
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
 // и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -17,6 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   exit();
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в БД.
+$user = 'u68598'; // Заменить на ваш логин uXXXXX
+$pass = '8795249'; // Заменить на пароль
+$db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
+  [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
 // Проверяем ошибки.
 $errors = FALSE;
@@ -52,6 +88,10 @@ if (!filter_var(($_POST['field-email']), FILTER_VALIDATE_EMAIL)) {
   print('Email введен некорректно.<br/>');
   $errors=TRUE;
 }
+if (emailExists($email, $db)) { // Используйте ваше соединение с БД!
+  print("Этот email уже зарегистрирован.<br/>");
+  $errors = TRUE;
+}
 
 if(empty($_POST['field-name-4']))
 {
@@ -79,10 +119,10 @@ if ($errors) {
 
 // Сохранение в базу данных.
 
-$user = 'u68598'; // Заменить на ваш логин uXXXXX
-$pass = '8795249'; // Заменить на пароль
-$db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
-  [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
+// $user = 'u68598'; // Заменить на ваш логин uXXXXX
+// $pass = '8795249'; // Заменить на пароль
+// $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
+//   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
 //  Именованные метки.
 try {

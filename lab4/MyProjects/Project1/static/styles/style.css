@@ -1,6 +1,10 @@
 #logo {float:left; margin:10px; width:100px; height:100px; border-radius: 0; padding:0;}
 .name {float:left; text-align: left; font-size:25pt; font-family:"DacikPush"; color:#b33803; font-weight: normal; position:absolute; top: 40px; left:120px;}
 
+/* Сообщения об ошибках и поля с ошибками выводим с красным бордюром. */
+.error {
+  border: 2px solid red;
+}
 
 body {
     background-color: black;

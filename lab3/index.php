@@ -16,7 +16,7 @@ function emailExists($email, $conn) {
   }
 
   // 2. Привязка параметра к запросу.  's' означает, что параметр - строка.
-  $stmt->bind_param("s", $email);
+  $stmt->PDO::bind_param("s", $email);
 
   // 3. Выполнение запроса.
   if (!$stmt->execute()) {
@@ -82,9 +82,9 @@ if(!isset($_POST['radio-group-1']) || empty($_POST['radio-group-1'])) {
   print('Выберите пол.<br/>');
   $errors= TRUE;
 }
-$_POST['field-email']=trim($_POST['field-email']);
-$_POST['field-email']=trim($_POST['field-email']);
-if (!filter_var(($_POST['field-email']), FILTER_VALIDATE_EMAIL)) {
+$email=trim($_POST['field-email']);
+$email=trim($_POST['field-email']);
+if (!filter_var($email), FILTER_VALIDATE_EMAIL)) {
   print('Email введен некорректно.<br/>');
   $errors=TRUE;
 }

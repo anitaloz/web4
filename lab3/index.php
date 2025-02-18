@@ -83,7 +83,7 @@ if(!isset($_POST['radio-group-1']) || empty($_POST['radio-group-1'])) {
 }
 $email=trim($_POST['field-email']);
 $email=trim($_POST['field-email']);
-if (!filter_var($email), FILTER_VALIDATE_EMAIL)) {
+if (!filter_var(($email), FILTER_VALIDATE_EMAIL)) {
   print('Email введен некорректно.<br/>');
   $errors=TRUE;
 }

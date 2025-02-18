@@ -2,35 +2,34 @@
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
-function emailExists($email, $conn) {
+function emailExists($email, $pdo) {
   // 1. Подготовка SQL запроса для проверки существования email.
   // Используем подготовленные выражения для предотвращения SQL-инъекций.
-  $sql = "SELECT COUNT(*) FROM users WHERE email = ?";
-  $stmt = $conn->prepare($sql);
+  $sql = "SELECT COUNT(*) FROM person WHERE email = :email"; // Используем именованный плейсхолдер
+  $stmt = $pdo->prepare($sql);
 
   // Проверка, успешно ли подготовлен запрос.
   if ($stmt === false) {
     // Обработка ошибки подготовки запроса.  Важно для отладки.
-    error_log("Ошибка подготовки запроса: " . $conn->error);
+    error_log("Ошибка подготовки запроса: " . $pdo->errorInfo()[2]); // Получаем сообщение об ошибке PDO
     return true; // Или false, в зависимости от того, как вы хотите обрабатывать ошибки БД.
   }
 
-  // 2. Привязка параметра к запросу.  's' означает, что параметр - строка.
-  $stmt->PDO::bind_param("s", $email);
+  // 2. Привязка параметра к запросу. Используем bindValue()
+  $stmt->bindValue(':email', $email, PDO::PARAM_STR); // Явно указываем тип данных
 
   // 3. Выполнение запроса.
   if (!$stmt->execute()) {
     // Обработка ошибки выполнения запроса. Важно для отладки.
-    error_log("Ошибка выполнения запроса: " . $stmt->error);
+    error_log("Ошибка выполнения запроса: " . $stmt->errorInfo()[2]); // Получаем сообщение об ошибке PDO
     return true; // Или false, в зависимости от того, как вы хотите обрабатывать ошибки БД.
   }
 
   // 4. Получение результата запроса.
-  $stmt->bind_result($count);
-  $stmt->fetch();
+  $count = $stmt->fetchColumn(); // Получаем сразу значение COUNT(*)
 
-  // 5. Закрытие подготовленного выражения.
-  $stmt->close();
+  // 5. Закрытие курсора (необязательно, но рекомендуется)
+  $stmt->closeCursor();
 
   // 6. Возврат true, если email найден в базе, иначе false.
   return $count > 0;

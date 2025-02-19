@@ -144,36 +144,42 @@
                         type="date" />
                     </label><br />
                     Пол:<br />
-                    <label><input type="radio" checked="checked"
-                    name="radio-group-1" <?php if ($errors['radio-group-1']) {print 'class="error"';} ?> value="Женский" />
+                    <label><input type="radio"  <?php if ($errors['radio-group-1']) {print 'class="error"';} ?>
+      <?php if ($values['radio-group-1']=='male') {print 'checked="checked"';} ?>
+                    name="radio-group-1" value="Женский" />
                     Женский</label>
-                    <label><input type="radio" checked="checked"
-                    name="radio-group-1" <?php if ($errors['radio-group-1']) {print 'class="error"';} ?> value="Мужской" />
+                    <label><input type="radio"  <?php if ($errors['radio-group-1']) {print 'class="error"';} ?>
+      <?php if ($values['radio-group-1']=='male') {print 'checked="checked"';} ?>
+                    name="radio-group-1" value="Мужской" />
                     Мужской</label><br />
+                    <?php 
+      $user_languages = explode(",",  $values['languages']);
+      ?>
                     <label>
                         Любимый язык программирования:
                         <br />
-                        <select name="field-name-4[]"
-                        multiple="multiple">
-                        <option value="1">Pascal</option>
-                        <option value="2" selected="selected">C
-                        <option value="3" selected="selected">C++
-                        <option value="4" selected="selected">JavaScript
-                        <option value="5" selected="selected">PHP
-                        <option value="6" selected="selected">Python
-                        <option value="7" selected="selected">Java
-                        <option value="8" selected="selected">Haskel
-                        <option value="9" selected="selected">Clojure
-                        <option value="10" selected="selected">Prolog
-                        <option value="11" selected="selected">Scala
+                        <select name="languages[]"
+                        multiple="multiple" <?php if ($errors['languages']) {print 'class="error"';} ?>>
+                        <option value="1"><?php if(in_array('Pascal', $user_languages)) {print 'selected="selected"';}?>>Pascal</option>
+                        <option value="2" <?php if(in_array('C', $user_languages)) {print 'selected="selected"';}?>>C
+                        <option value="3" <?php if(in_array('C++', $user_languages)) {print 'selected="selected"';}?>>C++
+                        <option value="4" <?php if(in_array('JavaScript', $user_languages)) {print 'selected="selected"';}?>>JavaScript
+                        <option value="5" <?php if(in_array('PHP', $user_languages)) {print 'selected="selected"';}?>>PHP
+                        <option value="6" <?php if(in_array('Python', $user_languages)) {print 'selected="selected"';}?>>Python
+                        <option value="7" <?php if(in_array('Java', $user_languages)) {print 'selected="selected"';}?>>Java
+                        <option value="8" <?php if(in_array('Haskel', $user_languages)) {print 'selected="selected"';}?>>Haskel
+                        <option value="9" <?php if(in_array('Clojure', $user_languages)) {print 'selected="selected"';}?>>Clojure
+                        <option value="10" <?php if(in_array('Prolog', $user_languages)) {print 'selected="selected"';}?>>Prolog
+                        <option value="11" <?php if(in_array('Scala', $user_languages)) {print 'selected="selected"';}?>>Scala
                         </select>
                     </label><br />
                     <label>
                         Биография:<br />
-                        <textarea name="field-name-2"></textarea>
-                    </label><br />   
+                        <textarea name="bio"><?php print $values['biography']; ?></textarea>
+                    </label><br /> 
+                    <label> 
                     С контрактом ознакомлен:<br />
-                    <label><input type="checkbox" checked="checked" name="check-1" />
+                    <input type="checkbox" checked="checked" name="check-1" <?php if ($errors['checkbox']) {print 'class="error"';} ?>  <?php if (!$errors['checkbox']) {print 'checked="checked"';} ?>> />
                     </label><br />
                     <div class="kn pb-sm-3">
                         <input type="submit" value="Сохранить" />

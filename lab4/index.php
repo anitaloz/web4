@@ -8,7 +8,36 @@
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
+function emailExists($email, $pdo) {
 
+  $sql = "SELECT COUNT(*) FROM person WHERE email = :email"; 
+  $stmt = $pdo->prepare($sql);
+
+
+  if ($stmt === false) {
+    error_log("Ошибка подготовки запроса: " . $pdo->errorInfo()[2]);
+    return true; 
+  }
+
+
+  $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+
+  if (!$stmt->execute()) {
+
+    error_log("Ошибка выполнения запроса: " . $stmt->errorInfo()[2]); 
+    return true; 
+  }
+
+  // 4. Получение результата запроса.
+  $count = $stmt->fetchColumn(); // Получаем сразу значение COUNT(*)
+
+  // 5. Закрытие курсора (необязательно, но рекомендуется)
+  $stmt->closeCursor();
+
+  // 6. Возврат true, если email найден в базе, иначе false.
+  return $count > 0;
+}
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
 // и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -66,12 +95,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $messages[] = '<div>Телефон должен содержать только цифры и знак +</div>';
   }
 
-  if ($errors['field-email']) {
+  if ($errors['field-email'] AND  $_COOKIE['field-email_error']==1) {
     // Удаляем куки, указывая время устаревания в прошлом.
     setcookie('field-email_error', '', 100000);
     setcookie('field-email_value', '', 100000);
     // Выводим сообщение.
     $messages[] = '<div>Email введен некорректно</div>';
+  }
+
+  if ($errors['field-email'] AND  $_COOKIE['field-email_error']==2) {
+    // Удаляем куки, указывая время устаревания в прошлом.
+    setcookie('field-email_error', '', 100000);
+    setcookie('field-email_value', '', 100000);
+    // Выводим сообщение.
+    $messages[] = '<div>Такой email уже зарегестрирован</div>';
   }
 
   if ($errors['field-date']) {
@@ -90,6 +127,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Выводим сообщение.
     $messages[] = '<div>Выберите пол</div>';
   }
+
+  if ($errors['check-1']) {
+    // Удаляем куки, указывая время устаревания в прошлом.
+    setcookie('check-1_error', '', 100000);
+    setcookie('check-1_value', '', 100000);
+    // Выводим сообщение.
+    $messages[] = '<div>Ознакомьтесь с контрактом</div>';
+  }
+
+  if ($errors['languages']) {
+    // Удаляем куки, указывая время устаревания в прошлом.
+    setcookie('languages_error', '', 100000);
+    setcookie('languages_value', '', 100000);
+    // Выводим сообщение.
+    $messages[] = '<div class="messages">Отметьте любимый язык программирования.</div>';
+  }
+
   // TODO: тут выдать сообщения об ошибках в других полях.
 
   // Складываем предыдущие значения полей в массив, если есть.
@@ -99,6 +153,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $values['field-email'] = empty($_COOKIE['field-email_value']) ? '' : $_COOKIE['field-email_value'];
   $values['field-date'] = empty($_COOKIE['field-date_value']) ? '' : $_COOKIE['field-date_value'];
   $values['radio-group-1'] = empty($_COOKIE['radio-group-1_value']) ? '' : $_COOKIE['radio-group-1_value'];
+  $values['check-1'] = empty($_COOKIE['check-1']) ? '' : $_COOKIE['check-1_value'];
+  $values['bio'] = empty($_COOKIE['bio']) ? '' : $_COOKIE['bio_value'];
+  $values['languages'] = empty($_COOKIE['languages_value']) ? '' : $_COOKIE['languages_value'];
   // TODO: аналогично все поля.
 
   // Включаем содержимое файла form.php.
@@ -108,6 +165,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.
 else {
+  $user = 'u68598'; // Заменить на ваш логин uXXXXX
+  $pass = '8795249'; // Заменить на пароль
+  $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
+    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
+
+  $fav_languages = $_POST['languages'] ?? [];
   // Проверяем ошибки.
   $errors = FALSE;
   if (empty($_POST['fio'])) {
@@ -127,7 +190,7 @@ else {
   }
 
   // Сохраняем ранее введенное в форму значение на год.
-  setcookie('fio_value', $_POST['fio'], time() + 12 * 30 * 24 * 60 * 60);
+  setcookie('fio_value', $_POST['fio'], time() + 365 * 24 * 60 * 60);
 
   // $_POST['field-tel']=trim($_POST['field-tel']);
   //$_POST['field-tel']=trim($_POST['field-tel']);
@@ -135,38 +198,44 @@ else {
     setcookie('field-tel_error', '1');
     $errors = TRUE;
   }
-  setcookie('field-tel_value', $_POST['field-tel'], time() + 12 * 30 * 24 * 60 * 60);
+  setcookie('field-tel_value', $_POST['field-tel'], time() + 365 * 24 * 60 * 60);
 
   if(!isset($_POST['radio-group-1']) || empty($_POST['radio-group-1'])) {
     setcookie('radio-group-1_error', '1');
     $errors = TRUE;
   }
-  setcookie('radio-group-1_value', $_POST['radio-group-1'], time() + 12 * 30 * 24 * 60 * 60);
+  setcookie('radio-group-1_value', $_POST['radio-group-1'], time() + 365 * 24 * 60 * 60);
 
-  // $_POST['field-email']=trim($_POST['field-email']);
-  // $_POST['field-email']=trim($_POST['field-email']);
-  if (!filter_var(($_POST['field-email']), FILTER_VALIDATE_EMAIL)) {
+  $email=trim($_POST['field-email']);
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     setcookie('field-email_error', '1');
     $errors = TRUE;
   }
-  setcookie('field-email_value', $_POST['field-email'], time() + 12 * 30 * 24 * 60 * 60);
+  if (emailExists($email, $db)) { 
+    setcookie('field-email_error', '2');
+    $errors = TRUE;
+  }
+  setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
 
-  // if(empty($_POST['field-name-4']))
-  // {
-  //   print('Выберите хотя бы один язык программирования.<br/>');
-  //   $errors=TRUE;
-  // }
+  if (empty($fav_languages)) {
+    setcookie('languages_error', "1");
+    $errors = TRUE;
+  }
+
+  $langs_value =(implode(",", $fav_languages));
+  setcookie('languages_value', $langs_value, time() + 365 * 24 * 60 * 60);
 
   if (empty($_POST['field-date'])) {
     setcookie('field-date_error', '1');
     $errors = TRUE;
   }
-  setcookie('field-date_value', $_POST['field-date'], time() + 12 * 30 * 24 * 60 * 60);
+  setcookie('field-date_value', $_POST['field-date'], time() + 365 * 24 * 60 * 60);
 
-  // if(!isset($_POST['check-1']) || empty($_POST['check-1'])) {
-  //   print('Ознакомьтесь с контрактом.<br/>');
-  //   $errors= TRUE;
-  // }
+  if(!isset($_POST['check-1']) || empty($_POST['check-1'])) {
+    setcookie('check-1_error', '1');
+    $errors = TRUE;
+  }
+  setcookie('check-1_value', $_POST['check-1'], time() + 365 * 24 * 60 * 60);
 
 // *************
 // TODO: тут необходимо проверить правильность заполнения всех остальных полей.
@@ -185,6 +254,9 @@ else {
     setcookie('field-email_error', '', 100000);
     setcookie('field-date_error', '', 100000);
     setcookie('radio-group-1_error', '', 100000);
+    setcookie('check-1_error', '', 100000);
+    setcookie('languages_error', '', 100000);
+    //setcookie('bio_error', '', 100000);
     // TODO: тут необходимо удалить остальные Cookies.
   }
 
@@ -195,34 +267,34 @@ else {
   // $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
   //   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
-  // //  Именованные метки.
-  // try {
-  //   $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
-  //   $stmt->bindParam(':fio', $fio);
-  //   $stmt->bindParam(':tel', $tel);
-  //   $stmt->bindParam(':email', $email);
-  //   $stmt->bindParam(':bdate', $bdate);
-  //   $stmt->bindParam(':gender', $gender);
-  //   $stmt->bindParam(':biography', $biography);
-  //   $fio = ($_POST['field-name-1']);
-  //   $tel = ($_POST['field-tel']);
-  //   $email = ($_POST['field-email']);
-  //   $bdate = ($_POST['field-date']);
-  //   $gender = ($_POST['radio-group-1']);
-  //   $biography = ($_POST['field-name-2']);
-  //   $stmt->execute();
-  //   $lastInsertId = $db->lastInsertId();
-  //   foreach($_POST['field-name-4'] as $lang) {
-  //     $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-  //     $stmt->bindParam(':pers_id', $lastInsertId);
-  //     $stmt->bindParam(':lang_id', $lang);
-  //     $stmt->execute();
-  //   }
-  // }
-  // catch(PDOException $e){
-  //   print('Error : ' . $e->getMessage());
-  //   exit();
-  // }
+  //  Именованные метки.
+  try {
+    $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
+    $stmt->bindParam(':fio', $fio);
+    $stmt->bindParam(':tel', $tel);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':bdate', $bdate);
+    $stmt->bindParam(':gender', $gender);
+    $stmt->bindParam(':biography', $biography);
+    $fio = ($_POST['field-name-1']);
+    $tel = ($_POST['field-tel']);
+    $email = ($_POST['field-email']);
+    $bdate = ($_POST['field-date']);
+    $gender = ($_POST['radio-group-1']);
+    $biography = ($_POST['field-name-2']);
+    $stmt->execute();
+    $lastInsertId = $db->lastInsertId();
+    foreach($_POST['field-name-4'] as $lang) {
+      $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
+      $stmt->bindParam(':pers_id', $lastInsertId);
+      $stmt->bindParam(':lang_id', $lang);
+      $stmt->execute();
+    }
+  }
+  catch(PDOException $e){
+    print('Error : ' . $e->getMessage());
+    exit();
+  }
 
   // Сохраняем куку с признаком успешного сохранения.
   setcookie('save', '1');

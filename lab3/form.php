@@ -120,7 +120,7 @@
                         email:<br />
                         <input name="field-email"
                         value=""
-                        type="email" />
+                        type=""/>
                     </label><br />
                     <label>
                         Дата рождения:<br />
@@ -141,16 +141,16 @@
                         <select name="field-name-4[]"
                         multiple="multiple">
                         <option value="1">Pascal</option>
-                        <option value="2" selected="selected">C
-                        <option value="3" selected="selected">C++
-                        <option value="4" selected="selected">JavaScript
-                        <option value="5" selected="selected">PHP
-                        <option value="6" selected="selected">Python
-                        <option value="7" selected="selected">Java
-                        <option value="8" selected="selected">Haskel
-                        <option value="9" selected="selected">Clojure
-                        <option value="10" selected="selected">Prolog
-                        <option value="11" selected="selected">Scala
+                        <option value="2">C
+                        <option value="3">C++
+                        <option value="4">JavaScript
+                        <option value="5">PHP
+                        <option value="6">Python
+                        <option value="7">Java
+                        <option value="8">Haskel
+                        <option value="9">Clojure
+                        <option value="10">Prolog
+                        <option value="11">Scala
                         </select>
                     </label><br />
                     <label>

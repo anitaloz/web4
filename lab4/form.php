@@ -160,7 +160,7 @@
                         <br />
                         <select name="languages[]"
                         multiple="multiple" <?php if ($errors['languages']) {print 'class="error"';} ?>>
-                        <option value="1"> selected="<?php if(in_array('1', $user_languages)) {print 'selected';}?>"Pascal</option>
+                        <option value="1" selected="<?php if(in_array('1', $user_languages)) {print 'selected';}?>">Pascal</option>
                         <option value="2" selected="<?php if(in_array('2', $user_languages)) {print 'selected';}?>">C
                         <option value="3" selected="<?php if(in_array('3', $user_languages)) {print 'selected';}?>">C++
                         <option value="4" selected="<?php if(in_array('4', $user_languages)) {print 'selected';}?>">JavaScript

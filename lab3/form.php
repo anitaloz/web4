@@ -158,7 +158,7 @@
                         <textarea name="field-name-2"></textarea>
                     </label><br />   
                     С контрактом ознакомлен:<br />
-                    <label><input type="checkbox" checked="checked" name="check-1" />
+                    <label><input type="checkbox" name="check-1" />
                     </label><br />
                     <div class="kn pb-sm-3">
                         <input type="submit" value="Сохранить" />

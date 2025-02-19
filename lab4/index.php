@@ -60,6 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $errors['field-email'] = !empty($_COOKIE['field-email_error']);
   $errors['field-date'] = !empty($_COOKIE['field-date_error']);
   $errors['radio-group-1'] = !empty($_COOKIE['radio-group-1_error']);
+  $errors['languages'] = !empty($_COOKIE['languages_error']);
+  $errors['check-1'] = !empty($_COOKIE['check-1_error']);
   // TODO: аналогично все поля.
 
   // Выдаем сообщения об ошибках.

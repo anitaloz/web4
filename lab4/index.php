@@ -278,15 +278,15 @@ else {
     $stmt->bindParam(':bdate', $bdate);
     $stmt->bindParam(':gender', $gender);
     $stmt->bindParam(':biography', $biography);
-    $fio = ($_POST['field-name-1']);
+    $fio = ($_POST['fio']);
     $tel = ($_POST['field-tel']);
     $email = ($_POST['field-email']);
     $bdate = ($_POST['field-date']);
     $gender = ($_POST['radio-group-1']);
-    $biography = ($_POST['field-name-2']);
+    $biography = ($_POST['bio']);
     $stmt->execute();
     $lastInsertId = $db->lastInsertId();
-    foreach($_POST['field-name-4'] as $lang) {
+    foreach($_POST['languages'] as $lang) {
       $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
       $stmt->bindParam(':pers_id', $lastInsertId);
       $stmt->bindParam(':lang_id', $lang);

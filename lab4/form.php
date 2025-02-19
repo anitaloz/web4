@@ -160,7 +160,7 @@
                         <br />
                         <select name="languages[]"
                         multiple="multiple" <?php if ($errors['languages']) {print 'class="error"';} ?>>
-                        <option value="1"><?php if(in_array('Pascal', $user_languages)) {print 'selected="selected"';}?>>Pascal</option>
+                        <option value="1"><?php if(in_array('Pascal', $user_languages)) {print 'selected="selected"';}?>Pascal</option>
                         <option value="2" <?php if(in_array('C', $user_languages)) {print 'selected="selected"';}?>>C
                         <option value="3" <?php if(in_array('C++', $user_languages)) {print 'selected="selected"';}?>>C++
                         <option value="4" <?php if(in_array('JavaScript', $user_languages)) {print 'selected="selected"';}?>>JavaScript
@@ -175,11 +175,11 @@
                     </label><br />
                     <label>
                         Биография:<br />
-                        <textarea name="bio"><?php print $values['biography']; ?></textarea>
+                        <textarea name="bio"><?php print $values['bio']; ?></textarea>
                     </label><br /> 
                     <label> 
                     С контрактом ознакомлен:<br />
-                    <input type="checkbox" name="check-1" <?php if ($errors['check-1']) {print 'class="error"';} ?>  <?php if (!$errors['check-1']) {print 'checked="checked"';} ?>> />
+                    <input type="checkbox" name="check-1" <?php if ($errors['check-1']) {print 'class="error"';} ?>  <?php if (!$errors['check-1']) {print 'checked="checked"';} ?>>
                     </label><br />
                     <div class="kn pb-sm-3">
                         <input type="submit" value="Сохранить" />

@@ -154,7 +154,7 @@
                     name="radio-group-1" value="Мужской" />
                     Мужской</label>
                     </div>
-                    <br />
+                    
                     <?php 
       $user_languages = explode(",",  $values['languages']);
       ?>
@@ -180,12 +180,13 @@
                         Биография:<br />
                         <textarea name="bio"<?php if ($errors['bio']) {print 'class="error"';} ?>><?php print $values['bio']; ?></textarea>  
                     </label><br /> 
-                    
+                    <div <?php if ($errors['check-1']) {print 'class="error_gen"';} ?>>
                     С контрактом ознакомлен:<br />
-                    <label> <input type="checkbox" name="check-1" <?php if ($errors['check-1']) {print 'class="error"';} ?> <?php if (!$errors['check-1']) {print 'checked="checked"';} ?>>
+                    <label> <input type="checkbox" name="check-1" <?php if (!$errors['check-1']) {print 'checked="checked"';} ?>>
                     </label><br />
                     <div class="kn pb-sm-3">
                         <input type="submit" value="Сохранить" />
+                    </div>
                     </div>
                 </form>
             </div>

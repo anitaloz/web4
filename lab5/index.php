@@ -38,6 +38,11 @@ function emailExists($email, $pdo) {
   // 6. Возврат true, если email найден в базе, иначе false.
   return $count > 0;
 }
+  $user = 'u68598'; // Заменить на ваш логин uXXXXX
+  $pass = '8795249'; // Заменить на пароль
+  $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
+    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
+
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
 // и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -169,12 +174,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // TODO: аналогично все поля.
     if (empty($errors) && !empty($_COOKIE[session_name()]) &&
     session_start() && !empty($_SESSION['login'])) {
+        $sql = "SELECT fio FROM person join person_LOGIN using(id) WHERE "login" = :login"; 
+        $stmt = $pdo->prepare($sql);
+        if ($stmt === false) {
+            error_log("Ошибка подготовки запроса: " . $pdo->errorInfo()[2]);
+            return true; 
+        }
+        $stmt->bindValue(':login', $_SESSION['login'], PDO::PARAM_STR);
+        if (!$stmt->execute()) {
+
+            error_log("Ошибка выполнения запроса: " . $stmt->errorInfo()[2]); 
+            return true; 
+        }
+        // 4. Получение результата запроса.
+        $count = $stmt->fetchColumn(); // Получаем сразу значение COUNT(*)
+
+        // 5. Закрытие курсора (необязательно, но рекомендуется)
+        $stmt->closeCursor();
     // TODO: загрузить данные пользователя из БД
     // и заполнить переменную $values,
     // предварительно санитизовав.
     // Для загрузки данных из БД делаем запрос SELECT и вызываем метод PDO fetchArray(), fetchObject() или fetchAll() 
     // См. https://www.php.net/manual/en/pdostatement.fetchall.php
-    printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
+        printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
     }
   // Включаем содержимое файла form.php.
   // В нем будут доступны переменные $messages, $errors и $values для вывода 
@@ -183,11 +205,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.
 else {
-//   $user = 'u68598'; // Заменить на ваш логин uXXXXX
-//   $pass = '8795249'; // Заменить на пароль
-//   $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
-//     [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
-
   $fav_languages = $_POST['languages'] ?? [];
   // Проверяем ошибки.
   $errors = FALSE;
@@ -286,33 +303,33 @@ else {
   //   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
   //  Именованные метки.
-//   try {
-//     $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
-//     $stmt->bindParam(':fio', $fio);
-//     $stmt->bindParam(':tel', $tel);
-//     $stmt->bindParam(':email', $email);
-//     $stmt->bindParam(':bdate', $bdate);
-//     $stmt->bindParam(':gender', $gender);
-//     $stmt->bindParam(':biography', $biography);
-//     $fio = ($_POST['fio']);
-//     $tel = ($_POST['field-tel']);
-//     $email = ($_POST['field-email']);
-//     $bdate = ($_POST['field-date']);
-//     $gender = ($_POST['radio-group-1']);
-//     $biography = ($_POST['bio']);
-//     $stmt->execute();
-//     $lastInsertId = $db->lastInsertId();
-//     foreach($_POST['languages'] as $lang) {
-//       $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-//       $stmt->bindParam(':pers_id', $lastInsertId);
-//       $stmt->bindParam(':lang_id', $lang);
-//       $stmt->execute();
-//     }
-//   }
-//   catch(PDOException $e){
-//     print('Error : ' . $e->getMessage());
-//     exit();
-//   }
+  try {
+    $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
+    $stmt->bindParam(':fio', $fio);
+    $stmt->bindParam(':tel', $tel);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':bdate', $bdate);
+    $stmt->bindParam(':gender', $gender);
+    $stmt->bindParam(':biography', $biography);
+    $fio = ($_POST['fio']);
+    $tel = ($_POST['field-tel']);
+    $email = ($_POST['field-email']);
+    $bdate = ($_POST['field-date']);
+    $gender = ($_POST['radio-group-1']);
+    $biography = ($_POST['bio']);
+    $stmt->execute();
+    $lastInsertId = $db->lastInsertId();
+    foreach($_POST['languages'] as $lang) {
+      $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
+      $stmt->bindParam(':pers_id', $lastInsertId);
+      $stmt->bindParam(':lang_id', $lang);
+      $stmt->execute();
+    }
+  }
+  catch(PDOException $e){
+    print('Error : ' . $e->getMessage());
+    exit();
+  }
 if (!empty($_COOKIE[session_name()]) &&
 session_start() && !empty($_SESSION['login'])) {
 // TODO: перезаписать данные в БД новыми данными,
@@ -321,12 +338,32 @@ session_start() && !empty($_SESSION['login'])) {
 else {
 // Генерируем уникальный логин и пароль.
 // TODO: сделать механизм генерации, например функциями rand(), uniquid(), md5(), substr().
-$login = '123';
-$pass = '123';
+$login = rand()%10000000;
+$pass = rand()%10000000000;
 // Сохраняем в Cookies.
 setcookie('login', $login);
 setcookie('pass', $pass);
-
+try {
+    $stmt = $db->prepare("INSERT INTO LOGIN (login, pass) VALUES (:login, :pass)");
+    $stmt->bindParam(':login', $login);
+    $stmt->bindParam(':pass', $pass);
+    $stmt->execute();
+}
+catch(PDOException $e){
+    print('Error : ' . $e->getMessage());
+    exit();
+}
+  try {
+    $lastInsertId = $db->lastInsertId();
+    $stmt = $db->prepare("INSERT INTO person_LOGIN (id, login) VALUES (:id, :login)");
+      $stmt->bindParam(':id', $lastInsertId);
+      $stmt->bindParam(':login', $login);
+      $stmt->execute();
+}
+catch(PDOException $e){
+    print('Error : ' . $e->getMessage());
+    exit();
+  }
 // TODO: Сохранение данных формы, логина и хеш md5() пароля в базу данных.
 // ...
 }

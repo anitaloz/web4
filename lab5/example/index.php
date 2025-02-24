@@ -14,6 +14,7 @@ header('Content-Type: text/html; charset=UTF-8');
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // Массив для временного хранения сообщений пользователю.
   $messages = array();
+
   // В суперглобальном массиве $_COOKIE PHP хранит все имена и значения куки текущего запроса.
   // Выдаем сообщение об успешном сохранении.
   if (!empty($_COOKIE['save'])) {
@@ -72,20 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в базе данных.
 else {
-  ?>
-  <form method="post" action="index.php">
-      <button type="submit" name="logout">Выход</button>
-  </form>
-  <?php
-
-if (isset($_POST['logout'])) {  // Проверяем, была ли нажата кнопка "Выход"
-  // Уничтожаем все данные сессии
-  session_unset();  // Удаляет все переменные сессии
-  session_destroy(); // Уничтожает саму сессию
-
-  header("Location: index.php"); // Замените на вашу страницу входа
-  exit(); // Завершаем выполнение скрипта, чтобы избежать дальнейшей обработки
-}
   // Проверяем ошибки.
   $errors = FALSE;
   if (empty($_POST['fio'])) {

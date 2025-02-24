@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $values['check-1'] = empty($_COOKIE['check-1']) ? '' : $_COOKIE['check-1_value'];
   $values['bio'] = empty($_COOKIE['bio']) ? '' : $_COOKIE['bio_value'];
   $values['languages'] = empty($_COOKIE['languages_value']) ? '' : $_COOKIE['languages_value'];
-  printf("x")
+  printf("x");
   // TODO: аналогично все поля.
     if (empty($errors) && !empty($_COOKIE[session_name()]) &&
     session_start() && !empty($_SESSION['login'])) {

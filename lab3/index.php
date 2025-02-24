@@ -82,7 +82,7 @@ if(!isset($_POST['radio-group-1']) || empty($_POST['radio-group-1'])) {
   $errors= TRUE;
 }
 $email=trim($_POST['field-email']);
-if(!preg_match('/^[a-zA-Z1-9._@]+$/u', $email) && preg_match('/^[@.]+$/u', $email)) {
+if(!preg_match('/^[a-zA-Z1-9._@]+$/u', $email) || !preg_match('/@.*\./', $email)) {
   print('Email введен некорректно.<br/>');
   $errors=TRUE;
 }

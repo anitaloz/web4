@@ -6,9 +6,9 @@
   border: 2px solid red;
 }
 
-.error-gen p{
+.error-gen{
     color:red;
-    border-bottom: 2px solid red;
+    /* border-bottom: 2px solid red; */
   }
 
 body {

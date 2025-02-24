@@ -82,7 +82,6 @@ if(!isset($_POST['radio-group-1']) || empty($_POST['radio-group-1'])) {
   $errors= TRUE;
 }
 $email=trim($_POST['field-email']);
-$email=trim($_POST['field-email']);
 if (!filter_var(($email), FILTER_VALIDATE_EMAIL)) {
   print('Email введен некорректно.<br/>');
   $errors=TRUE;
@@ -95,6 +94,18 @@ if (emailExists($email, $db)) { // Используйте ваше соедин�
 if(empty($_POST['field-name-4']))
 {
   print('Выберите хотя бы один язык программирования.<br/>');
+  $errors=TRUE;
+}
+
+if(empty($_POST['field-name-2']))
+{
+  print('Заполните биографию.<br/>');
+  $errors=TRUE;
+}
+
+if(!preg_match('/^[а-яА-Яa-zA-Z1-9., ]+$/u', $_POST['field-name-2']))
+{
+  print('Заполните биографию.<br/>');
   $errors=TRUE;
 }
 
@@ -116,14 +127,6 @@ if ($errors) {
   exit();
 }
 
-// Сохранение в базу данных.
-
-// $user = 'u68598'; // Заменить на ваш логин uXXXXX
-// $pass = '8795249'; // Заменить на пароль
-// $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
-//   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
-
-//  Именованные метки.
 try {
   $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
   $stmt->bindParam(':fio', $fio);
@@ -151,26 +154,4 @@ catch(PDOException $e){
   print('Error : ' . $e->getMessage());
   exit();
 }
-
-
-//  stmt - это "дескриптор состояния".
- 
-
-//$stmt = $db->prepare("INSERT INTO test (label,color) VALUES (:label,:color)");
-//$stmt -> execute(['label'=>'perfect', 'color'=>'green']);
- 
-//Еще вариант
-/*$stmt = $db->prepare("INSERT INTO users (firstname, lastname, email) VALUES (:firstname, :lastname, :email)");
-$stmt->bindParam(':firstname', $firstname);
-$stmt->bindParam(':lastname', $lastname);
-$stmt->bindParam(':email', $email);
-$firstname = "John";
-$lastname = "Smith";
-$email = "john@test.com";
-$stmt->execute();
-*/
-
-// Делаем перенаправление.
-// Если запись не сохраняется, но ошибок не видно, то можно закомментировать эту строку чтобы увидеть ошибку.
-// Если ошибок при этом не видно, то необходимо настроить параметр display_errors для PHP.
 header('Location: p12.html');

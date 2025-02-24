@@ -178,17 +178,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $stmt = $pdo->prepare($sql);
         if ($stmt === false) {
             error_log("Ошибка подготовки запроса: " . $pdo->errorInfo()[2]);
-            return true; 
         }
         $stmt->bindValue(':login', $_SESSION['login'], PDO::PARAM_STR);
         if (!$stmt->execute()) {
 
             error_log("Ошибка выполнения запроса: " . $stmt->errorInfo()[2]); 
-            return true; 
         }
         // 4. Получение результата запроса.
-        $count = $stmt->fetchColumn(); // Получаем сразу значение COUNT(*)
-
+        $fio = $stmt->fetchColumn(); // Получаем сразу значение COUNT(*)
+        $values['fio']=$fio;
         // 5. Закрытие курсора (необязательно, но рекомендуется)
         $stmt->closeCursor();
     // TODO: загрузить данные пользователя из БД
@@ -198,9 +196,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // См. https://www.php.net/manual/en/pdostatement.fetchall.php
         printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
     }
-  // Включаем содержимое файла form.php.
-  // В нем будут доступны переменные $messages, $errors и $values для вывода 
-  // сообщений, полей с ранее заполненными данными и признаками ошибок.
   include('form.php');
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.
@@ -246,10 +241,10 @@ else {
     setcookie('field-email_error', '1');
     $errors = TRUE;
   }
-//   if (emailExists($email, $db)) { 
-//     setcookie('field-email_error', '2');
-//     $errors = TRUE;
-//   }
+  if (emailExists($email, $db)) { 
+    setcookie('field-email_error', '2');
+    $errors = TRUE;
+  }
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
 
   if (empty($fav_languages)) {
@@ -338,8 +333,6 @@ else {
             print('Error : ' . $e->getMessage());
             exit();
         }
-    // TODO: Сохранение данных формы, логина и хеш md5() пароля в базу данных.
-    // ...
     }
 
   // Сохраняем куку с признаком успешного сохранения.

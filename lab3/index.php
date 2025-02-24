@@ -66,7 +66,7 @@ if(strlen($_POST['field-name-1'])>150) {
   $errors = TRUE;
 }
 
-if(!preg_match('/^[[:alpha:][:space:]]+$/u', $_POST['field-name-1'])) {
+if(!preg_match('/^[а-яА-Яa-zA-Z]+$/u', $_POST['field-name-1'])) {
   print('ФИО должно содержать только буквы (русские и английские) и пробелы.<br/>');
   $errors =TRUE;
 }
@@ -82,7 +82,7 @@ if(!isset($_POST['radio-group-1']) || empty($_POST['radio-group-1'])) {
   $errors= TRUE;
 }
 $email=trim($_POST['field-email']);
-if (!filter_var(($email), FILTER_VALIDATE_EMAIL)) {
+if(!preg_match('/^[a-zA-Z1-9._@]+$/u', $email) && preg_match('/^[@.]+$/u', $email)) {
   print('Email введен некорректно.<br/>');
   $errors=TRUE;
 }
@@ -103,7 +103,7 @@ if(empty($_POST['field-name-2']))
   $errors=TRUE;
 }
 
-if(!preg_match('/^[а-яА-Яa-zA-Z1-9., ]+$/u', $_POST['field-name-2']))
+if(!preg_match('/^[а-яА-Яa-zA-Z1-9.,?!:()]+$/u', $_POST['field-name-2']))
 {
   print('Используйте только допустимые символы: буквы, цифры, знаки препинания.<br/>');
   $errors=TRUE;

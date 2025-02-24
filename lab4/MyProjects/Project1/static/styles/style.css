@@ -5,6 +5,7 @@
 .error {
     color:rgb(219, 33, 0);
     border: 2px solid rgb(219, 33, 0);
+    background-color:#b3380379
 }
 
 .error_gen {

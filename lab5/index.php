@@ -272,11 +272,6 @@ else {
   }
   setcookie('check-1_value', $_POST['check-1'], time() + 365 * 24 * 60 * 60);
 
-// *************
-// TODO: тут необходимо проверить правильность заполнения всех остальных полей.
-// Сохранить в Cookie признаки ошибок и значения полей.
-// *************
-
   if ($errors) {
     // При наличии ошибок перезагружаем страницу и завершаем работу скрипта.
     header('Location: index.php');
@@ -292,17 +287,7 @@ else {
     setcookie('check-1_error', '', 100000);
     setcookie('languages_error', '', 100000);
     //setcookie('bio_error', '', 100000);
-    // TODO: тут необходимо удалить остальные Cookies.
   }
-
-  // Сохранение в БД.
-  // ...
-  // $user = 'u68598'; // Заменить на ваш логин uXXXXX
-  // $pass = '8795249'; // Заменить на пароль
-  // $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
-  //   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
-
-  //  Именованные метки.
 
 if (!empty($_COOKIE[session_name()]) &&
 session_start() && !empty($_SESSION['login'])) {
@@ -344,7 +329,6 @@ else {
             $stmt->bindParam(':login', $login);
             $stmt->bindParam(':pass', $hash_pass);
             $stmt->execute();
-            $lastInsertId = $db->lastInsertId();
             $stmt = $db->prepare("INSERT INTO person_LOGIN (id, login) VALUES (:id, :login)");
             $stmt->bindParam(':id', $lastInsertId);
             $stmt->bindParam(':login', $login);

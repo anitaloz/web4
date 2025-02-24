@@ -197,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // См. https://www.php.net/manual/en/pdostatement.fetchall.php
         printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
     }
-    printf("y");
+    printf($values['fio']);
   include('form.php');
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.

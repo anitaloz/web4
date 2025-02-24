@@ -174,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // TODO: аналогично все поля.
     if (empty($errors) && !empty($_COOKIE[session_name()]) &&
     session_start() && !empty($_SESSION['login'])) {
-        $sql = "SELECT fio FROM person join person_LOGIN using(id) WHERE "login" = :login"; 
+        $sql = "SELECT fio FROM person join person_LOGIN using(id) WHERE login = :login"; 
         $stmt = $pdo->prepare($sql);
         if ($stmt === false) {
             error_log("Ошибка подготовки запроса: " . $pdo->errorInfo()[2]);

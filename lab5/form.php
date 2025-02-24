@@ -185,6 +185,9 @@
                         <input type="submit" value="Сохранить" />
                     </div>
                 </form>
+                <!-- <form method="post" action="logout.php">
+    <button type="submit" name="logout">Выход</button>
+</form> -->
             </div>
             <footer>
                 <p> (с) Тополян Алина</p>

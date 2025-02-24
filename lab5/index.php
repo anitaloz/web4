@@ -303,39 +303,40 @@ else {
   //   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
   //  Именованные метки.
-    try {
-    $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
-    $stmt->bindParam(':fio', $fio);
-    $stmt->bindParam(':tel', $tel);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':bdate', $bdate);
-    $stmt->bindParam(':gender', $gender);
-    $stmt->bindParam(':biography', $biography);
-    $fio = ($_POST['fio']);
-    $tel = ($_POST['field-tel']);
-    $email = ($_POST['field-email']);
-    $bdate = ($_POST['field-date']);
-    $gender = ($_POST['radio-group-1']);
-    $biography = ($_POST['bio']);
-    $stmt->execute();
-    $lastInsertId = $db->lastInsertId();
-    foreach($_POST['languages'] as $lang) {
-      $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-      $stmt->bindParam(':pers_id', $lastInsertId);
-      $stmt->bindParam(':lang_id', $lang);
-      $stmt->execute();
-    }
-  }
-  catch(PDOException $e){
-    print('Error : ' . $e->getMessage());
-    exit();
-  }
+
 if (!empty($_COOKIE[session_name()]) &&
 session_start() && !empty($_SESSION['login'])) {
 // TODO: перезаписать данные в БД новыми данными,
 // кроме логина и пароля.
 }
 else {
+    try {
+        $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
+        $stmt->bindParam(':fio', $fio);
+        $stmt->bindParam(':tel', $tel);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':bdate', $bdate);
+        $stmt->bindParam(':gender', $gender);
+        $stmt->bindParam(':biography', $biography);
+        $fio = ($_POST['fio']);
+        $tel = ($_POST['field-tel']);
+        $email = ($_POST['field-email']);
+        $bdate = ($_POST['field-date']);
+        $gender = ($_POST['radio-group-1']);
+        $biography = ($_POST['bio']);
+        $stmt->execute();
+        $lastInsertId = $db->lastInsertId();
+        foreach($_POST['languages'] as $lang) {
+          $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
+          $stmt->bindParam(':pers_id', $lastInsertId);
+          $stmt->bindParam(':lang_id', $lang);
+          $stmt->execute();
+        }
+    }
+    catch(PDOException $e){
+    print('Error : ' . $e->getMessage());
+    exit();
+    }
     // Генерируем уникальный логин и пароль.
     // TODO: сделать механизм генерации, например функциями rand(), uniquid(), md5(), substr().
     $login = rand()%10000000;

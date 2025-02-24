@@ -171,6 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $values['check-1'] = empty($_COOKIE['check-1']) ? '' : $_COOKIE['check-1_value'];
   $values['bio'] = empty($_COOKIE['bio']) ? '' : $_COOKIE['bio_value'];
   $values['languages'] = empty($_COOKIE['languages_value']) ? '' : $_COOKIE['languages_value'];
+  printf("x")
   // TODO: аналогично все поля.
     if (empty($errors) && !empty($_COOKIE[session_name()]) &&
     session_start() && !empty($_SESSION['login'])) {
@@ -185,10 +186,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             error_log("Ошибка выполнения запроса: " . $stmt->errorInfo()[2]); 
         }
         // 4. Получение результата запроса.
-        $fio = $stmt->fetchColumn(); // Получаем сразу значение COUNT(*)
+        $fio = $stmt->fetchColumn();
+        printf($fio);
         $values['fio']=$fio;
         // 5. Закрытие курсора (необязательно, но рекомендуется)
-        $stmt->closeCursor();
     // TODO: загрузить данные пользователя из БД
     // и заполнить переменную $values,
     // предварительно санитизовав.
@@ -196,6 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // См. https://www.php.net/manual/en/pdostatement.fetchall.php
         printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
     }
+    printf("y");
   include('form.php');
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.

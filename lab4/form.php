@@ -182,7 +182,7 @@
                     </label><br /> 
                     
                     С контрактом ознакомлен:<br />
-                    <label> <input type="checkbox" name="check-1" <?php if ($errors['check-1']) {print 'class="error"';} ?>  checked="<?php if (!$errors['check-1']) {print 'checked';} ?>">
+                    <label> <input type="checkbox" name="check-1" <?php if ($errors['check-1']) {print 'class="error"';} ?><?php if (!$errors['check-1']) {print 'checked="checked';} ?>>
                     </label><br />
                     <div class="kn pb-sm-3">
                         <input type="submit" value="Сохранить" />

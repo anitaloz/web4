@@ -7,6 +7,10 @@
     border: 2px solid red;
 }
 
+.error_gen {
+    color:red;
+    border-bottom:2px solid red;
+}
 
 body {
     background-color: black;

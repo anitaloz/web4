@@ -143,7 +143,7 @@
                         <?php if ($errors['field-date']) {print 'class="error"';} ?> value="<?php print $values['field-date']; ?>"
                         type="date" />
                     </label><br />
-                    <div <?php if ($errors['radio-group-1']) {print 'class="error"';} ?>>
+                    <div <?php if ($errors['radio-group-1']) {print 'class="error_gen"';} ?>>
                     Пол:<br />
                     <label><input type="radio"  <?php if ($errors['radio-group-1']) {print 'class="error"';} ?>
       <?php if ($values['radio-group-1']=='Женский') {print 'checked="checked"';} ?>
@@ -178,7 +178,7 @@
                     </label><br />
                     <label>
                         Биография:<br />
-                        <textarea name="bio"<?php if ($errors['bio']) {print 'class="error"';} ?>><?php print $values['bio']; ?></textarea>  
+                        <textarea name="bio"<?php if ($errors['bio']) {print 'class="error"';} ?>>kjklkj<?php print $values['bio']; ?></textarea>  
                     </label><br /> 
                     
                     С контрактом ознакомлен:<br />

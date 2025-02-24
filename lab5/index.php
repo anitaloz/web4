@@ -310,55 +310,49 @@ session_start() && !empty($_SESSION['login'])) {
 // кроме логина и пароля.
 }
 else {
-    try {
-        $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
-        $stmt->bindParam(':fio', $fio);
-        $stmt->bindParam(':tel', $tel);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':bdate', $bdate);
-        $stmt->bindParam(':gender', $gender);
-        $stmt->bindParam(':biography', $biography);
-        $fio = ($_POST['fio']);
-        $tel = ($_POST['field-tel']);
-        $email = ($_POST['field-email']);
-        $bdate = ($_POST['field-date']);
-        $gender = ($_POST['radio-group-1']);
-        $biography = ($_POST['bio']);
-        $stmt->execute();
-        $lastInsertId = $db->lastInsertId();
-        foreach($_POST['languages'] as $lang) {
-          $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-          $stmt->bindParam(':pers_id', $lastInsertId);
-          $stmt->bindParam(':lang_id', $lang);
-          $stmt->execute();
+        try {
+            $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
+            $stmt->bindParam(':fio', $fio);
+            $stmt->bindParam(':tel', $tel);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':bdate', $bdate);
+            $stmt->bindParam(':gender', $gender);
+            $stmt->bindParam(':biography', $biography);
+            $fio = ($_POST['fio']);
+            $tel = ($_POST['field-tel']);
+            $email = ($_POST['field-email']);
+            $bdate = ($_POST['field-date']);
+            $gender = ($_POST['radio-group-1']);
+            $biography = ($_POST['bio']);
+            $stmt->execute();
+            $lastInsertId = $db->lastInsertId();
+            foreach($_POST['languages'] as $lang) {
+            $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
+            $stmt->bindParam(':pers_id', $lastInsertId);
+            $stmt->bindParam(':lang_id', $lang);
+            $stmt->execute();
+            }
+            // Генерируем уникальный логин и пароль.
+            // TODO: сделать механизм генерации, например функциями rand(), uniquid(), md5(), substr().
+            $login = rand()%10000000;
+            $pass = rand()%10000000000;
+            // Сохраняем в Cookies.
+            setcookie('login', $login);
+            setcookie('pass', $pass);
+            $stmt = $db->prepare("INSERT INTO LOGIN (login, pass) VALUES (:login, :pass)");
+            $stmt->bindParam(':login', $login);
+            $stmt->bindParam(':pass', $pass);
+            $stmt->execute();
+            $lastInsertId = $db->lastInsertId();
+            $stmt = $db->prepare("INSERT INTO person_LOGIN (id, login) VALUES (:id, :login)");
+            $stmt->bindParam(':id', $lastInsertId);
+            $stmt->bindParam(':login', $login);
+            $stmt->execute();
         }
-    }
-    catch(PDOException $e){
-    print('Error : ' . $e->getMessage());
-    exit();
-    }
-    // Генерируем уникальный логин и пароль.
-    // TODO: сделать механизм генерации, например функциями rand(), uniquid(), md5(), substr().
-    $login = rand()%10000000;
-    $pass = rand()%10000000000;
-    // Сохраняем в Cookies.
-    setcookie('login', $login);
-    setcookie('pass', $pass);
-    try {
-        $stmt = $db->prepare("INSERT INTO LOGIN (login, pass) VALUES (:login, :pass)");
-        $stmt->bindParam(':login', $login);
-        $stmt->bindParam(':pass', $pass);
-        $stmt->execute();
-        $lastInsertId = $db->lastInsertId();
-        $stmt = $db->prepare("INSERT INTO person_LOGIN (id, login) VALUES (:id, :login)");
-        $stmt->bindParam(':id', $lastInsertId);
-        $stmt->bindParam(':login', $login);
-        $stmt->execute();
-    }
-    catch(PDOException $e){
-        print('Error : ' . $e->getMessage());
-        exit();
-    }
+        catch(PDOException $e){
+            print('Error : ' . $e->getMessage());
+            exit();
+        }
     // TODO: Сохранение данных формы, логина и хеш md5() пароля в базу данных.
     // ...
     }

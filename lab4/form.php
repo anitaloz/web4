@@ -178,7 +178,7 @@
                     </label><br />
                     <label>
                         Биография:<br />
-                        <textarea name="bio"<?php if ($errors['bio']) {print 'class="error"';} ?>>kjklkj<?php print $values['bio']; ?></textarea>  
+                        <textarea name="bio"<?php if ($errors['bio']) {print 'class="error"';} ?>><?php print $values['bio']; ?></textarea>  
                     </label><br /> 
                     
                     С контрактом ознакомлен:<br />

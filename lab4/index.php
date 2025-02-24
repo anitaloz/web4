@@ -172,8 +172,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $values['field-email'] = empty($_COOKIE['field-email_value']) ? '' : $_COOKIE['field-email_value'];
   $values['field-date'] = empty($_COOKIE['field-date_value']) ? '' : $_COOKIE['field-date_value'];
   $values['radio-group-1'] = empty($_COOKIE['radio-group-1_value']) ? '' : $_COOKIE['radio-group-1_value'];
-  $values['check-1'] = empty($_COOKIE['check-1']) ? '' : $_COOKIE['check-1_value'];
-  $values['bio'] = empty($_COOKIE['bio']) ? '' : $_COOKIE['bio_value'];
+  $values['check-1'] = empty($_COOKIE['check-1_value']) ? '' : $_COOKIE['check-1_value'];
+  $values['bio'] = empty($_COOKIE['bio_value']) ? '' : $_COOKIE['bio_value'];
   $values['languages'] = empty($_COOKIE['languages_value']) ? '' : $_COOKIE['languages_value'];
   // TODO: аналогично все поля.
 

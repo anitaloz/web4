@@ -3,12 +3,12 @@
 
 /* Сообщения об ошибках и поля с ошибками выводим с красным бордюром. */
 .error {
-    color:red;
-    border: 2px solid red;
+    color:rgb(182, 67, 0);
+    border: 2px solid rgb(182, 67, 0);
 }
 
 .error_gen {
-    color:red;
+    color:rgb(182, 67, 0);
 }
 
 body {

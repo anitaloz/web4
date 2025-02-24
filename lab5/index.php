@@ -337,11 +337,12 @@ else {
             $login = rand()%10000000;
             $pass = rand()%10000000000;
             // Сохраняем в Cookies.
+            $hash_pass=md5($pass);
             setcookie('login', $login);
             setcookie('pass', $pass);
             $stmt = $db->prepare("INSERT INTO LOGIN (login, pass) VALUES (:login, :pass)");
             $stmt->bindParam(':login', $login);
-            $stmt->bindParam(':pass', $pass);
+            $stmt->bindParam(':pass', $hash_pass);
             $stmt->execute();
             $lastInsertId = $db->lastInsertId();
             $stmt = $db->prepare("INSERT INTO person_LOGIN (id, login) VALUES (:id, :login)");

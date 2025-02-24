@@ -14,6 +14,16 @@ header('Content-Type: text/html; charset=UTF-8');
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // Массив для временного хранения сообщений пользователю.
   $messages = array();
+  ?>
+  <form method="post" action="logout.php">
+      <button type="submit" name="logout">Выход</button>
+  </form>
+  <?php
+
+if (isset($_POST['logout'])) {  // Проверяем, была ли нажата кнопка "Выход"
+  // Уничтожаем все данные сессии
+  session_unset();  // Удаляет все переменные сессии
+  session_destroy(); // Уничтожает саму сессию
 
   // В суперглобальном массиве $_COOKIE PHP хранит все имена и значения куки текущего запроса.
   // Выдаем сообщение об успешном сохранении.

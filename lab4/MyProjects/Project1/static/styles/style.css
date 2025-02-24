@@ -3,8 +3,10 @@
 
 /* Сообщения об ошибках и поля с ошибками выводим с красным бордюром. */
 .error {
+    color:red;
   border: 2px solid red;
 }
+
 
 body {
     background-color: black;

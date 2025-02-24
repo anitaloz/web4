@@ -5,11 +5,13 @@
 .error {
     color:red;
     border: 2px solid red;
+    background-color: red;
 }
 
 .error_gen {
     color:red;
     border-bottom:2px solid red;
+    background-color: red;
 }
 
 body {

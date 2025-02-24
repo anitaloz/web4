@@ -143,8 +143,8 @@
                         <?php if ($errors['field-date']) {print 'class="error"';} ?> value="<?php print $values['field-date']; ?>"
                         type="date" />
                     </label><br />
-                    <div <?php if ($errors['radio-group-1']) {print 'class="error"';} ?>>
-                    Пол:<br />
+                    <div <?php if ($errors['radio-group-1']) {print 'class="error-gen"';} ?>>
+                    <p>Пол:</p><br />
                     <label><input type="radio"  <?php if ($errors['radio-group-1']) {print 'class="error"';} ?>
       <?php if ($values['radio-group-1']=='Женский') {print 'checked="checked"';} ?>
                     name="radio-group-1" value="Женский" />

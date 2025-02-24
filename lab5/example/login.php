@@ -21,6 +21,33 @@ if ($_COOKIE[session_name()] && session_start()) {
     // Если есть логин в сессии, то пользователь уже авторизован.
     // TODO: Сделать выход (окончание сессии вызовом session_destroy()
     //при нажатии на кнопку Выход).
+    <?php
+session_start(); // Важно: Начните сессию в самом начале скрипта
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Выход</title>
+</head>
+<body>
+
+<h2>Вы действительно хотите выйти?</h2>
+
+<form method="post" action="logout.php">
+    <button type="submit" name="logout">Выход</button>
+</form>
+
+</body>
+</html>
+if (isset($_POST['logout'])) {  // Проверяем, была ли нажата кнопка "Выход"
+    // Уничтожаем все данные сессии
+    session_unset();  // Удаляет все переменные сессии
+    session_destroy(); // Уничтожает саму сессию
+
+    // Перенаправляем пользователя на страницу входа (например, index.php или login.php)
+    header("Location: index.php"); // Замените на вашу страницу входа
+    exit(); // Завершаем выполнение скрипта, чтобы избежать дальнейшей обработки
+}
+
     // Делаем перенаправление на форму.
     header('Location: ./');
     exit();

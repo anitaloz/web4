@@ -66,7 +66,7 @@ if(strlen($_POST['field-name-1'])>150) {
   $errors = TRUE;
 }
 
-if(!preg_match('/^[а-яА-Яa-zA-Z]+$/u', $_POST['field-name-1'])) {
+if(!preg_match('/^[а-яА-Яa-zA-Z ]+$/u', $_POST['field-name-1'])) {
   print('ФИО должно содержать только буквы (русские и английские) и пробелы.<br/>');
   $errors =TRUE;
 }

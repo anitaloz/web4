@@ -261,7 +261,7 @@ else {
     $errors = TRUE;
   }
 
-  if (!preg_match('/^[а-яА-Яa-zA-Z1-9.,?!:()]+$/u', $_POST['bio'])) {
+  if (!empty($_POST['bio']) && !preg_match('/^[а-яА-Яa-zA-Z1-9.,?!:()]+$/u', $_POST['bio'])) {
     setcookie('bio_error', '2');
     $errors = TRUE;
   }

@@ -144,7 +144,7 @@
                         type="date" />
                     </label><br />
                     <div <?php if ($errors['radio-group-1']) {print 'class="error-gen"';} ?>>
-                    <p>Пол:</p><br />
+                    Пол:<br />
                     <label><input type="radio"  <?php if ($errors['radio-group-1']) {print 'class="error"';} ?>
       <?php if ($values['radio-group-1']=='Женский') {print 'checked="checked"';} ?>
                     name="radio-group-1" value="Женский" />

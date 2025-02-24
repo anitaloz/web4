@@ -62,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $errors['radio-group-1'] = !empty($_COOKIE['radio-group-1_error']);
   $errors['languages'] = !empty($_COOKIE['languages_error']);
   $errors['check-1'] = !empty($_COOKIE['check-1_error']);
+  $errors['bio'] = !empty($_COOKIE['bio_error']);
   // TODO: аналогично все поля.
 
   // Выдаем сообщения об ошибках.
@@ -146,6 +147,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $messages[] = '<div class="messages">Отметьте любимый язык программирования.</div>';
   }
 
+  if ($errors['bio'] AND  $_COOKIE['bio_error']==1) {
+    // Удаляем куки, указывая время устаревания в прошлом.
+    setcookie('bio_error', '', 100000);
+    setcookie('bio_value', '', 100000);
+    // Выводим сообщение.
+    $messages[] = '<div>Заполните биографию.</div>';
+  }
+
+  if ($errors['bio'] AND  $_COOKIE['bio_error']==2) {
+    // Удаляем куки, указывая время устаревания в прошлом.
+    setcookie('bio_error', '', 100000);
+    setcookie('bio_value', '', 100000);
+    // Выводим сообщение.
+    $messages[] = '<div>Используйте только допустимые символы: буквы, цифры, знаки препинания.</div>';
+  }
+
   // TODO: тут выдать сообщения об ошибках в других полях.
 
   // Складываем предыдущие значения полей в массив, если есть.
@@ -209,7 +226,7 @@ else {
   setcookie('radio-group-1_value', $_POST['radio-group-1'], time() + 365 * 24 * 60 * 60);
 
   $email=trim($_POST['field-email']);
-  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  if(!preg_match('/^[a-zA-Z1-9._@]+$/u', $email) || !preg_match('/@.*\./', $email)) {
     setcookie('field-email_error', '1');
     $errors = TRUE;
   }
@@ -239,6 +256,16 @@ else {
   }
   setcookie('check-1_value', $_POST['check-1'], time() + 365 * 24 * 60 * 60);
 
+  if (empty($_POST['bio'])) {
+    setcookie('bio_error', '1');
+    $errors = TRUE;
+  }
+
+  if (!preg_match('/^[а-яА-Яa-zA-Z1-9.,?!:()]+$/u', $_POST['bio'])) {
+    setcookie('bio_error', '2');
+    $errors = TRUE;
+  }
+  setcookie('bio_value', $_POST['bio'], time() + 365 * 24 * 60 * 60);
 // *************
 // TODO: тут необходимо проверить правильность заполнения всех остальных полей.
 // Сохранить в Cookie признаки ошибок и значения полей.
@@ -258,7 +285,7 @@ else {
     setcookie('radio-group-1_error', '', 100000);
     setcookie('check-1_error', '', 100000);
     setcookie('languages_error', '', 100000);
-    //setcookie('bio_error', '', 100000);
+    setcookie('bio_error', '', 100000);
     // TODO: тут необходимо удалить остальные Cookies.
   }
 

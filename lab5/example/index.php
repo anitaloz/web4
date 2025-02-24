@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // Массив для временного хранения сообщений пользователю.
   $messages = array();
   ?>
-  <form method="post" action="logout.php">
+  <form method="post" action="index.php">
       <button type="submit" name="logout">Выход</button>
   </form>
   <?php

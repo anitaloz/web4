@@ -39,7 +39,7 @@ function emailExists($email, $pdo) {
     $dp->execute();
     $id=$dp->fetchColumn();
     $check=$pdo->prepare("SELECT login from person_LOGIN where id=:id");
-    $ckect->bindParam(':id', $id, PDO::PARAM_INT);
+    $ckeck->bindParam(':id', $id, PDO::PARAM_INT);
     $check->execute();
     $login=$check->fetchColumn();
     if($login===$_SESSION['login']) {

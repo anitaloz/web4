@@ -14,7 +14,7 @@ header('Content-Type: text/html; charset=UTF-8');
 function isValid($login, $db) {
   $count;
   try{
-    $stmt = $db->prepare("SELECT COUNT(*) FROM users WHERE login = ?");
+    $stmt = $db->prepare("SELECT COUNT(*) FROM person_LOGIN WHERE login = ?");
     $stmt->execute([$login]);
     $count = $stmt->fetchColumn();
   } 

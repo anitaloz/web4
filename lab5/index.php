@@ -334,7 +334,7 @@ else {
     $lastInsertId->execute();
     $pers_id=$lastInsertId->fetchColumn();
     $erasure=$db->prepare("DELETE from personlang where pers_id=:pers_id");
-    $erasure->bindParam(':pers_id', $pers_id);
+    $erasure->bindParam(':pers_id', $pers_id, PDO::PARAM_INT);
     $erasure->execute();
     foreach($_POST['languages'] as $lang) {
     $stmt1 = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");

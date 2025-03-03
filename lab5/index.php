@@ -30,31 +30,8 @@ function emailExists($email, $pdo) {
         error_log("Ошибка выполнения запроса: " . $stmt->errorInfo()[2]); 
         return true; 
     }
-    printf('ghjhghjhghjhgjghjg');
     // 4. Получение результата запроса.
     $count = $stmt->fetchColumn(); // Получаем сразу значение COUNT(*)
-    try {
-        $dp=$pdo->prepare("SELECT id from person where email=:email");
-        $dp->bindParam(':email', $email);
-        $dp->execute();
-    }
-    catch(PDOException $e){
-        print('Error : ' . $e->getMessage());
-        exit();
-    }
-    $id = $dp->fetchColumn();
-    if(is_null($id)) {
-        $id=0;
-    }
-    
-    $check=$pdo->prepare("SELECT login from person_LOGIN where id=:id");
-    $check->bindParam(':id', $id);
-    $check->execute();
-    $login=$check->fetchColumn();
-    
-    if($login==$_SESSION['login'] && !is_null($login)) {
-        $count = 0;
-    }
     // 5. Закрытие курсора (необязательно, но рекомендуется)
     $stmt->closeCursor();
 
@@ -279,7 +256,29 @@ else {
   }
   if (emailExists($email, $db)) { 
     setcookie('field-email_error', '2');
-    $errors = TRUE;
+    try {
+        $dp=$pdo->prepare("SELECT id from person where email=:email");
+        $dp->bindParam(':email', $email);
+        $dp->execute();
+    }
+    catch(PDOException $e){
+        print('Error : ' . $e->getMessage());
+        exit();
+    }
+    $id = $dp->fetchColumn();
+    if(is_null($id)) {
+        $id=0;
+    }
+    
+    $check=$pdo->prepare("SELECT login from person_LOGIN where id=:id");
+    $check->bindParam(':id', $id);
+    $check->execute();
+    $login=$check->fetchColumn();
+    
+    if($login!=$_SESSION['login'] || is_null($login)) {
+        $errors = TRUE;
+    }
+    
   }
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
 
@@ -316,6 +315,7 @@ else {
 
 
   if ($errors) {
+
     header('Location: index.php');
     exit();
   }

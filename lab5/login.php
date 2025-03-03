@@ -29,7 +29,7 @@ function password_check($login, $password, $db) {
   $passw;
   try{
     $stmt = $db->prepare("SELECT pass FROM person_LOGIN WHERE login = :login");
-    $stmt->bindParam(':login', $login);
+    $stmt->bindParam(':login', $login, PDO::PARAM_STR);
     $stmt->execute();
     $passw = $stmt->fetchColumn();
   } 
@@ -37,7 +37,7 @@ function password_check($login, $password, $db) {
     print('Error : ' . $e->getMessage());
     exit();
   }
-  return (password_verify($password, $passw));
+  return ($passw==$password);
 }
 // В суперглобальном массиве $_SESSION хранятся переменные сессии.
 // Будем сохранять туда логин после успешной авторизации.
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 // Иначе, если запрос был методом POST, т.е. нужно сделать авторизацию с записью логина в сессию.
 else {
   $login = $_POST['login'];
-  $password = ($_POST['pass']);
+  $password = md5($_POST['pass']);
 
   $user = 'u68598';
   $pass = '8795249';
@@ -84,7 +84,7 @@ else {
     session_start();
   }
 
-  if (isValid($login, $db) && password_check($login, $password, $db)){
+  if (password_check($login, $password, $db)){
     $_SESSION['login'] = $_POST['login'];
 
     $_SESSION['uid'];

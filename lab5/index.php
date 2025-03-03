@@ -42,7 +42,7 @@ function emailExists($email, $pdo) {
         $id=0;
     }
     $check=$pdo->prepare("SELECT login from person_LOGIN where id=:id");
-    $ckeck->bindParam(':id', $id);
+    $check->bindParam(':id', $id);
     $check->execute();
     $login=$check->fetchColumn();
     if($login===$_SESSION['login'] && !is_null($login)) {

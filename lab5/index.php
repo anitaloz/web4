@@ -33,10 +33,15 @@ function emailExists($email, $pdo) {
 
     // 4. Получение результата запроса.
     $count = $stmt->fetchColumn(); // Получаем сразу значение COUNT(*)
-
+    try {
     $dp=$pdo->prepare("SELECT id from person where email=:email");
     $dp->bindParam(':email', $email);
     $dp->execute();
+    }
+    catch(PDOException $e){
+        print('Error : ' . $e->getMessage());
+        exit();
+    }
     $id = $dp->fetchColumn();
     if(is_null($id)) {
         $id=0;
@@ -328,6 +333,7 @@ else {
   // Проверяем меняются ли ранее сохраненные данные или отправляются новые.
 
   if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
+    try {
     $dop=$db->prepare("SELECT id from person_LOGIN where login=:login");
     $dop->bindParam(':login', $_SESSION['login']);
     $dop->execute();
@@ -357,6 +363,11 @@ else {
     $stmt1->bindParam(':pers_id', $pers_id, PDO::PARAM_INT);
     $stmt1->bindParam(':lang_id', $lang);
     $stmt1->execute();
+    }
+    catch(PDOException $e){
+        print('Error : ' . $e->getMessage());
+        exit();
+    }
   }
 }
   else {

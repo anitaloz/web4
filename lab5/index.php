@@ -257,7 +257,7 @@ else {
   if (emailExists($email, $db)) { 
     setcookie('field-email_error', '2');
     try {
-        $dp=$pdo->prepare("SELECT id from person where email=:email");
+        $dp=$db->prepare("SELECT id from person where email=:email");
         $dp->bindParam(':email', $email);
         $dp->execute();
     }
@@ -270,7 +270,7 @@ else {
         $id=0;
     }
     
-    $check=$pdo->prepare("SELECT login from person_LOGIN where id=:id");
+    $check=$db->prepare("SELECT login from person_LOGIN where id=:id");
     $check->bindParam(':id', $id);
     $check->execute();
     $login=$check->fetchColumn();

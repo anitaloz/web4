@@ -311,11 +311,32 @@ else {
 
   // Проверяем меняются ли ранее сохраненные данные или отправляются новые.
 
-  if (isset($_COOKIE[session_name()]) && session_start()) {
-    $stmt = $db->prepare("UPDATE person set fio=:fio where id=(select id from person_LOGIN where login=:login");
+  if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
+    $stmt = $db->prepare("UPDATE person set fio=:fio, tel=:tel, email=:email, bdate=:bdate, gender=:gender, biography=:biography where id=(select id from person_LOGIN where login=:login");
         $stmt->bindParam(':fio', $_POST['fio']);
+        $stmt->bindParam(':tel', $tel);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':bdate', $bdate);
+        $stmt->bindParam(':gender', $gender);
+        $stmt->bindParam(':biography', $biography);
+        $tel = ($_POST['field-tel']);
+        $email = ($_POST['field-email']);
+        $bdate = ($_POST['field-date']);
+        $gender = ($_POST['radio-group-1']);
+        $biography = ($_POST['bio']);
         $stmt->bindParam(':login', $_SESSION['login']);
-    $errors=FALSE
+        $stmt->execute();
+        $lastInsertId = $db->prepare("SELECT id from person_LOGIN where login=:login");
+        $lastInsertId->bindParam(':login', $_SESSION['login']);
+        $lastInsertId->execute();
+        $erasure=db->prepare("DELETE from personlang where pers_id=:pers_id");
+        $erasure->bindParam(':pers_id', $lastInsertId);
+        $erasure->execute();
+        foreach($_POST['languages'] as $lang) {
+        $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
+        $stmt->bindParam(':pers_id', $lastInsertId);
+        $stmt->bindParam(':lang_id', $lang);
+        $stmt->execute();
   }
   else {
     $login = rand()%10000000;

@@ -255,7 +255,6 @@ else {
     $errors = TRUE;
   }
   if (emailExists($email, $db)) { 
-    setcookie('field-email_error', '2');
     try {
         $dp=$db->prepare("SELECT id from person where email=:email");
         $dp->bindParam(':email', $email);
@@ -277,6 +276,7 @@ else {
     print($login);
     if($login!=$_SESSION['login'] || is_null($login)) {
         $errors = TRUE;
+        setcookie('field-email_error', '2');
     }
     
   }

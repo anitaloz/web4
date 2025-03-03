@@ -37,7 +37,7 @@ function password_check($login, $password, $db) {
     print('Error : ' . $e->getMessage());
     exit();
   }
-  return ($passw==$password);
+  return ($passw===$password);
 }
 // В суперглобальном массиве $_SESSION хранятся переменные сессии.
 // Будем сохранять туда логин после успешной авторизации.

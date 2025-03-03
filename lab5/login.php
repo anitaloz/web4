@@ -28,7 +28,7 @@ function isValid($login, $db) {
 function password_check($login, $password, $db) {
   $passw;
   try{
-    $stmt = $db->prepare("SELECT password FROM person_LOGIN WHERE login = ?");
+    $stmt = $db->prepare("SELECT pass FROM person_LOGIN WHERE login = ?");
     $stmt->execute([$login]);
     $passw = $stmt->fetchColumn();
   } 

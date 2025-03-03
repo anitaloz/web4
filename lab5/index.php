@@ -256,11 +256,11 @@ else {
     setcookie('field-email_error', '1');
     $errors = TRUE;
   }
-//   if (emailExists($email, $db)) { 
-//     setcookie('field-email_error', '2');
-//     $errors = TRUE;
-//   }
-//   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
+  if (emailExists($email, $db)) { 
+    setcookie('field-email_error', '2');
+    $errors = TRUE;
+  }
+  setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
 
   if (empty($fav_languages)) {
     setcookie('languages_error', "1");
@@ -294,7 +294,7 @@ else {
   setcookie('bio_value', $_POST['bio'], time() + 365 * 24 * 60 * 60);
 
 
-  if ($errors) {
+  if ($errors && !isset($_COOKIE[session_name()])) {
     header('Location: index.php');
     exit();
   }

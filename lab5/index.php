@@ -317,7 +317,7 @@ else {
     $dop->execute();
     $stmt = $db->prepare("UPDATE person set fio=:fio, tel=:tel, email=:email, bdate=:bdate, gender=:gender, biography=:biography where id=:id");
     $stmt->bindParam(':fio', $_POST['fio']);
-    $stmt->bindParam(':id', $dop);
+    $stmt->bindParam(':id', $dop->fetchColumn());
     $stmt->bindParam(':tel', $tel);
     $stmt->bindParam(':email', $email);
     $stmt->bindParam(':bdate', $bdate);
@@ -328,7 +328,6 @@ else {
     $bdate = ($_POST['field-date']);
     $gender = ($_POST['radio-group-1']);
     $biography = ($_POST['bio']);
-    
     $stmt->execute();
     $lastInsertId = $db->prepare("SELECT id from person_LOGIN where login=:login");
     $lastInsertId->bindParam(':login', $_SESSION['login']);
@@ -338,7 +337,7 @@ else {
     $erasure->execute();
     foreach($_POST['languages'] as $lang) {
     $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-    $stmt->bindParam(':pers_id', $lastInsertId);
+    $stmt->bindParam(':pers_id', $lastInsertId->fetchColumn());
     $stmt->bindParam(':lang_id', $lang);
     $stmt->execute();
   }

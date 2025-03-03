@@ -47,7 +47,7 @@ function emailExists($email, $pdo) {
     $check->execute();
     $login=$check->fetchColumn();
     
-    if($login==$_SESSION['login'] && !is_null($login)) {
+    if($login==$_COOKIE['login'] && !is_null($login)) {
         $count = 0;
     }
     // 5. Закрытие курсора (необязательно, но рекомендуется)

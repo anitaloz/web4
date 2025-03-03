@@ -185,7 +185,7 @@
                         <input type="submit" value="Сохранить" />
                     </div>
                 </form>
-                <?php if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login']))
+                <?php if (isset($_COOKIE[session_name()]))
                 {
                     print('<form method="post" action="">
                         <input type="submit" name="logout" value="Выход">

@@ -28,8 +28,9 @@ function isValid($login, $db) {
 function password_check($login, $password, $db) {
   $passw;
   try{
-    $stmt = $db->prepare("SELECT pass FROM person_LOGIN WHERE login = ?");
-    $stmt->execute([$login]);
+    $stmt = $db->prepare("SELECT pass FROM person_LOGIN WHERE login = :login");
+    $stmt->bindParam(':login', $login)
+    $stmt->execute();
     $passw = $stmt->fetchColumn();
   } 
   catch (PDOException $e){

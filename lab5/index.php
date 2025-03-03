@@ -256,11 +256,11 @@ else {
     setcookie('field-email_error', '1');
     $errors = TRUE;
   }
-  if (emailExists($email, $db)) { 
-    setcookie('field-email_error', '2');
-    $errors = TRUE;
-  }
-  setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
+//   if (emailExists($email, $db)) { 
+//     setcookie('field-email_error', '2');
+//     $errors = TRUE;
+//   }
+//   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
 
   if (empty($fav_languages)) {
     setcookie('languages_error', "1");
@@ -294,7 +294,6 @@ else {
   setcookie('bio_value', $_POST['bio'], time() + 365 * 24 * 60 * 60);
 
 
-
   if ($errors) {
     header('Location: index.php');
     exit();
@@ -311,10 +310,12 @@ else {
   }
 
   // Проверяем меняются ли ранее сохраненные данные или отправляются новые.
+
   if (isset($_COOKIE[session_name()]) && session_start()) {
     $stmt = $db->prepare("UPDATE person set fio=:fio where id=(select id from person_LOGIN where login=:login");
         $stmt->bindParam(':fio', $_POST['fio']);
         $stmt->bindParam(':login', $_SESSION['login']);
+    $errors=FALSE
   }
   else {
     $login = rand()%10000000;

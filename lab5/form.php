@@ -153,7 +153,7 @@
                     name="radio-group-1" value="Мужской" />
                     Мужской</label><br />
                     <?php 
-      $user_languages = explode(",",  $values['languages']);
+      $user_languages = $values['languages'];
       ?>
                     <label>
                         Любимый язык программирования:

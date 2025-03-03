@@ -256,32 +256,29 @@ else {
   }
 
   
-  if (emailExists($email, $db)) { 
-    try {
-    $dp=$db->prepare("SELECT id from person where email=:email");
-    $dp->bindParam(':email', $email);
-    $dp->execute();
-    }
-    catch(PDOException $e){
-        print('Error : ' . $e->getMessage());
-        exit();
-    }
-    $id = $dp->fetchColumn();
-    if(is_null($id)) {
-        $id=0;
-    }
-    $check=$db->prepare("SELECT login from person_LOGIN where id=:id");
-    $check->bindParam(':id', $id);
-    $check->execute();
-    $login=$check->fetchColumn();
+//   if (emailExists($email, $db)) { 
+//     try {
+//     $dp=$db->prepare("SELECT id from person where email=:email");
+//     $dp->bindParam(':email', $email);
+//     $dp->execute();
+//     }
+//     catch(PDOException $e){
+//         print('Error : ' . $e->getMessage());
+//         exit();
+//     }
+//     $id = $dp->fetchColumn();
+//     if(is_null($id)) {
+//         $id=0;
+//     }
+//     $check=$db->prepare("SELECT login from person_LOGIN where id=:id");
+//     $check->bindParam(':id', $id);
+//     $check->execute();
+//     $login=$check->fetchColumn();
 
-    if(!($login==$_SESSION['login'] && !is_null($login))) {
-        setcookie('field-email_error', '1');
-        $errors = TRUE;
-    }
-    
-
-  }
+//     if(!($login==$_SESSION['login'] && !is_null($login))) {
+//         setcookie('field-email_error', '2');
+//         $errors = TRUE;
+//     }
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
 
   if (empty($fav_languages)) {

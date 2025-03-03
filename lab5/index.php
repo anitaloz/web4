@@ -332,7 +332,7 @@ else {
     $lastInsertId = $db->prepare("SELECT id from person_LOGIN where login=:login");
     $lastInsertId->bindParam(':login', $_SESSION['login']);
     $lastInsertId->execute();
-    $erasure=db->prepare("DELETE from personlang where pers_id=:pers_id");
+    $erasure=$db->prepare("DELETE from personlang where pers_id=:pers_id");
     $erasure->bindParam(':pers_id', $lastInsertId);
     $erasure->execute();
     foreach($_POST['languages'] as $lang) {

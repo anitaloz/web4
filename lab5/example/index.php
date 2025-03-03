@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // ранее в сессию записан факт успешного логина.
   if (empty($errors) && isset($_COOKIE[session_name()]) &&
       session_start() && isset($_SESSION['login'])) {
-        print('asdasdasdasdasdad')
+        print('asdasdasdasdasdad');
     // TODO: загрузить данные пользователя из БД
     // и заполнить переменную $values,
     // предварительно санитизовав.

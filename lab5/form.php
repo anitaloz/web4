@@ -187,9 +187,9 @@
                 </form>
                 <?php if (!empty($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login']))
                 {
-                    print("<form method="post" action="">
+                    print('<form method="post" action="">
                         <input type="submit" name="logout" value="Выход">
-                    </form>");
+                    </form>');
                 }?>
             </div>
             <footer>

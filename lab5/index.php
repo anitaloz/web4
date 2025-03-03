@@ -336,10 +336,10 @@ else {
     $erasure->bindParam(':pers_id', $lastInsertId->fetchColumn());
     $erasure->execute();
     foreach($_POST['languages'] as $lang) {
-    $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-    $stmt->bindParam(':pers_id', $lastInsertId->fetchColumn());
-    $stmt->bindParam(':lang_id', $lang);
-    $stmt->execute();
+    $stmt1 = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
+    $stmt1->bindParam(':pers_id', int($lastInsertId->fetchColumn()));
+    $stmt1->bindParam(':lang_id', $lang);
+    $stmt1->execute();
   }
 }
   else {

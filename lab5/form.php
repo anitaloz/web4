@@ -153,7 +153,7 @@
                     name="radio-group-1" value="Мужской" />
                     Мужской</label><br />
                     <?php 
-      $user_languages = $values['languages'];
+      $user_languages = explode(",",  $values['languages']);
       ?>
                     <label>
                         Любимый язык программирования:
@@ -185,7 +185,7 @@
                         <input type="submit" value="Сохранить" />
                     </div>
                 </form>
-                <?php if (isset($_COOKIE[session_name()]))
+                <?php if (isset($_COOKIE[session_name()]) && !empty($_SESSION['login']))
                 {
                     print('<form method="post" action="">
                         <input type="submit" name="logout" value="Выход">

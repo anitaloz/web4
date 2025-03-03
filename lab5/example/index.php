@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // предварительно санитизовав.
     // Для загрузки данных из БД делаем запрос SELECT и вызываем метод PDO fetchArray(), fetchObject() или fetchAll() 
     // См. https://www.php.net/manual/en/pdostatement.fetchall.php
-    printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
+    print('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
   }
 
   // Включаем содержимое файла form.php.

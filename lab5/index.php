@@ -311,7 +311,7 @@ else {
   }
 
   // Проверяем меняются ли ранее сохраненные данные или отправляются новые.
-  if (isset($_COOKIE[session_name()]) && session_start() && isset($_SESSION['login'])) {
+  if (isset($_COOKIE[session_name()]) && session_start()) {
     $stmt = $db->prepare("UPDATE person set fio=:fio where id=(select id from person_LOGIN where login=:login");
         $stmt->bindParam(':fio', $_POST['fio']);
         $stmt->bindParam(':login', $_SESSION['login']);

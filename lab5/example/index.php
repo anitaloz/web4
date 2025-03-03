@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // ранее в сессию записан факт успешного логина.
   if (empty($errors) && isset($_COOKIE[session_name()]) &&
       session_start() && isset($_SESSION['login'])) {
+        print('asdasdasdasdasdad')
     // TODO: загрузить данные пользователя из БД
     // и заполнить переменную $values,
     // предварительно санитизовав.
@@ -102,8 +103,8 @@ else {
   }
 
   // Проверяем меняются ли ранее сохраненные данные или отправляются новые.
-  if (!empty($_COOKIE[session_name()]) &&
-      session_start() && !empty($_SESSION['login'])) {
+  if (isset($_COOKIE[session_name()]) &&
+      session_start() && isset($_SESSION['login'])) {
     // TODO: перезаписать данные в БД новыми данными,
     // кроме логина и пароля.
   }

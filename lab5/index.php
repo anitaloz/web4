@@ -38,7 +38,7 @@ function emailExists($email, $pdo) {
     $dp->bindParam(':email', $email);
     $dp->execute();
     $id=$dp->fetchColumn();
-    if($id) {
+    if(!empty($id)) {
         $check=$pdo->prepare("SELECT login from person_LOGIN where id=:id");
         $ckeck->bindParam(':id', $id);
         $check->execute();

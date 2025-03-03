@@ -338,6 +338,7 @@ else {
         $stmt->bindParam(':lang_id', $lang);
         $stmt->execute();
   }
+}
   else {
     $login = rand()%10000000;
     $pass = rand()%10000000000;

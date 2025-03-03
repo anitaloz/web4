@@ -208,7 +208,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // См. https://www.php.net/manual/en/pdostatement.fetchall.php
         printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
     }
-    printf($values['fio']);
+    //printf($values['fio']);
   include('form.php');
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.
@@ -331,8 +331,8 @@ else {
             $pass = rand()%10000000000;
             // Сохраняем в Cookies.
             $hash_pass=md5($pass);
-            setcookie('login', $login);
-            setcookie('pass', $pass);
+            setcookie('login', '123');
+            setcookie('pass', '123');
             $stmt = $db->prepare("INSERT INTO LOGIN (login, pass) VALUES (:login, :pass)");
             $stmt->bindParam(':login', $login);
             $stmt->bindParam(':pass', $hash_pass);

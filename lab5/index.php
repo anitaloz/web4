@@ -38,14 +38,15 @@ function emailExists($email, $pdo) {
     $dp->bindParam(':email', $email);
     $dp->execute();
     $id=$dp->fetchColumn();
-    if(!empty($id)) {
-        $check=$pdo->prepare("SELECT login from person_LOGIN where id=:id");
-        $ckeck->bindParam(':id', $id);
-        $check->execute();
-        $login=$check->fetchColumn();
-        if($login===$_SESSION['login']) {
-            $count = 0;
-        }
+    if(empty($id)) {
+        $id=0;
+    }
+    $check=$pdo->prepare("SELECT login from person_LOGIN where id=:id");
+    $ckeck->bindParam(':id', $id);
+    $check->execute();
+    $login=$check->fetchColumn();
+    if($login===$_SESSION['login'] && !empty($login)) {
+        $count = 0;
     }
     // 5. Закрытие курсора (необязательно, но рекомендуется)
     $stmt->closeCursor();

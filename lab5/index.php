@@ -282,7 +282,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':login', $_SESSION['login'], PDO::PARAM_STR);
             $stmt->execute();
-            $lang = $stmt->fetchAll();
+            $lang = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
             $langs_value1 =(implode(",", $lang));
             $values['languages']=$langs_value1;
         }

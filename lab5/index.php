@@ -332,12 +332,14 @@ else {
     $lastInsertId = $db->prepare("SELECT id from person_LOGIN where login=:login");
     $lastInsertId->bindParam(':login', $_SESSION['login']);
     $lastInsertId->execute();
+    $pers_id=$lastInsertId->fetchColumn()
     $erasure=$db->prepare("DELETE from personlang where pers_id=:pers_id");
-    $erasure->bindParam(':pers_id', $lastInsertId->fetchColumn());
+    $erasure->bindParam(':pers_id', $pers_id);
     $erasure->execute();
     foreach($_POST['languages'] as $lang) {
     $stmt1 = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-    $stmt1->bindParam(':pers_id', $lastInsertId->fetchColumn());
+    $pers_id=$lastInsertId->fetchColumn()
+    $stmt1->bindParam(':pers_id', $pers_id, PDO::PARAM_INT);
     $stmt1->bindParam(':lang_id', $lang);
     $stmt1->execute();
   }

@@ -193,11 +193,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // ранее в сессию записан факт успешного логина.
   if (isset($_COOKIE[session_name()]) &&
       session_start() && !empty($_SESSION['login'])) {
-    // TODO: загрузить данные пользователя из БД
-    // и заполнить переменную $values,
-    // предварительно санитизовав.
-    // Для загрузки данных из БД делаем запрос SELECT и вызываем метод PDO fetchArray(), fetchObject() или fetchAll() 
-    // См. https://www.php.net/manual/en/pdostatement.fetchall.php
+        $user = 'u68598'; // Заменить на ваш логин uXXXXX
+        $pass = '8795249'; // Заменить на пароль
+        $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
+          [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
+      
+        $sql = "SELECT fio FROM person join person_LOGIN using(id) WHERE login = :login"; 
+        $stmt = $db->prepare($sql);
+        if ($stmt === false) {
+            error_log("Ошибка подготовки запроса: " . $db->errorInfo()[2]);
+        }
+        $stmt->bindValue(':login', $_SESSION['login'], PDO::PARAM_STR);
+        if (!$stmt->execute()) {
+            error_log("Ошибка выполнения запроса: " . $stmt->errorInfo()[2]); 
+        }
+        // 4. Получение результата запроса.
+        $fio = $stmt->fetchColumn();
+        $values['fio']=$fio;
     printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
   }
 
@@ -256,29 +268,30 @@ else {
   }
 
   
-//   if (emailExists($email, $db)) { 
-//     try {
-//     $dp=$db->prepare("SELECT id from person where email=:email");
-//     $dp->bindParam(':email', $email);
-//     $dp->execute();
-//     }
-//     catch(PDOException $e){
-//         print('Error : ' . $e->getMessage());
-//         exit();
-//     }
-//     $id = $dp->fetchColumn();
-//     if(is_null($id)) {
-//         $id=0;
-//     }
-//     $check=$db->prepare("SELECT login from person_LOGIN where id=:id");
-//     $check->bindParam(':id', $id);
-//     $check->execute();
-//     $login=$check->fetchColumn();
+  if (emailExists($email, $db)) { 
+    try {
+    $dp=$db->prepare("SELECT id from person where email=:email");
+    $dp->bindParam(':email', $email);
+    $dp->execute();
+    }
+    catch(PDOException $e){
+        print('Error : ' . $e->getMessage());
+        exit();
+    }
+    $id = $dp->fetchColumn();
+    // if(is_null($id)) {
+    //     $id=0;
+    // }
+    // $check=$db->prepare("SELECT login from person_LOGIN where id=:id");
+    // $check->bindParam(':id', $id);
+    // $check->execute();
+    // $login=$check->fetchColumn();
 
-//     if(!($login==$_SESSION['login'] && !is_null($login))) {
-//         setcookie('field-email_error', '2');
-//         $errors = TRUE;
-//     }
+    if($id!=$_SESSION['uid']) {
+        setcookie('field-email_error', '2');
+        $errors = TRUE;
+    }
+
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
 
   if (empty($fav_languages)) {

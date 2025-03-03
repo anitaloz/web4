@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 // Иначе, если запрос был методом POST, т.е. нужно сделать авторизацию с записью логина в сессию.
 else {
   $login = $_POST['login'];
-  $password = md5($_POST('pass'));
+  $password = md5($_POST['pass']);
 
   $user = 'u68598';
   $pass = '8795249';

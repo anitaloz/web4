@@ -34,7 +34,7 @@ function emailExists($email, $pdo) {
     // 4. Получение результата запроса.
     $count = $stmt->fetchColumn(); // Получаем сразу значение COUNT(*)
 
-    $dp=$pdo->prepare("SELECT id from person where email=:email")
+    $dp=$pdo->prepare("SELECT id from person where email=:email");
     $dp->bindParam(':email', $email);
     $dp->execute();
     $id=$dp->fetchColumn();

@@ -276,7 +276,7 @@ else {
     $login=$check->fetchColumn();
 
     if(!($login==$_SESSION['login'] && !is_null($login))) {
-        setcookie('field-email_error', '2');
+        setcookie('field-email_error', '1');
         $errors = TRUE;
     }
     

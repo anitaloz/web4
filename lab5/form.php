@@ -185,9 +185,12 @@
                         <input type="submit" value="Сохранить" />
                     </div>
                 </form>
-                <!-- <form method="post" action="logout.php">
-    <button type="submit" name="logout">Выход</button>
-</form> -->
+                if (!empty($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login']))
+                {
+                    <form method="post" action="">
+                        <input type="submit" name="logout" value="Выход">
+                    </form>
+                }
             </div>
             <footer>
                 <p> (с) Тополян Алина</p>

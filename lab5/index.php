@@ -8,6 +8,17 @@
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
+if (isset($_POST['logout'])) {
+  // Уничтожаем все данные сессии
+  session_unset(); // Удаляет все переменные сессии
+  session_destroy(); // Уничтожает сессию.  Это освобождает ресурсы,
+                      // связанные с сессией, и удаляет cookie сессии
+                      // (если cookie были установлены).
+
+  // Перенаправляем пользователя на страницу входа (или любую другую страницу)
+  header("Location: index.php"); // Замените "login.php" на вашу страницу входа
+  exit(); // Важно добавить exit(), чтобы предотвратить дальнейшее выполнение скрипта
+}
 function emailExists($email, $pdo) {
 
   $sql = "SELECT COUNT(*) FROM person WHERE email = :email"; 
@@ -48,7 +59,7 @@ function emailExists($email, $pdo) {
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // Массив для временного хранения сообщений пользователю.
   $messages = array();
-
+  if()
   // В суперглобальном массиве $_COOKIE PHP хранит все имена и значения куки текущего запроса.
   // Выдаем сообщение об успешном сохранении.
   if (!empty($_COOKIE['save'])) {
@@ -287,12 +298,12 @@ else {
     //setcookie('bio_error', '', 100000);
   }
 
-if (!empty($_COOKIE[session_name()]) &&
-session_start() && !empty($_SESSION['login'])) {
-// TODO: перезаписать данные в БД новыми данными,
-// кроме логина и пароля.
-}
-else {
+  if (!empty($_COOKIE[session_name()]) &&
+  session_start() && !empty($_SESSION['login'])) {
+  // TODO: перезаписать данные в БД новыми данными,
+  // кроме логина и пароля.
+  }
+  else {
         try {
             $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
             $stmt->bindParam(':fio', $fio);
@@ -336,7 +347,7 @@ else {
             print('Error : ' . $e->getMessage());
             exit();
         }
-    }
+  }
 
   // Сохраняем куку с признаком успешного сохранения.
   setcookie('save', '1');

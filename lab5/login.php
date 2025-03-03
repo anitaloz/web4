@@ -37,7 +37,7 @@ function password_check($login, $password, $db) {
     print('Error : ' . $e->getMessage());
     exit();
   }
-  return ($passw===$password);
+  return (password_verify($password, $passw));
 }
 // В суперглобальном массиве $_SESSION хранятся переменные сессии.
 // Будем сохранять туда логин после успешной авторизации.
@@ -46,10 +46,6 @@ $session_started = false;
 if (isset($_COOKIE[session_name()]) && session_start()) {
   $session_started = true;
   if (!empty($_SESSION['login'])) {
-    // Если есть логин в сессии, то пользователь уже авторизован.
-    // TODO: Сделать выход (окончание сессии вызовом session_destroy()
-    //при нажатии на кнопку Выход).
-    // Делаем перенаправление на форму
     if(isset($_POST['logout'])){
       session_unset();
       session_destroy();

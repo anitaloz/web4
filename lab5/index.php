@@ -45,6 +45,7 @@ function emailExists($email, $pdo) {
     $check->bindParam(':id', $id);
     $check->execute();
     $login=$check->fetchColumn();
+    print($login);
     if($login==$_SESSION['login'] && !is_null($login)) {
         $count = $count-1;
     }

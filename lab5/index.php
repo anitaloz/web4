@@ -337,7 +337,7 @@ else {
     $erasure->execute();
     foreach($_POST['languages'] as $lang) {
     $stmt1 = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-    $stmt1->bindParam(':pers_id', int($lastInsertId->fetchColumn()));
+    $stmt1->bindParam(':pers_id', (int)$lastInsertId->fetchColumn());
     $stmt1->bindParam(':lang_id', $lang);
     $stmt1->execute();
   }

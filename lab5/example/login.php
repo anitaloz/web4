@@ -49,7 +49,7 @@ else {
     session_start();
   }
   // Если все ок, то авторизуем пользователя.
-  $_SESSION['login'] = $_POST['login'];
+  $_SESSION['login'] = 123;
   // Записываем ID пользователя.
   $_SESSION['uid'] = 123;
 

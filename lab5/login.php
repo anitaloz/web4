@@ -84,7 +84,7 @@ else {
     session_start();
   }
 
-  if (password_check($login, $password, $db)){
+  if (isValid($login, $db) && password_check($login, $password, $db)){
     $_SESSION['login'] = $_POST['login'];
 
     $_SESSION['uid'];

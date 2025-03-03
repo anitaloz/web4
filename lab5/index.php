@@ -191,7 +191,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
   // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
   // ранее в сессию записан факт успешного логина.
-  if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
+  if (isset($_COOKIE[session_name()]) &&
+      session_start() && !empty($_SESSION['login'])) {
         $user = 'u68598'; // Заменить на ваш логин uXXXXX
         $pass = '8795249'; // Заменить на пароль
         $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
@@ -209,8 +210,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         // 4. Получение результата запроса.
         $fio = $stmt->fetchColumn();
         $values['fio']=$fio;
-        
     printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
+  }
 
   // Включаем содержимое файла form.php.
   // В нем будут доступны переменные $messages, $errors и $values для вывода 
@@ -268,29 +269,22 @@ else {
 
   
   if (emailExists($email, $db)) { 
-    try {
-    $dp=$db->prepare("SELECT id from person where email=:email");
-    $dp->bindParam(':email', $email);
-    $dp->execute();
-    }
-    catch(PDOException $e){
-        print('Error : ' . $e->getMessage());
-        exit();
-    }
-    $id = $dp->fetchColumn();
-    // if(is_null($id)) {
-    //     $id=0;
-    // }
-    // $check=$db->prepare("SELECT login from person_LOGIN where id=:id");
-    // $check->bindParam(':id', $id);
-    // $check->execute();
-    // $login=$check->fetchColumn();
+        try {
+        $dp=$db->prepare("SELECT id from person where email=:email");
+        $dp->bindParam(':email', $email);
+        $dp->execute();
+        }
+        catch(PDOException $e){
+            print('Error : ' . $e->getMessage());
+            exit();
+        }
+        $id = $dp->fetchColumn();
 
-    if($id!=$_SESSION['uid']) {
-        setcookie('field-email_error', '2');
-        $errors = TRUE;
+        if($id!=$_SESSION['uid']) {
+            setcookie('field-email_error', '2');
+            $errors = TRUE;
+        }
     }
-}
 
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
 

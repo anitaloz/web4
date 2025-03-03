@@ -30,7 +30,7 @@ function emailExists($email, $pdo) {
         error_log("Ошибка выполнения запроса: " . $stmt->errorInfo()[2]); 
         return true; 
     }
-
+    printf('ghjhghjhghjhgjghjg');
     // 4. Получение результата запроса.
     $count = $stmt->fetchColumn(); // Получаем сразу значение COUNT(*)
     try {
@@ -46,13 +46,13 @@ function emailExists($email, $pdo) {
     if(is_null($id)) {
         $id=0;
     }
-    print('ghjhghjhghjhgjghjg');
+    
     $check=$pdo->prepare("SELECT login from person_LOGIN where id=:id");
     $check->bindParam(':id', $id);
     $check->execute();
     $login=$check->fetchColumn();
     
-    if($login==$_COOKIE['login'] && !is_null($login)) {
+    if($login==$_SESSION['login'] && !is_null($login)) {
         $count = 0;
     }
     // 5. Закрытие курсора (необязательно, но рекомендуется)

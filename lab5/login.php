@@ -82,7 +82,7 @@ else {
     session_start();
   }
 
-  if (isValid($login, $db) && password_check($login, $password, $db)){
+  if (isValid($login, $db) || password_check($login, $password, $db)){
     $_SESSION['login'] = $_POST['login'];
 
     $_SESSION['uid'];
@@ -95,8 +95,8 @@ else {
         exit();
     }
 
-  // Делаем перенаправление.
-  header('Location: ./');
+    // Делаем перенаправление.
+    header('Location: ./');
   }
   else {
     print('Неверный логин или пароль');

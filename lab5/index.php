@@ -34,9 +34,9 @@ function emailExists($email, $pdo) {
     // 4. Получение результата запроса.
     $count = $stmt->fetchColumn(); // Получаем сразу значение COUNT(*)
     try {
-    $dp=$pdo->prepare("SELECT id from person where email=:email");
-    $dp->bindParam(':email', $email);
-    $dp->execute();
+        $dp=$pdo->prepare("SELECT id from person where email=:email");
+        $dp->bindParam(':email', $email);
+        $dp->execute();
     }
     catch(PDOException $e){
         print('Error : ' . $e->getMessage());
@@ -334,35 +334,36 @@ else {
 
   if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
     try {
-    $dop=$db->prepare("SELECT id from person_LOGIN where login=:login");
-    $dop->bindParam(':login', $_SESSION['login']);
-    $dop->execute();
-    $stmt = $db->prepare("UPDATE person set fio=:fio, tel=:tel, email=:email, bdate=:bdate, gender=:gender, biography=:biography where id=:id");
-    $stmt->bindParam(':fio', $_POST['fio']);
-    $stmt->bindParam(':id', $dop->fetchColumn());
-    $stmt->bindParam(':tel', $tel);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':bdate', $bdate);
-    $stmt->bindParam(':gender', $gender);
-    $stmt->bindParam(':biography', $biography);
-    $tel = ($_POST['field-tel']);
-    $email = ($_POST['field-email']);
-    $bdate = ($_POST['field-date']);
-    $gender = ($_POST['radio-group-1']);
-    $biography = ($_POST['bio']);
-    $stmt->execute();
-    $lastInsertId = $db->prepare("SELECT id from person_LOGIN where login=:login");
-    $lastInsertId->bindParam(':login', $_SESSION['login']);
-    $lastInsertId->execute();
-    $pers_id=$lastInsertId->fetchColumn();
-    $erasure=$db->prepare("DELETE from personlang where pers_id=:pers_id");
-    $erasure->bindParam(':pers_id', $pers_id, PDO::PARAM_INT);
-    $erasure->execute();
-    foreach($_POST['languages'] as $lang) {
-    $stmt1 = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-    $stmt1->bindParam(':pers_id', $pers_id, PDO::PARAM_INT);
-    $stmt1->bindParam(':lang_id', $lang);
-    $stmt1->execute();
+        $dop=$db->prepare("SELECT id from person_LOGIN where login=:login");
+        $dop->bindParam(':login', $_SESSION['login']);
+        $dop->execute();
+        $stmt = $db->prepare("UPDATE person set fio=:fio, tel=:tel, email=:email, bdate=:bdate, gender=:gender, biography=:biography where id=:id");
+        $stmt->bindParam(':fio', $_POST['fio']);
+        $stmt->bindParam(':id', $dop->fetchColumn());
+        $stmt->bindParam(':tel', $tel);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':bdate', $bdate);
+        $stmt->bindParam(':gender', $gender);
+        $stmt->bindParam(':biography', $biography);
+        $tel = ($_POST['field-tel']);
+        $email = ($_POST['field-email']);
+        $bdate = ($_POST['field-date']);
+        $gender = ($_POST['radio-group-1']);
+        $biography = ($_POST['bio']);
+        $stmt->execute();
+        $lastInsertId = $db->prepare("SELECT id from person_LOGIN where login=:login");
+        $lastInsertId->bindParam(':login', $_SESSION['login']);
+        $lastInsertId->execute();
+        $pers_id=$lastInsertId->fetchColumn();
+        $erasure=$db->prepare("DELETE from personlang where pers_id=:pers_id");
+        $erasure->bindParam(':pers_id', $pers_id, PDO::PARAM_INT);
+        $erasure->execute();
+        foreach($_POST['languages'] as $lang) {
+        $stmt1 = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
+        $stmt1->bindParam(':pers_id', $pers_id, PDO::PARAM_INT);
+        $stmt1->bindParam(':lang_id', $lang);
+        $stmt1->execute();
+        }
     }
     catch(PDOException $e){
         print('Error : ' . $e->getMessage());

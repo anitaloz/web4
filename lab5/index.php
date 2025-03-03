@@ -249,7 +249,7 @@ else {
   }
   setcookie('radio-group-1_value', $_POST['radio-group-1'], time() + 365 * 24 * 60 * 60);
 
-  $email=trim($_POST['field-email']);
+  $email=($_POST['field-email']);
   if(!preg_match('/^[a-zA-Z1-9._@]+$/u', $email) || !preg_match('/@.*\./', $email)) {
     setcookie('field-email_error', '1');
     $errors = TRUE;

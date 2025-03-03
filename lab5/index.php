@@ -262,7 +262,7 @@ else {
     setcookie('field-email_error', '1');
     $errors = TRUE;
   }
-  if (emailExists($email, $db) && ) { 
+  if (emailExists($email, $db)) { 
     setcookie('field-email_error', '2');
     $errors = TRUE;
   }

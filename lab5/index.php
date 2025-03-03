@@ -290,7 +290,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             print('Error : ' . $e->getMessage());
             exit();
         }
-    printf('<div>Вход с логином %s, uid %d<\div>', $_SESSION['login'], $_SESSION['uid']);
+        $messages[] = "<div>Вход с логином " . htmlspecialchars($_SESSION['login']) . ", uid " . (int)$_SESSION['uid'] . "</div>";
   }
 
   // Включаем содержимое файла form.php.

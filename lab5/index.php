@@ -207,9 +207,74 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if (!$stmt->execute()) {
             error_log("Ошибка выполнения запроса: " . $stmt->errorInfo()[2]); 
         }
-        // 4. Получение результата запроса.
         $fio = $stmt->fetchColumn();
         $values['fio']=$fio;
+
+
+
+        $sql = "SELECT email FROM person join person_LOGIN using(id) WHERE login = :login"; 
+        try{
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':login', $_SESSION['login'], PDO::PARAM_STR);
+            $stmt->execute();
+            $em = $stmt->fetchColumn();
+            $values['field-email']=$em;
+        }
+        catch(PDOException $e){
+            print('Error : ' . $e->getMessage());
+            exit();
+        }
+
+        $sql = "SELECT tel FROM person join person_LOGIN using(id) WHERE login = :login"; 
+        try{
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':login', $_SESSION['login'], PDO::PARAM_STR);
+            $stmt->execute();
+            $tel = $stmt->fetchColumn();
+            $values['field-tel']=$tel;
+        }
+        catch(PDOException $e){
+            print('Error : ' . $e->getMessage());
+            exit();
+        }
+        $sql = "SELECT bdate FROM person join person_LOGIN using(id) WHERE login = :login"; 
+        try{
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':login', $_SESSION['login'], PDO::PARAM_STR);
+            $stmt->execute();
+            $date = $stmt->fetchColumn();
+            $values['field-date']=$date;
+        }
+        catch(PDOException $e){
+            print('Error : ' . $e->getMessage());
+            exit();
+        }
+
+        $sql = "SELECT gender FROM person join person_LOGIN using(id) WHERE login = :login"; 
+        try{
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':login', $_SESSION['login'], PDO::PARAM_STR);
+            $stmt->execute();
+            $gen = $stmt->fetchColumn();
+            $values['radio-group-1']=$gen;
+        }
+        catch(PDOException $e){
+            print('Error : ' . $e->getMessage());
+            exit();
+        }
+
+        $sql = "SELECT biography FROM person join person_LOGIN using(id) WHERE login = :login"; 
+        try{
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':login', $_SESSION['login'], PDO::PARAM_STR);
+            $stmt->execute();
+            $bio = $stmt->fetchColumn();
+            $values['bio']=$bio;
+        }
+        catch(PDOException $e){
+            print('Error : ' . $e->getMessage());
+            exit();
+        }
     printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
   }
 
@@ -268,23 +333,23 @@ else {
   }
 
   
-  if (emailExists($email, $db)) { 
-        try {
-        $dp=$db->prepare("SELECT id from person where email=:email");
-        $dp->bindParam(':email', $email);
-        $dp->execute();
-        }
-        catch(PDOException $e){
-            print('Error : ' . $e->getMessage());
-            exit();
-        }
-        $id = $dp->fetchColumn();
+//   if (emailExists($email, $db)) { 
+//         try {
+//         $dp=$db->prepare("SELECT id from person where email=:email");
+//         $dp->bindParam(':email', $email);
+//         $dp->execute();
+//         }
+//         catch(PDOException $e){
+//             print('Error : ' . $e->getMessage());
+//             exit();
+//         }
+//         $id = $dp->fetchColumn();
 
-        if($id!=$_SESSION['uid']) {
-            setcookie('field-email_error', '2');
-            $errors = TRUE;
-        }
-    }
+//         if($id!=$_SESSION['uid']) {
+//             setcookie('field-email_error', '2');
+//             $errors = TRUE;
+//         }
+//     }
 
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
 

@@ -41,13 +41,14 @@ function emailExists($email, $pdo) {
     if(is_null($id)) {
         $id=0;
     }
+    print('ghjhghjhghjhgjghjg');
     $check=$pdo->prepare("SELECT login from person_LOGIN where id=:id");
     $check->bindParam(':id', $id);
     $check->execute();
     $login=$check->fetchColumn();
-    print('ghjhghjhghjhgjghjg');
+    
     if($login==$_SESSION['login'] && !is_null($login)) {
-        $count = $count-1;
+        $count = 0;
     }
     // 5. Закрытие курсора (необязательно, но рекомендуется)
     $stmt->closeCursor();

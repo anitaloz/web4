@@ -370,7 +370,6 @@ else {
         exit();
     }
   }
-}
   else {
     $login = rand()%10000000;
     $pass = rand()%10000000000;

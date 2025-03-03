@@ -33,7 +33,13 @@ function emailExists($email, $pdo) {
 
     // 4. Получение результата запроса.
     $count = $stmt->fetchColumn(); // Получаем сразу значение COUNT(*)
-
+    $check=$pdo->prepare("SELECT login from person_LOGIN where id=(SELECT from person where email=:email)");
+    $check->bindParam(':email', $email)
+    $check->execute();
+    $login=$check->fetchColumn();
+    if($login===$_SESSION['login']) {
+        $count = 0;
+    }
     // 5. Закрытие курсора (необязательно, но рекомендуется)
     $stmt->closeCursor();
 
@@ -256,7 +262,7 @@ else {
     setcookie('field-email_error', '1');
     $errors = TRUE;
   }
-  if (emailExists($email, $db)) { 
+  if (emailExists($email, $db) && ) { 
     setcookie('field-email_error', '2');
     $errors = TRUE;
   }
@@ -294,7 +300,7 @@ else {
   setcookie('bio_value', $_POST['bio'], time() + 365 * 24 * 60 * 60);
 
 
-  if ($errors && !isset($_COOKIE[session_name()])) {
+  if ($errors) {
     header('Location: index.php');
     exit();
   }

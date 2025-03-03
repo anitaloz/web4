@@ -297,7 +297,7 @@ else {
     //setcookie('bio_error', '', 100000);
   }
 
-  if (!empty($_COOKIE[session_name()]) &&
+  if (isset($_COOKIE[session_name()]) &&
   session_start() && !empty($_SESSION['login'])) {
   // TODO: перезаписать данные в БД новыми данными,
   // кроме логина и пароля.

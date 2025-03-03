@@ -275,6 +275,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             print('Error : ' . $e->getMessage());
             exit();
         }
+
+
+        $sql = "SELECT lang_id FROM personlang(pers_id as id, lang_id) join person_LOGIN using(id) WHERE login = :login"; 
+        try{
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':login', $_SESSION['login'], PDO::PARAM_STR);
+            $stmt->execute();
+            $lang = $stmt->fetchAll();
+            $values['languages']=$lang;
+        }
+        catch(PDOException $e){
+            print('Error : ' . $e->getMessage());
+            exit();
+        }
     printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
   }
 

@@ -175,6 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // TODO: аналогично все поля.
     if (empty($errors) && isset($_COOKIE[session_name()]) &&
     session_start() && !empty($_SESSION['login'])) {
+      printf($_SESSION['login'])
         $sql = "SELECT fio FROM person join person_LOGIN using(id) WHERE login = :login"; 
         $stmt = $pdo->prepare($sql);
         if ($stmt === false) {
@@ -187,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         }
         // 4. Получение результата запроса.
         $fio = $stmt->fetchColumn();
-        printf($fio);
+        //printf($fio);
         $values['fio']=$fio;
         // 5. Закрытие курсора (необязательно, но рекомендуется)
     // TODO: загрузить данные пользователя из БД

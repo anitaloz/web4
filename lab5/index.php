@@ -34,7 +34,7 @@ function emailExists($email, $pdo) {
     // 4. Получение результата запроса.
     $count = $stmt->fetchColumn(); // Получаем сразу значение COUNT(*)
     $check=$pdo->prepare("SELECT login from person_LOGIN where id=(SELECT from person where email=:email)");
-    $check->bindParam(':email', $email)
+    $check->bindParam(':email', $email);
     $check->execute();
     $login=$check->fetchColumn();
     if($login===$_SESSION['login']) {

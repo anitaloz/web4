@@ -312,7 +312,7 @@ else {
   // Проверяем меняются ли ранее сохраненные данные или отправляются новые.
 
   if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
-    $dop=$db->prepare("SELECT id from person_LOGIN where login=:login")
+    $dop=$db->prepare("SELECT id from person_LOGIN where login=:login");
     $dop->bindParam(':login', $_SESSION['login']);
     $dop->execute();
     $stmt = $db->prepare("UPDATE person set fio=:fio, tel=:tel, email=:email, bdate=:bdate, gender=:gender, biography=:biography where id=:id");

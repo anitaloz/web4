@@ -49,7 +49,13 @@ if (isset($_COOKIE[session_name()]) && session_start()) {
     // Если есть логин в сессии, то пользователь уже авторизован.
     // TODO: Сделать выход (окончание сессии вызовом session_destroy()
     //при нажатии на кнопку Выход).
-    // Делаем перенаправление на форму.
+    // Делаем перенаправление на форму
+    if(isset($_POST['logout'])){
+      session_unset();
+      session_destroy();
+      header('Location: login.php');
+      exit();
+    }
     header('Location: ./');
     exit();
   }

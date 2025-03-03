@@ -185,12 +185,13 @@
                         <input type="submit" value="Сохранить" />
                     </div>
                 </form>
-                <?php if (isset($_COOKIE[session_name()]) && !empty($_SESSION['login']))
-                {
-                    print('<form method="post" action="">
-                        <input type="submit" name="logout" value="Выход">
+                <?php 
+                    if(isset($_COOKIE[session_name()])){
+                        print('<form class="logout_form" action="login.php" method="POST">
+                        <input type="submit" name="logout" value="Выйти"/> 
                     </form>');
-                }?>
+                    }
+                 ?>
             </div>
             <footer>
                 <p> (с) Тополян Алина</p>

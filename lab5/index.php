@@ -12,40 +12,48 @@ header('Content-Type: text/html; charset=UTF-8');
 
 function emailExists($email, $pdo) {
 
-    // 1. Проверяем существование email и получаем login в одном запросе (это более эффективно)
-    $sql = "SELECT pl.login
-            FROM person p
-            LEFT JOIN person_LOGIN pl ON p.id = pl.id
-            WHERE p.email = :email";
-
+    $sql = "SELECT COUNT(*) FROM person WHERE email = :email"; 
     $stmt = $pdo->prepare($sql);
+
 
     if ($stmt === false) {
         error_log("Ошибка подготовки запроса: " . $pdo->errorInfo()[2]);
-        return false; // В случае ошибки возвращаем false
+        return true; 
     }
 
-    $stmt->bindValue(':email', $email, PDO::PARAM_STR); // Используем bindValue
+
+    $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+
     if (!$stmt->execute()) {
-        error_log("Ошибка выполнения запроса: " . $stmt->errorInfo()[2]);
-        return false; // В случае ошибки возвращаем false
+
+        error_log("Ошибка выполнения запроса: " . $stmt->errorInfo()[2]); 
+        return true; 
     }
 
-    $login = $stmt->fetchColumn();
+    // 4. Получение результата запроса.
+    $count = $stmt->fetchColumn(); // Получаем сразу значение COUNT(*)
 
-    // 2. Проверка существования login и совпадения с данными сессии
-    if ($login !== false && $login === $_SESSION['login']) {
-        // Email существует и связан с текущим пользователем.
-        $stmt->closeCursor();
-        return true; // Или false, если вы хотите запретить использование email, связанного с текущим пользователем.
+    $dp=$pdo->prepare("SELECT id from person where email=:email");
+    $dp->bindParam(':email', $email);
+    $dp->execute();
+    $id = $dp->fetchColumn();
+    if(is_null($id)) {
+        $id=0;
     }
-
+    $check=$pdo->prepare("SELECT login from person_LOGIN where id=:id");
+    $check->bindParam(':id', $id);
+    $check->execute();
+    $login=$check->fetchColumn();
+    if($login===$_SESSION['login'] && !is_null($login)) {
+        $count = $count-1;
+    }
+    // 5. Закрытие курсора (необязательно, но рекомендуется)
     $stmt->closeCursor();
 
-    // 3. Если login не найден или не совпадает с данными сессии, email не существует
-    return false;
-}
-
+    // 6. Возврат true, если email найден в базе, иначе false.
+    return $count > 0;
+}//функция для проверки почты
 
 
 

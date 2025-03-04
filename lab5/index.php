@@ -351,6 +351,7 @@ else {
   if (emailExists($email, $db)) { 
         //$messages [] = $id; 
         $messages [] = 'check';
+        print('check');
         try {
         $dp=$db->prepare("SELECT id from person where email=:email");
         $dp->bindParam(':email', $email);
@@ -362,12 +363,13 @@ else {
         }
         $id = $dp->fetchColumn();
         
+        print($id);
 
-        // if($id!=$_SESSION['uid']) {
-            
-        //     setcookie('field-email_error', '2');
-        //     $errors = TRUE;
-        // }
+        if($id!=$_SESSION['uid']) {
+            print('check2')
+            setcookie('field-email_error', '2');
+            $errors = TRUE;
+        }
     }
 
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);

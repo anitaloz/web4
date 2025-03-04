@@ -366,7 +366,7 @@ else {
         print($id);
 
         if($id!=$_SESSION['uid']) {
-            print('check2')
+            print('check2');
             setcookie('field-email_error', '2');
             $errors = TRUE;
         }

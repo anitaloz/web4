@@ -359,7 +359,7 @@ else {
             print('Error : ' . $e->getMessage());
             exit();
         }
-        setcookie('idcheck', $id)
+        setcookie('idcheck', $id);
 
         if($id!=$_SESSION['uid']) {
             setcookie('field-email_error', '2');

@@ -349,21 +349,25 @@ else {
   
   if (emailExists($email, $db)) { 
     $id;
+    $login;
         try {
           $dp=$db->prepare("SELECT id from person where email=?");
           // $dp->bindParam(':email', $email);
           $dp->execute([$email]);
           $id = $dp->fetchColumn();
+
+          $check=$pdo->prepare("SELECT id from person_LOGIN where login=:id");
+          $check->bindParam(':id', $_SESSION['login']);
+          $check->execute();
+          $login=$check->fetchColumn();
         }
         catch(PDOException $e){
             print('Error : ' . $e->getMessage());
             exit();
         }
         setcookie('idcheck', $id);
-        $s=$_SESSION['uid'];
-        setcookie('ln', $s);
-        var_dump($_SESSION['uid']);
-        if($id!==$_SESSION['uid']) {
+        
+        if($id!=$login) {
             setcookie('field-email_error', '2');
             $errors = TRUE;
         }

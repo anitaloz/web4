@@ -356,7 +356,7 @@ else {
           $dp->execute([$email]);
           $id = $dp->fetchColumn();
 
-          $check=$pdo->prepare("SELECT id from person_LOGIN where login=:id");
+          $check=$db->prepare("SELECT id from person_LOGIN where login=:id");
           $check->bindParam(':id', $_SESSION['login']);
           $check->execute();
           $login=$check->fetchColumn();

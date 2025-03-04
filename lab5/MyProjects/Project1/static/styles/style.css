@@ -2,7 +2,7 @@
 .name {float:left; text-align: left; font-size:25pt; font-family:"DacikPush"; color:#b33803; font-weight: normal; position:absolute; top: 40px; left:120px;}
 
 /* Сообщения об ошибках и поля с ошибками выводим с красным бордюром. */
-.log { padding:10%; }
+.log { padding:10%; margin:auto;}
 .error {
     border: 2px solid rgb(150, 30, 0);
     background-color:#b3350379;

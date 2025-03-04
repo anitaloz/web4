@@ -349,7 +349,7 @@ else {
 
   
   if (emailExists($email, $db)) { 
-        $messages [] = $id; 
+        //$messages [] = $id; 
         $messages [] = 'check';
         try {
         $dp=$db->prepare("SELECT id from person where email=:email");

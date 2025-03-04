@@ -300,6 +300,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в базе данных.
 else {
+  session_start();
   $user = 'u68598'; // Заменить на ваш логин uXXXXX
   $pass = '8795249'; // Заменить на пароль
   $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,

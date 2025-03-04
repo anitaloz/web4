@@ -348,23 +348,24 @@ else {
   }
 
   
-//   if (emailExists($email, $db)) { 
-//         try {
-//         $dp=$db->prepare("SELECT id from person where email=:email");
-//         $dp->bindParam(':email', $email);
-//         $dp->execute();
-//         }
-//         catch(PDOException $e){
-//             print('Error : ' . $e->getMessage());
-//             exit();
-//         }
-//         $id = $dp->fetchColumn();
+  if (emailExists($email, $db)) { 
+        try {
+        $dp=$db->prepare("SELECT id from person where email=:email");
+        $dp->bindParam(':email', $email);
+        $dp->execute();
+        }
+        catch(PDOException $e){
+            print('Error : ' . $e->getMessage());
+            exit();
+        }
+        $id = $dp->fetchColumn();
 
-//         if($id!=$_SESSION['uid']) {
-//             setcookie('field-email_error', '2');
-//             $errors = TRUE;
-//         }
-//     }
+        if($id!=$_SESSION['uid']) {
+            $messages [] = $id; 
+            setcookie('field-email_error', '2');
+            $errors = TRUE;
+        }
+    }
 
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
 

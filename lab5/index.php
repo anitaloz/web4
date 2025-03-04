@@ -1,5 +1,4 @@
 <?php
-  session_start();
 
 /**
  * Реализовать возможность входа с паролем и логином с использованием
@@ -351,6 +350,8 @@ else {
   
   if (emailExists($email, $db)) { 
     $id;
+    session_start();
+
         try {
           $dp=$db->prepare("SELECT id from person where email=?");
           // $dp->bindParam(':email', $email);

@@ -348,10 +348,8 @@ else {
     $errors = TRUE;
   }
   
-  if (emailExists($email, $db)) { 
+  if (emailExists($email, $db) && session_start()) { 
     $id;
-    session_start();
-
         try {
           $dp=$db->prepare("SELECT id from person where email=?");
           // $dp->bindParam(':email', $email);

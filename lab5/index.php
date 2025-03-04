@@ -346,29 +346,22 @@ else {
     setcookie('field-email_error', '1');
     $errors = TRUE;
   }
-
-  print('x');
   
   if (emailExists($email, $db)) { 
-        //$messages [] = $id; 
-        $messages [] = 'check';
-        print('check');
+    $id;
         try {
-        $dp=$db->prepare("SELECT id from person where email=:email");
-        $dp->bindParam(':email', $email);
+          $dp=$db->prepare("SELECT id from person where email=:email");
+          $dp->bindParam(':email', $email);
         $dp->execute();
+        $id = $dp->fetchColumn();
         }
         catch(PDOException $e){
             print('Error : ' . $e->getMessage());
             exit();
         }
-        $id = $dp->fetchColumn();
-        
-        print($id);
 
         if($id!=$_SESSION['uid']) {
-            print('check2');
-            setcookie('field-email_error', '2');
+            setcookie('field-email_error', '1');
             $errors = TRUE;
         }
     }

@@ -101,8 +101,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             <div class="content container-fluid mt-sm-0" >
               <div class="log">
                 <form action="" method="post">
-                  <input name="login" />
-                  <input name="pass" />
+                  <label> 
+                    Логин:
+                    <input name="login" />
+                  </label>
+                  <label>
+                    Пароль:
+                    <input name="pass" />
+                  </label>
                   <input type="submit" value="Войти" />
                 </form>
               </div>

@@ -349,6 +349,8 @@ else {
 
   
   if (emailExists($email, $db)) { 
+        $messages [] = $id; 
+        $messages [] = 'check';
         try {
         $dp=$db->prepare("SELECT id from person where email=:email");
         $dp->bindParam(':email', $email);
@@ -359,8 +361,7 @@ else {
             exit();
         }
         $id = $dp->fetchColumn();
-        $messages [] = $id; 
-        $messages [] = 'check';
+        
 
         if($id!=$_SESSION['uid']) {
             

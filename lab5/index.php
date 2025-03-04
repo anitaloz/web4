@@ -363,11 +363,11 @@ else {
         $id = $dp->fetchColumn();
         
 
-        if($id!=$_SESSION['uid']) {
+        // if($id!=$_SESSION['uid']) {
             
-            setcookie('field-email_error', '2');
-            $errors = TRUE;
-        }
+        //     setcookie('field-email_error', '2');
+        //     $errors = TRUE;
+        // }
     }
 
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);

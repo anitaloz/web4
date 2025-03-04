@@ -361,9 +361,9 @@ else {
         }
         setcookie('idcheck', $id);
         $s=$_SESSION['uid'];
-        setcookie('idch', $s);
-
-        if((int)$id!=(int)$_SESSION['uid']) {
+        setcookie('ln', $s);
+        var_dump($_SESSION['uid']);
+        if($id!==$_SESSION['uid']) {
             setcookie('field-email_error', '2');
             $errors = TRUE;
         }

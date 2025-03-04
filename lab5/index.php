@@ -359,9 +359,11 @@ else {
             exit();
         }
         $id = $dp->fetchColumn();
+        $messages [] = $id; 
+        $messages [] = 'check';
 
         if($id!=$_SESSION['uid']) {
-            $messages [] = $id; 
+            
             setcookie('field-email_error', '2');
             $errors = TRUE;
         }

@@ -360,6 +360,7 @@ else {
             exit();
         }
         setcookie('idcheck', $id);
+        setcookie('idch', $_SESSION['uid']);
 
         if((int)$id!=(int)$_SESSION['uid']) {
             setcookie('field-email_error', '2');

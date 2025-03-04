@@ -74,12 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-      <!-- <style>
-/* Сообщения об ошибках и поля с ошибками выводим с красным бордюром. */
-.error {
-  border: 2px solid red;
-}
-    </style> -->
     <link rel="icon" href="MyProjects/Project1/око1.ico" type="image/x-icon">
     <link rel="stylesheet" href="MyProjects/Project1/static/styles/style.css">
 
@@ -104,12 +98,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 </nav>
             </div>
             
-            <div class="content container-fluid mt-sm-0">
-                        <form action="" method="post">
-                          <input name="login" />
-                          <input name="pass" />
-                          <input type="submit" value="Войти" />
-                        </form>
+            <div class="content container-fluid mt-sm-0" >
+              <div class="log">
+                <form action="" method="post">
+                  <input name="login" />
+                  <input name="pass" />
+                  <input type="submit" value="Войти" />
+                </form>
+              </div>
             </div>
 
 <?php

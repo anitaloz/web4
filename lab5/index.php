@@ -347,6 +347,7 @@ else {
     $errors = TRUE;
   }
 
+  print('x');
   
   if (emailExists($email, $db)) { 
         //$messages [] = $id; 

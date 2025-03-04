@@ -104,11 +104,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                   <label> 
                     Логин:<br />
                     <input name="login" />
-                  </label>
+                  </label> <br />
                   <label>
                     Пароль:<br />
                     <input name="pass" />
                   </label>
+                  <br />
                   <input type="submit" value="Войти" />
                 </form>
               </div>

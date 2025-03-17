@@ -464,7 +464,7 @@ else {
     $login = generate_pass(7);
     $pass = generate_pass();
     // Сохраняем в Cookies.
-    $hash_pass=password_hash($pass);
+    $hash_pass=password_hash($pass, PASSWORD_DEFAULT);
     setcookie('login', $login);
     setcookie('pass', $pass);
     try {

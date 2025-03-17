@@ -133,6 +133,7 @@ else {
       header('Location: adm_page.php');
     }
   }
+  else {
   $user = 'u68598';
   $pass = '8795249';
   $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
@@ -161,4 +162,5 @@ else {
   else {
     print('Неверный логин или пароль');
   }
+}
 }

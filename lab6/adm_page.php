@@ -20,37 +20,41 @@ else
 
         $stmt = $db->prepare($query); // Подготавливаем запрос
         $stmt->execute();// Выполняем запрос с параметром
-        echo "<table border='1'>"; // Начало HTML-таблицы
-        echo "<tr>
-                <th>ID</th>
-                <th>FIO</th>
-                <th>Tel</th>
-                <th>email</th>
-                <th>bdate</th>
-                <th>gender</th>
-                <th>biography</th>
-            </tr>"; // Заголовки столбцов
+        ?>
 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<tr>";
-            echo "<td>" . htmlspecialchars($row['id']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['fio']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['tel']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['bdate']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['biography']) . "</td>";
-            echo '<form method="get action="">
-            <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row["id"]) ?>">
-            <button type="submit"></button>
-          </form>';
-            echo '<form method="post" action="">
-            <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row["id"]) ?>">
-            <button type="submit">Удалить</button>
-          </form>';
-            echo "</tr>";
-            }
+        <table>
+        <tr>
+            <th>ID</th>
+            <th>FIO</th>
+            <th>Tel</th>
+            <th>Email</th>
+            <th>Bdate</th>
+            <th>Gender</th>
+            <th>Biography</th>
+            <th>Действия</th>
+        </tr>
 
+        <?php foreach ($results as $row): ?>
+            <tr>
+            <td><?= htmlspecialchars($row['id']) ?></td>
+            <td><?= htmlspecialchars($row['fio']) ?></td>
+            <td><?= htmlspecialchars($row['tel']) ?></td>
+            <td><?= htmlspecialchars($row['email']) ?></td>
+            <td><?= htmlspecialchars($row['bdate']) ?></td>
+            <td><?= htmlspecialchars($row['gender']) ?></td>
+            <td><?= htmlspecialchars($row['biography']) ?></td>
+            <td>
+                <form method="post" action="">
+                <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
+                <button type="submit">Удалить</button>
+                </form>
+            </td>
+            </tr>
+        <?php endforeach; ?>
+
+        </table>
+
+<?php
 
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_id'])) {

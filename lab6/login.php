@@ -130,7 +130,7 @@ else {
     header('HTTP/1.1 401 Unanthorized');
     header('WWW-Authenticate: Basic realm="My site"');
     print('<h1>401 Требуется авторизация</h1>');
-    exit();
+    exit();}
     else{
       header('Location: adm_page.php')
     }

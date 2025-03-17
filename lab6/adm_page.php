@@ -63,7 +63,7 @@ else
       
         // Защита от SQL-инъекций с использованием подготовленного запроса
         $delete_query = "DELETE FROM person WHERE id = :id";
-        $delete_querylang="DELETE FROM personlang WHERE id=:id";
+        $delete_querylang="DELETE FROM personlang WHERE pers_id=:id";
         try {
             $delete_stmt = $db->prepare($delete_querylang);
             $delete_stmt->bindParam(':id', $delete_id, PDO::PARAM_INT); // Явно указываем тип параметра

@@ -40,13 +40,37 @@ else
             echo "<td>" . htmlspecialchars($row['bdate']) . "</td>";
             echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
             echo "<td>" . htmlspecialchars($row['biography']) . "</td>";
-            echo '<td> <form class="update_form" action="index.php" method="GET">
-            <input type="submit" name="update" value="Изменить"/> </form> </td>';
-            echo '<td> <form class="delete_form" action="index.php" method="POST">
-            <input type="submit" name="delete" value="Удалить"/> </form> </td>';
+            echo '<form method="get action="">
+            <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
+            <button type="submit"></button>
+          </form>';
+            echo '<form method="post" action="">
+            <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
+            <button type="submit">Удалить</button>
+          </form>';
             echo "</tr>";
             }
 
-        echo "</table>"; // Конец HTML-таблицы
+
     }
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_id'])) {
+        $delete_id = $_POST['delete_id'];
+      
+        // Защита от SQL-инъекций с использованием подготовленного запроса
+        $delete_query = "DELETE FROM person WHERE id = :id";
+        try {
+          $delete_stmt = $db->prepare($delete_query);
+          $delete_stmt->bindParam(':id', $delete_id, PDO::PARAM_INT); // Явно указываем тип параметра
+          $delete_stmt->execute();
+      
+          echo "<p style='color: green;'>Строка с ID " . htmlspecialchars($delete_id) . " успешно удалена.</p>";
+      
+          // Перенаправление на эту же страницу для обновления таблицы (необязательно)
+          header("Location: ".$_SERVER['PHP_SELF']);
+          exit;
+      
+        } catch (PDOException $e) {
+          echo "<p style='color: red;'>Ошибка удаления: " . $e->getMessage() . "</p>";
+        }
+      }
 }

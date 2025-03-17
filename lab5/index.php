@@ -10,7 +10,7 @@
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
 
-function check_login($login)
+function check_login($login, $db)
 {
   try{
     $stmt = $db->prepare("SELECT COUNT(*) FROM LOGIN WHERE login = :login");
@@ -478,7 +478,7 @@ else {
   }
   else {
     $login = 'AO6jWvH';
-    while(check_login($login)>0)
+    while(check_login($login, $db)>0)
     {
       $login = generate_pass(7);
     }

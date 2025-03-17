@@ -20,7 +20,6 @@ else
 
         $stmt = $db->prepare($query); // Подготавливаем запрос
         $stmt->execute();// Выполняем запрос с параметром
-        //$result = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
         echo "<table border='1'>"; // Начало HTML-таблицы
         echo "<tr>
                 <th>ID</th>
@@ -41,7 +40,7 @@ else
             echo "<td>" . htmlspecialchars($row['bdate']) . "</td>";
             echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
             echo "<td>" . htmlspecialchars($row['biography']) . "</td>";
-            echo '<td> <form class="update_form" action="index.php" method="POST">
+            echo '<td> <form class="update_form" action="index.php" method="GET">
             <input type="submit" name="update" value="Изменить"/> </form> </td>';
             echo '<td> <form class="delete_form" action="index.php" method="POST">
             <input type="submit" name="delete" value="Удалить"/> </form> </td>';

@@ -41,6 +41,12 @@ else
             echo "<td>" . htmlspecialchars($row['bdate']) . "</td>";
             echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
             echo "<td>" . htmlspecialchars($row['biography']) . "</td>";
+            echo "<td> <form class="update_form" action="index.php" method="POST">
+            <input type="submit" name="update" value="Изменить"/> 
+        </form></td>";
+            echo "<td> <form class="delete_form" action="index.php" method="POST">
+            <input type="submit" name="delete" value="Удалить"/> 
+        </form> </td>";
             echo "</tr>";
             }
 

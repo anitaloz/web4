@@ -1,5 +1,6 @@
 
 <?php
+
 if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] != 'admin' || md5($_SERVER['PHP_AUTH_PW']) != md5('123')) 
 {
     ?>
@@ -7,8 +8,10 @@ if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERV
     <h1>Требуется авторизация<h1>
     <?php
 }
+
 else
 {
+    $messAction=null;
     $user = 'u68598'; // Заменить на ваш логин uXXXXX
     $pass = '8795249'; // Заменить на пароль
     $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,

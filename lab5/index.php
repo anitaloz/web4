@@ -18,11 +18,11 @@ function check_login($login)
     $stmt->execute();
     $fl = $stmt->fetchColumn();
   }
-  return $fl;
   catch (PDOException $e){
     print('Error : ' . $e->getMessage());
     return false;
   }
+  return $fl;
 }
 
 function generate_pass(int $length=9):string{

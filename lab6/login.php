@@ -122,16 +122,17 @@ else {
   $login = $_POST['login'];
   $password = md5($_POST['pass']);
   if ($login=='admin' && $password==md5('123')){
-    if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] != 'admin' || md5($_SERVER['PHP_AUTH_PW']) != md5('123')) 
-    {
-    header('HTTP/1.1 401 Unanthorized');
-    header('WWW-Authenticate: Basic realm="My site"');
-    print('<h1>401 Требуется авторизация</h1>');
-    exit();
-    }
-    else {
-      header('Location: adm_page.php');
-    }
+  //   if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] != 'admin' || md5($_SERVER['PHP_AUTH_PW']) != md5('123')) 
+  //   {
+  //   header('HTTP/1.1 401 Unanthorized');
+  //   header('WWW-Authenticate: Basic realm="My site"');
+  //   print('<h1>401 Требуется авторизация</h1>');
+  //   exit();
+  //   }
+  //   else {
+  //     header('Location: adm_page.php');
+  //   }
+  include('admin.php')
   }
   else {
   $user = 'u68598';

@@ -10,6 +10,26 @@
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
 
+function check_login($login, $db)
+{
+  try{
+    $stmt = $db->prepare("SELECT COUNT(*) FROM LOGIN WHERE login = :login");
+    $stmt->bindParam(':login', $login, PDO::PARAM_STR);
+    $stmt->execute();
+    $fl = $stmt->fetchColumn();
+  }
+  catch (PDOException $e){
+    print('Error : ' . $e->getMessage());
+    return false;
+  }
+  return $fl;
+}
+
+function generate_pass(int $length=9):string{
+  $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  $shuff = str_shuffle($characters);
+  return substr($shuff, 0, $length);
+}
 
 function emailExists($email, $pdo) {
 
@@ -193,7 +213,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $session_started = true;
     if (!empty($_SESSION['login'])) {
       if(isset($_POST['update'])){
-        
+
       }
       header('Location: ./');
       exit();
@@ -466,10 +486,14 @@ else {
     }
   }
   else {
-    $login = rand()%10000000;
-    $pass = rand()%10000000000;
+    $login = generate_pass(7);
+    while(check_login($login, $db)>0)
+    {
+      $login = generate_pass(7);
+    }
+    $pass = generate_pass();
     // Сохраняем в Cookies.
-    $hash_pass=md5($pass);
+    $hash_pass=password_hash($pass, PASSWORD_DEFAULT);
     setcookie('login', $login);
     setcookie('pass', $pass);
     try {

@@ -25,6 +25,7 @@ function isValid($login, $db) {
   return $count > 0;
 }
 
+
 function password_check($login, $password, $db) {
   $passw;
   try{
@@ -32,12 +33,15 @@ function password_check($login, $password, $db) {
     $stmt->bindParam(':login', $login, PDO::PARAM_STR);
     $stmt->execute();
     $passw = $stmt->fetchColumn();
+    if($passw===false){
+      return false;
+    }
+    return password_verify($password, $passw);
   } 
   catch (PDOException $e){
     print('Error : ' . $e->getMessage());
-    exit();
+    return false;
   }
-  return ($passw==$password);
 }
 // В суперглобальном массиве $_SESSION хранятся переменные сессии.
 // Будем сохранять туда логин после успешной авторизации.
@@ -120,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 // Иначе, если запрос был методом POST, т.е. нужно сделать авторизацию с записью логина в сессию.
 else {
   $login = $_POST['login'];
-  $password = md5($_POST['pass']);
+  $password = $_POST['pass'];
   if ($login=='admin' && $password==md5('123')){
     if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] != 'admin' || md5($_SERVER['PHP_AUTH_PW']) != md5('123')) 
     {

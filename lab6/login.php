@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 else {
   $login = $_POST['login'];
   $password = $_POST['pass'];
-  if ($login=='admin' && $password==md5('123')){
+  if ($login=='admin' && $password=='123'){
     if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] != 'admin' || md5($_SERVER['PHP_AUTH_PW']) != md5('123')) 
     {
     header('HTTP/1.1 401 Unanthorized');

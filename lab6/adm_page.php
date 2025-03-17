@@ -101,6 +101,6 @@ else
       if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_id'])) {
         $update_id = $_POST['update_id'];
         $_SESSION['login']=$_POST['update_id'];
-        header("Location: index.php")
+        header("Location: index.php");
       }
 }

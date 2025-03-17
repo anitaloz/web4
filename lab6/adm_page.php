@@ -18,7 +18,7 @@ else
     {
         $query = "SELECT id, fio, tel, email, bdate, gender, biography FROM person"; // Запрос с параметром
 
-        $stmt = db->prepare($query); // Подготавливаем запрос
+        $stmt = $db->prepare($query); // Подготавливаем запрос
         $stmt->execute();// Выполняем запрос с параметром
         //$result = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
         echo "<table border='1'>"; // Начало HTML-таблицы

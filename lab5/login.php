@@ -32,12 +32,15 @@ function password_check($login, $password, $db) {
     $stmt->bindParam(':login', $login, PDO::PARAM_STR);
     $stmt->execute();
     $passw = $stmt->fetchColumn();
+    if($passw===false){
+      return false;
+    }
+    return password_verify($password, $passw);
   } 
   catch (PDOException $e){
     print('Error : ' . $e->getMessage());
-    exit();
+    return false;
   }
-  return ($passw==$password);
 }
 // В суперглобальном массиве $_SESSION хранятся переменные сессии.
 // Будем сохранять туда логин после успешной авторизации.
@@ -120,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 // Иначе, если запрос был методом POST, т.е. нужно сделать авторизацию с записью логина в сессию.
 else {
   $login = $_POST['login'];
-  $password = md5($_POST['pass']);
+  $password = $_POST['pass'];
 
   $user = 'u68598';
   $pass = '8795249';

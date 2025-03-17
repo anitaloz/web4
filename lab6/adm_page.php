@@ -69,7 +69,7 @@ else
         $delete_query = "DELETE FROM person WHERE id = :id";
         $delete_querylang="DELETE FROM personlang WHERE pers_id=:id";
         $delete_querylogin="DELETE FROM person_LOGIN WHERE id=:id";
-        $addition_query="SELECT login FROM person_LOGIN WHERE id=:id"
+        $addition_query="SELECT login FROM person_LOGIN WHERE id=:id";
         $delete_LOGIN="DELETE FROM LOGIN WHERE login=:login";
         try {
             $delete_stmt = $db->prepare($addition_query);

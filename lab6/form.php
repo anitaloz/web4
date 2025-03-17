@@ -186,6 +186,7 @@
                     <div class="kn pb-sm-3">
                         <input type="submit" value="Сохранить" />
                     </div>
+                    <a href="adm_page.php">Вход</a>
                 </form>
                 <?php 
                     if(isset($_COOKIE[session_name()]) && !empty($_SESSION['login'])){

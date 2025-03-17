@@ -477,7 +477,7 @@ else {
     }
   }
   else {
-    $login = 'AO6jWvH';
+    $login = generate_pass(7);
     while(check_login($login, $db)>0)
     {
       $login = generate_pass(7);

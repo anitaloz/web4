@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 else {
   $login = $_POST['login'];
   $password = md5($_POST['pass']);
-  if $login='admin'{
+  if ($login='admin'){
     if (empty($_SERVER['PHP_AUTH_USER']) ||
     empty($_SERVER['PHP_AUTH_PW']) ||
     $_SERVER['PHP_AUTH_USER'] != 'admin' ||

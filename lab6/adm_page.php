@@ -50,7 +50,7 @@ else
                 <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
                 <button type="submit">Удалить</button>
                 </form>
-                <form method="get" action="index.php">
+                <form method="post" action="">
                 <input type="hidden" name="update_id" value="<?= htmlspecialchars($row['id']) ?>">
                 <button type="submit">Изменить</button>
                 </form>
@@ -96,5 +96,11 @@ else
             } catch (PDOException $e) {
             echo "<p style='color: red;'>Ошибка удаления: " . $e->getMessage() . "</p>";
             }
+      }
+
+      if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_id'])) {
+        $update_id = $_POST['update_id'];
+        $_SESSION['login']=$_POST['update_id'];
+        header("Location: index.php")
       }
 }

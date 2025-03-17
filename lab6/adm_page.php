@@ -9,5 +9,5 @@ if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERV
 }
 else
 {
-    if($_SERVER['REQUEST_METHOD'] == 'GET')
+    if($_SERVER['REQUEST_METHOD'] == 'GET');
 }

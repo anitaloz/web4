@@ -24,6 +24,14 @@ else
         ?>
 
         <table border='1'>
+        <?php
+            if (!($messAction)) {
+            print('<div id="messAction">');
+            // Выводим все сообщения.
+                print($messAction);
+            print('</div>');
+            }
+        ?>
         <tr>
             <th>ID</th>
             <th>FIO</th>
@@ -87,10 +95,10 @@ else
             $delete_stmt->bindParam(':id', $delete_id, PDO::PARAM_INT);
             $delete_stmt->execute();
         
-            echo "<p style='color: green;'>Строка с ID " . htmlspecialchars($delete_id) . " успешно удалена.</p>";
-        
+            //echo "<p style='color: green;'>Строка с ID " . htmlspecialchars($delete_id) . " успешно удалена.</p>";
+            $messAction = '<p style="color: green;">Строка с ID " . htmlspecialchars($delete_id) . " успешно удалена.</p>';
             //header("Location: ".$_SERVER['PHP_SELF']);
-            exit;
+           // exit;
         
             } catch (PDOException $e) {
             echo "<p style='color: red;'>Ошибка удаления: " . $e->getMessage() . "</p>";

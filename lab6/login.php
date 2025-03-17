@@ -127,7 +127,7 @@ else {
   header('HTTP/1.1 401 Unanthorized');
   header('WWW-Authenticate: Basic realm="My site"');
   print('<h1>401 Требуется авторизация</h1>');
-  //exit();
+  exit();
 }
   $login = $_POST['login'];
   $password = md5($_POST['pass']);

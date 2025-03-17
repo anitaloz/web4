@@ -177,8 +177,8 @@
                     </label><br />
                     <label>
                         Биография:<br />
-                        <textarea name="bio"><?php print $values['bio']; ?></textarea>
-                    </label><br /> 
+                        <textarea name="bio"<?php if ($errors['bio']) {print 'class="error"';} ?>><?php print $values['bio']; ?></textarea>  
+                    </label><br />  
                     
                     С контрактом ознакомлен:<br />
                     <label> <input type="checkbox" name="check-1" <?php if ($errors['check-1']) {print 'class="error"';} ?>  checked="<?php if (!$errors['check-1']) {print 'checked';} ?>">

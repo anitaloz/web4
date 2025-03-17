@@ -69,13 +69,18 @@ else
         $delete_query = "DELETE FROM person WHERE id = :id";
         $delete_querylang="DELETE FROM personlang WHERE pers_id=:id";
         $delete_querylogin="DELETE FROM person_LOGIN WHERE id=:id";
-        $delete_LOGIN="DELETE FROM LOGIN WHERE login=(SELECT login FROM personlang WHERE pers_id=:id)";
+        $addition_query="SELECT login FROM person_LOGIN WHERE id=:id"
+        $delete_LOGIN="DELETE FROM LOGIN WHERE login=:login";
         try {
-            $delete_stmt = $db->prepare($delete_LOGIN);
+            $delete_stmt = $db->prepare($addition_query);
             $delete_stmt->bindParam(':id', $delete_id, PDO::PARAM_INT); // Явно указываем тип параметра
             $delete_stmt->execute();
+            $doplog=$delete_stmt->fetchColumn();
             $delete_stmt = $db->prepare($delete_querylogin);
             $delete_stmt->bindParam(':id', $delete_id, PDO::PARAM_INT); // Явно указываем тип параметра
+            $delete_stmt->execute();
+            $delete_stmt = $db->prepare($delete_LOGIN);
+            $delete_stmt->bindParam(':login', $doplog, PDO::PARAM_INT); // Явно указываем тип параметра
             $delete_stmt->execute();
             $delete_stmt = $db->prepare($delete_querylang);
             $delete_stmt->bindParam(':id', $delete_id, PDO::PARAM_INT); // Явно указываем тип параметра

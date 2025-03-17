@@ -189,7 +189,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 
 
-
+  if (isset($_COOKIE[session_name()]) && session_start()) {
+    $session_started = true;
+    if (!empty($_SESSION['login'])) {
+      if(isset($_POST['update'])){
+        
+      }
+      header('Location: ./');
+      exit();
+    }
+  }
   // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
   // ранее в сессию записан факт успешного логина.
   if (isset($_COOKIE[session_name()]) &&

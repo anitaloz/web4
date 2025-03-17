@@ -41,11 +41,11 @@ else
             echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
             echo "<td>" . htmlspecialchars($row['biography']) . "</td>";
             echo '<form method="get action="">
-            <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
+            <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row["id"]) ?>">
             <button type="submit"></button>
           </form>';
             echo '<form method="post" action="">
-            <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
+            <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row["id"]) ?>">
             <button type="submit">Удалить</button>
           </form>';
             echo "</tr>";

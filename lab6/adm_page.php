@@ -100,8 +100,8 @@ else
         
             //echo "<p style='color: green;'>Строка с ID " . htmlspecialchars($delete_id) . " успешно удалена.</p>";
             $messAction = '<p style="color: green;">Строка с ID " . htmlspecialchars($delete_id) . " успешно удалена.</p>';
-            //header("Location: ".$_SERVER['PHP_SELF']);
-           // exit;
+            header("Location: ".$_SERVER['PHP_SELF']);
+            exit;
         
             } catch (PDOException $e) {
             echo "<p style='color: red;'>Ошибка удаления: " . $e->getMessage() . "</p>";

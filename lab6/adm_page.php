@@ -49,6 +49,10 @@ else
                 <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
                 <button type="submit">Удалить</button>
                 </form>
+                <form method="get" action="">
+                <input type="hidden" name="update_id" value="<?= htmlspecialchars($row['id']) ?>">
+                <button type="submit">Изменить</button>
+                </form>
             </td>
             </tr>
         <?php endforeach; ?>

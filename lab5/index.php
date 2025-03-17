@@ -9,7 +9,11 @@
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
-
+function generate_pass(int $length=9):string{
+  $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  $shuff = str_shuffle($characters);
+  return substr($shuff, 0, $length);
+}
 
 function emailExists($email, $pdo) {
 
@@ -457,10 +461,10 @@ else {
     }
   }
   else {
-    $login = rand()%10000000;
-    $pass = rand()%10000000000;
+    $login = generate_pass(7);
+    $pass = generate_pass();
     // Сохраняем в Cookies.
-    $hash_pass=md5($pass);
+    $hash_pass=password_hash($pass);
     setcookie('login', $login);
     setcookie('pass', $pass);
     try {

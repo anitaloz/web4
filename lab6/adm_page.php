@@ -65,19 +65,21 @@ else
         $delete_query = "DELETE FROM person WHERE id = :id";
         $delete_querylang="DELETE FROM personlang WHERE id=:id";
         try {
+            $delete_stmt = $db->prepare($delete_querylang);
+            $delete_stmt->bindParam(':id', $delete_id, PDO::PARAM_INT); // Явно указываем тип параметра
+            $delete_stmt->execute();
+            $delete_stmt = $db->prepare($delete_query);
+            $delete_stmt->bindParam(':id', $delete_id, PDO::PARAM_INT); // Явно указываем тип параметра
+            $delete_stmt->execute();
         
-          $delete_stmt = $db->prepare($delete_query);
-          $delete_stmt->bindParam(':id', $delete_id, PDO::PARAM_INT); // Явно указываем тип параметра
-          $delete_stmt->execute();
-      
-          echo "<p style='color: green;'>Строка с ID " . htmlspecialchars($delete_id) . " успешно удалена.</p>";
-      
-          // Перенаправление на эту же страницу для обновления таблицы (необязательно)
-          header("Location: ".$_SERVER['PHP_SELF']);
-          exit;
-      
-        } catch (PDOException $e) {
-          echo "<p style='color: red;'>Ошибка удаления: " . $e->getMessage() . "</p>";
-        }
+            echo "<p style='color: green;'>Строка с ID " . htmlspecialchars($delete_id) . " успешно удалена.</p>";
+        
+            // Перенаправление на эту же страницу для обновления таблицы (необязательно)
+            header("Location: ".$_SERVER['PHP_SELF']);
+            exit;
+        
+            } catch (PDOException $e) {
+            echo "<p style='color: red;'>Ошибка удаления: " . $e->getMessage() . "</p>";
+            }
       }
 }

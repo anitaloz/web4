@@ -9,6 +9,22 @@
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
+
+function check_login($login)
+{
+  try{
+    $stmt = $db->prepare("SELECT COUNT(*) FROM LOGIN WHERE login = :login");
+    $stmt->bindParam(':login', $login, PDO::PARAM_STR);
+    $stmt->execute();
+    $fl = $stmt->fetchColumn();
+  }
+  return $fl;
+  catch (PDOException $e){
+    print('Error : ' . $e->getMessage());
+    return false;
+  }
+}
+
 function generate_pass(int $length=9):string{
   $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   $shuff = str_shuffle($characters);
@@ -462,6 +478,10 @@ else {
   }
   else {
     $login = generate_pass(7);
+    while(check_login($login)>0)
+    {
+      $login = generate_pass(7);
+    }
     $pass = generate_pass();
     // Сохраняем в Cookies.
     $hash_pass=password_hash($pass, PASSWORD_DEFAULT);

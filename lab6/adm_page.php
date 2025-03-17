@@ -77,7 +77,7 @@ else
             $delete_stmt->execute();
             $doplog=$delete_stmt->fetchColumn();
             $delete_stmt = $db->prepare($delete_querylogin);
-            $delete_stmt->bindParam(':id', $delete_id, PDO::PARAM_INT); // Явно указываем тип параметра
+            $delete_stmt->bindParam(':id', $delete_id, PDO::PARAM_STR); // Явно указываем тип параметра
             $delete_stmt->execute();
             $delete_stmt = $db->prepare($delete_LOGIN);
             $delete_stmt->bindParam(':login', $doplog, PDO::PARAM_INT); // Явно указываем тип параметра

@@ -132,7 +132,7 @@ else {
   //   else {
   //     header('Location: adm_page.php');
   //   }
-  include('admin.php')
+  include('admin.php');
   }
   else {
   $user = 'u68598';

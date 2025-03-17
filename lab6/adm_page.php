@@ -1,6 +1,5 @@
 
 <?php
-$messAction=array();
 if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] != 'admin' || md5($_SERVER['PHP_AUTH_PW']) != md5('123')) 
 {
     ?>
@@ -26,16 +25,6 @@ else
         ?>
 
         <table border='1'>
-        <?php
-        if (!empty($messAction)) {
-            print('<div id="messages">');
-            // Выводим все сообщения.
-            foreach ($messAction as $message) {
-                print($message);
-            }
-            print('</div>');
-    }
-        ?>
         <tr>
             <th>ID</th>
             <th>FIO</th>
@@ -100,7 +89,7 @@ else
             $delete_stmt->execute();
         
             //echo "<p style='color: green;'>Строка с ID " . htmlspecialchars($delete_id) . " успешно удалена.</p>";
-            $messAction[] = '<p style="color: green;">Строка с ID " . htmlspecialchars($delete_id) . " успешно удалена.</p>';
+            //$messAction[] = '<p style="color: green;">Строка с ID " . htmlspecialchars($delete_id) . " успешно удалена.</p>';
             header("Location: adm_page.php");
             exit;
         

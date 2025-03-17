@@ -96,12 +96,23 @@ else
             } catch (PDOException $e) {
             echo "<p style='color: red;'>Ошибка удаления: " . $e->getMessage() . "</p>";
             }
-      }
+    }
 
-      if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_id'])) {
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_id'])) {
         $update_id = $_POST['update_id'];
+        $update_query = "SELECT login FROM person_LOGIN WHERE id = :id";
+        try {
+            $update_stmt = $db->prepare($update_query);
+            $update_stmt->bindParam(':id', $update_id, PDO::PARAM_INT);
+            $update_stmt->execute();
+            $doplog=$update_stmt->fetchColumn();
+        }
+        catch (PDOException $e){
+            print('Error : ' . $e->getMessage());
+        }
         session_start();
-        $_SESSION['login']=$_POST['update_id'];
+        $_SESSION['login']=$doplog;
+        $_SESSION['uid']=$_POST['update_id'];
         header("Location: index.php");
-      }
+    }
 }

@@ -41,7 +41,7 @@ else
         echo "<td>" . htmlspecialchars($row['email']) . "</td>";
         echo "<td>" . htmlspecialchars($row['dbate']) . "</td>";
         echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['biography']) . "</td>"
+        echo "<td>" . htmlspecialchars($row['biography']) . "</td>";
         echo "</tr>";
         }
 

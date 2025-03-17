@@ -1,6 +1,6 @@
 
 <?php
-
+$messAction=array()
 if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] != 'admin' || md5($_SERVER['PHP_AUTH_PW']) != md5('123')) 
 {
     ?>
@@ -8,10 +8,9 @@ if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERV
     <h1>Требуется авторизация<h1>
     <?php
 }
-
 else
 {
-    $messAction=null;
+    ;
     $user = 'u68598'; // Заменить на ваш логин uXXXXX
     $pass = '8795249'; // Заменить на пароль
     $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
@@ -28,12 +27,14 @@ else
 
         <table border='1'>
         <?php
-            if (!($messAction)) {
-            print('<div id="messAction">');
+        if (!empty($messAction)) {
+            print('<div id="messages">');
             // Выводим все сообщения.
-                print($messAction);
-            print('</div>');
+            foreach ($messAction as $message) {
+                print($message);
             }
+            print('</div>');
+    }
         ?>
         <tr>
             <th>ID</th>
@@ -99,8 +100,8 @@ else
             $delete_stmt->execute();
         
             //echo "<p style='color: green;'>Строка с ID " . htmlspecialchars($delete_id) . " успешно удалена.</p>";
-            $messAction = '<p style="color: green;">Строка с ID " . htmlspecialchars($delete_id) . " успешно удалена.</p>';
-            header("Location: ".$_SERVER['PHP_SELF']);
+            $messAction[] = '<p style="color: green;">Строка с ID " . htmlspecialchars($delete_id) . " успешно удалена.</p>';
+            header("Location: adm_page.php");
             exit;
         
             } catch (PDOException $e) {

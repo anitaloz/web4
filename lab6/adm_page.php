@@ -89,7 +89,7 @@ else
         
             echo "<p style='color: green;'>Строка с ID " . htmlspecialchars($delete_id) . " успешно удалена.</p>";
         
-            header("Location: ".$_SERVER['PHP_SELF']);
+            //header("Location: ".$_SERVER['PHP_SELF']);
             exit;
         
             } catch (PDOException $e) {

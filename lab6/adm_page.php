@@ -23,7 +23,7 @@ else
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         ?>
 
-        <table border:1px>
+        <table border='1'>
         <tr>
             <th>ID</th>
             <th>FIO</th>

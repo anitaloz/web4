@@ -18,10 +18,9 @@ else
     {
         $query = "SELECT id, fio, tel, email, bdate, gender, biography FROM person"; // Запрос с параметром
 
-        pg_prepare($db, "my_query", $query); // Подготавливаем запрос
-        
-        //$min_calories = 100; // Пример значения параметра
-        $result = pg_execute($db, "my_query", array()); // Выполняем запрос с параметром
+        $stmt = db->prepare($query); // Подготавливаем запрос
+        $stmt->execute();// Выполняем запрос с параметром
+        //$result = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
         echo "<table border='1'>"; // Начало HTML-таблицы
         echo "<tr>
                 <th>ID</th>
@@ -33,17 +32,17 @@ else
                 <th>biography</th>
             </tr>"; // Заголовки столбцов
 
-        while ($row = pg_fetch_assoc($result)) {
-        echo "<tr>";
-        echo "<td>" . htmlspecialchars($row['id']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['fio']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['tel']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['dbate']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
-        echo "<td>" . htmlspecialchars($row['biography']) . "</td>";
-        echo "</tr>";
-        }
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($row['id']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['fio']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['tel']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['email']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['bdate']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['biography']) . "</td>";
+            echo "</tr>";
+            }
 
         echo "</table>"; // Конец HTML-таблицы
     }

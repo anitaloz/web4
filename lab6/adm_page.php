@@ -20,6 +20,7 @@ else
 
         $stmt = $db->prepare($query); // Подготавливаем запрос
         $stmt->execute();// Выполняем запрос с параметром
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         ?>
 
         <table>

@@ -49,10 +49,7 @@
                 <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
                 <button type="submit">Удалить</button>
                 </form>
-                <form method="post" action="">
-                <input type="hidden" name="update_id" value="<?= htmlspecialchars($row['id']) ?>">
-                <a href="" type="submit">Изменить</a>
-                </form>
+                <a href="index.php/?uid=<?= htmlspecialchars($row['id']) ?>">Изменить</a>
             </td>
             </tr>
         <?php endforeach; ?>
@@ -100,10 +97,7 @@
         }
     }
 
-    // if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_id'])) {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if($_SERVER['PHP_AUTH_USER'] == 'admin' || md5($_SERVER['PHP_AUTH_PW']) == md5('123'))
-        {
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_id'])) {
         $update_id = $_POST['update_id'];
         $update_query = "SELECT login FROM person_LOGIN WHERE id = :id";
         try {
@@ -120,5 +114,4 @@
         $_SESSION['login']=$doplog;
         $_SESSION['uid']=$_POST['update_id'];
         header("Location: index.php");
-        }
     }

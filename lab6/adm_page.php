@@ -47,11 +47,11 @@
             <td>
                 <form method="post" action="">
                 <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
-                <a href="">Удалить</a>
+                <button type="submit">Удалить</button>
                 </form>
                 <form method="post" action="">
                 <input type="hidden" name="update_id" value="<?= htmlspecialchars($row['id']) ?>">
-                <button type="submit">Изменить</button>
+                <a href="" type="submit">Изменить</a>
                 </form>
             </td>
             </tr>
@@ -100,7 +100,8 @@
         }
     }
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_id'])) {
+    // if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_id'])) {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if($_SERVER['PHP_AUTH_USER'] == 'admin' || md5($_SERVER['PHP_AUTH_PW']) == md5('123'))
         {
         $update_id = $_POST['update_id'];

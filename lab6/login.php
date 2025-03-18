@@ -126,7 +126,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 else {
   $login = $_POST['login'];
   $password = $_POST['pass'];
-  else {
   $user = 'u68598';
   $pass = '8795249';
   $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
@@ -155,5 +154,4 @@ else {
   else {
     print('Неверный логин или пароль');
   }
-}
 }

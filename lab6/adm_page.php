@@ -7,20 +7,18 @@
     print('<h1>401 Требуется авторизация</h1>');
     exit();
     }
-    else {
-      header('Location: adm_page.php');
-    }
+
+    // else {
+    //   header('Location: adm_page.php');
+    // }
   //include('admin.php');
-if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] != 'admin' || md5($_SERVER['PHP_AUTH_PW']) != md5('123')) 
-{
-    ?>
-    <html>
-    <h1>Требуется авторизация<h1>
-    <?php
-}
-else
-{
-    ;
+// if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] != 'admin' || md5($_SERVER['PHP_AUTH_PW']) != md5('123')) 
+// {
+
+// }
+// else
+// {
+    print("Вы видите защищенные паролем данные");
     $user = 'u68598'; // Заменить на ваш логин uXXXXX
     $pass = '8795249'; // Заменить на пароль
     $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
@@ -128,4 +126,3 @@ else
         $_SESSION['uid']=$_POST['update_id'];
         header("Location: index.php");
     }
-}

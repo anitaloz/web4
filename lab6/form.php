@@ -186,7 +186,11 @@
                     <div class="kn pb-sm-3">
                         <input type="submit" value="Сохранить" />
                     </div>
-                    <a href="login.php">Вход</a>
+                    <?php 
+                    if(!isset($_COOKIE[session_name()]) || empty($_SESSION['login'])){
+                        print('<a href="login.php">Вход</a>');
+                    }
+                 ?>
                 </form>
                 <?php 
                     if(isset($_COOKIE[session_name()]) && !empty($_SESSION['login'])){

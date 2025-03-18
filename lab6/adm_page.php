@@ -47,7 +47,7 @@
             <td>
                 <form method="post" action="">
                 <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
-                <button type="submit">Удалить</button>
+                <a href="">Удалить</a>
                 </form>
                 <form method="post" action="">
                 <input type="hidden" name="update_id" value="<?= htmlspecialchars($row['id']) ?>">
@@ -63,6 +63,8 @@
 
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_id'])) {
+        if($_SERVER['PHP_AUTH_USER'] == 'admin' || md5($_SERVER['PHP_AUTH_PW']) == md5('123'))
+        {
         $delete_id = $_POST['delete_id'];
         $delete_query = "DELETE FROM person WHERE id = :id";
         $delete_querylang="DELETE FROM personlang WHERE pers_id=:id";
@@ -95,9 +97,12 @@
             } catch (PDOException $e) {
             echo "<p style='color: red;'>Ошибка удаления: " . $e->getMessage() . "</p>";
             }
+        }
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_id'])) {
+        if($_SERVER['PHP_AUTH_USER'] == 'admin' || md5($_SERVER['PHP_AUTH_PW']) == md5('123'))
+        {
         $update_id = $_POST['update_id'];
         $update_query = "SELECT login FROM person_LOGIN WHERE id = :id";
         try {
@@ -114,4 +119,5 @@
         $_SESSION['login']=$doplog;
         $_SESSION['uid']=$_POST['update_id'];
         header("Location: index.php");
+        }
     }

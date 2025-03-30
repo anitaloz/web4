@@ -1,4 +1,3 @@
-
 <?php
     require_once 'db.php';
     if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] != 'admin' || md5($_SERVER['PHP_AUTH_PW']) != md5('123')) 
@@ -9,6 +8,7 @@
     exit();
     }
     print("Вы видите защищенные паролем данные");
+    echo password_hash('123', PASSWORD_DEFAULT);
     if($_SERVER['REQUEST_METHOD'] == 'GET')
     {
         $query = "SELECT id, fio, tel, email, bdate, gender, biography FROM person"; // Запрос с параметром

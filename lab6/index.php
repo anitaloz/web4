@@ -409,6 +409,7 @@ else {
             print('Error : ' . $e->getMessage());
             exit();
         }
+        echo($_SESSION['uid']);
         if($id!==$_SESSION['uid']) {
             setcookie('field-email_error', '2');
             $errors = TRUE;
@@ -466,7 +467,6 @@ else {
   }
 
   // Проверяем меняются ли ранее сохраненные данные или отправляются новые.
-
   if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
     try {
         $dop=$db->prepare("SELECT id from person_LOGIN where login=:login");

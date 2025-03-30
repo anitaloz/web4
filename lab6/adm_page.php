@@ -1,6 +1,12 @@
 <?php
     require_once 'db.php';
-    if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] != 'admin' || !password_check($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'], $db)) 
+    $query = "SELECT login FROM LOGIN where role='ADMIN'"; // Запрос с параметром
+
+        $stmt = $db->prepare($query); // Подготавливаем запрос
+        $stmt->execute();// Выполняем запрос с параметром
+        $adminlogin = $stmt->fetchColumn();
+    
+    if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] !=  $adminlogin || !password_check($adminlogin, $_SERVER['PHP_AUTH_PW'], $db)) 
     {
     header('HTTP/1.1 401 Unanthorized');
     header('WWW-Authenticate: Basic realm="My site"');

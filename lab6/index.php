@@ -246,11 +246,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $_SESSION['uid']=$_GET['uid'];
   }
 
-  if (isset($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
-    if(!$session_started)
-    {
-      session_start();
-    }
+  if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
         // $user = 'u68598'; // Заменить на ваш логин uXXXXX
         // $pass = '8795249'; // Заменить на пароль
         // $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,

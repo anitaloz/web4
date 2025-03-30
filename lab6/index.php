@@ -221,6 +221,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // }
   // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
   // ранее в сессию записан факт успешного логина.
+  session_start();
   if(!empty($_GET['uid']))
   {
     $update_id = $_GET['uid'];
@@ -235,7 +236,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         print('Error : ' . $e->getMessage());
         exit();
     }
-    session_start();
     $_SESSION['login']=$doplog;
     $_SESSION['uid']=$_GET['uid'];
   }
@@ -341,6 +341,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $messages[] = "<div>Вход с логином " . htmlspecialchars($_SESSION['login']) . ", uid " . (int)$_SESSION['uid'] . "</div>";
 
   }
+  session_abort();
 
   // Включаем содержимое файла form.php.
   // В нем будут доступны переменные $messages, $errors и $values для вывода 

@@ -1,5 +1,5 @@
 <?php
-require_once 'db.php';
+
 /**
  * Файл login.php для не авторизованного пользователя выводит форму логина.
  * При отправке формы проверяет логин/пароль и создает сессию,
@@ -45,8 +45,8 @@ function password_check($login, $password, $db) {
 }
 // В суперглобальном массиве $_SESSION хранятся переменные сессии.
 // Будем сохранять туда логин после успешной авторизации.
-global $session_started;
-$session_start=false;
+$session_started = false;
+
 if (isset($_COOKIE[session_name()]) && session_start()) {
   $session_started = true;
   if (!empty($_SESSION['login'])) {
@@ -126,10 +126,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 else {
   $login = $_POST['login'];
   $password = $_POST['pass'];
-  // $user = 'u68598';
-  // $pass = '8795249';
-  // $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
-  //   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+  $user = 'u68598';
+  $pass = '8795249';
+  $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
+    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
   if (!$session_started) {
     session_start();

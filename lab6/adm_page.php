@@ -29,8 +29,8 @@
     // 2. Группируем данные в PHP
     $languages_by_person = [];
     foreach ($person_languages as $row) {
-        $person_id = $row['id'];
-        $language_name = $row['lang_name']; // Используем language_name
+        $person_id = $row['pers_id'];
+        $language_name = $row['namelang']; // Используем language_name
         if (!isset($languages_by_person[$person_id])) {
             $languages_by_person[$person_id] = [];
         }

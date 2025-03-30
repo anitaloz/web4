@@ -15,7 +15,6 @@
     exit();
     }
     print("Вы видите защищенные паролем данные");
-    //echo password_hash('123', PASSWORD_DEFAULT);
     if($_SERVER['REQUEST_METHOD'] == 'GET')
     {
         $query = "SELECT id, fio, tel, email, bdate, gender, biography FROM person"; // Запрос с параметром
@@ -90,6 +89,22 @@
             </tr>
         <?php endforeach; ?>
         </table>
+
+        <?php
+        try {
+            echo "<table><thead> <tr><td>LANGUAGE</td><td>Q</td></tr></thead> ";
+            $stmt = $db->prepare("SELECT namelang, COUNT(pers_id) as cnt from pesonlang p join languages l on p.lang_id=l.id GROUP BY pers_id");
+            $stmt->execute();
+            while($row = $stmt->fetch(PDO::FETCH_OBJ)){
+                echo "<tr><td>$row->namelang</td><td>$row->cnt</td></tr>";
+            }
+            echo "</table>";
+        }
+        catch (PDOException $e){
+            print('ERROR : ' . $e->getMessage());
+            exit();
+        }
+    ?>
 
 <?php
 

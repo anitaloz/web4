@@ -224,10 +224,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $session_started=false;
   if(!empty($_GET['uid']))
   {
-    // $user = 'u68598'; // Заменить на ваш логин uXXXXX
-    // $pass = '8795249'; // Заменить на пароль
-    // $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
-    // [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
     $update_id = $_GET['uid'];
         $update_query = "SELECT login FROM person_LOGIN WHERE id = :id";
         try {
@@ -240,10 +236,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             print('Error : ' . $e->getMessage());
             exit();
         }
-        session_start();
-        $session_started=true;
-        $_SESSION['login']=$doplog;
-        $_SESSION['uid']=$_GET['uid'];
+        $_COOKIE['login']=$doplog;
+        $_COOKIE['uid']=$_GET['uid'];
   }
 
   if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
@@ -251,7 +245,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         // $pass = '8795249'; // Заменить на пароль
         // $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
         //   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
-      
+        if(!empty($_COOKIE['login']))
+        {
+          $_SESSION['login']=$_COOKIE['login']
+          $_SESSION['uid']=$_GET['uid'];
+        }
         $sql = "SELECT fio FROM person join person_LOGIN using(id) WHERE login = :login"; 
         $stmt = $db->prepare($sql);
         if ($stmt === false) {

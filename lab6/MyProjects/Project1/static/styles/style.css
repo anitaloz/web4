@@ -2,7 +2,7 @@
 .name {float:left; text-align: left; font-size:25pt; font-family:"DacikPush"; color:#b33803; font-weight: normal; position:absolute; top: 40px; left:120px;}
 
 /* Сообщения об ошибках и поля с ошибками выводим с красным бордюром. */
-.log { padding:6%;}
+.log { padding:6%;  text-align: center;}
 .log form { text-align: center;}
 .error {
     border: 2px solid rgb(150, 30, 0);
@@ -128,7 +128,7 @@ footer {
 }
 
 table.stat{
-    width:75%;
+    min-width:75%;
 }
 
 a:hover {
@@ -168,7 +168,7 @@ tr.tb{
     }
 
     table.stat{
-        width:75%;
+        min-width:75%;
     }
 
     nav ul{margin:0;}

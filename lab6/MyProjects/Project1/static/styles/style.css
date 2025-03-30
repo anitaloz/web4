@@ -127,7 +127,7 @@ footer {
     width:100%;
 }
 
-.stat table{
+table.stat{
     width:75%;
 }
 
@@ -167,7 +167,7 @@ tr.tb{
         
     }
 
-    .stat table{
+    table.stat{
         width:75%;
     }
 

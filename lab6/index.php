@@ -407,12 +407,6 @@ if (emailExists($email, $db) && session_start()) {
       echo "Database error: " . $e->getMessage(); // Выводим ошибку на экран
       exit();
   }
-
-  echo "id: " . $id . " (type: " . gettype($id) . ")<br>"; // Проверяем значение и тип
-  echo "_SESSION['uid']: " . $_SESSION['uid'] . " (type: " . gettype($_SESSION['uid']) . ")<br>"; // Проверяем значение и тип
-
-  die("Reached comparison point"); // Останавливаем выполнение после вывода значений
-
   if ((int)$id !== (int)$_SESSION['uid']) {
       setcookie('field-email_error', '2');
       $errors = TRUE;

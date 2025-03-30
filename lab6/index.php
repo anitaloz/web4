@@ -1,5 +1,6 @@
 <?php
 require_once 'db.php';
+require_once 'functions.php';
 /**
  * Реализовать возможность входа с паролем и логином с использованием
  * сессии для изменения отправленных данных в предыдущей задаче,
@@ -9,58 +10,6 @@ require_once 'db.php';
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
-
-function check_login($login, $db)
-{
-  try{
-    $stmt = $db->prepare("SELECT COUNT(*) FROM LOGIN WHERE login = :login");
-    $stmt->bindParam(':login', $login, PDO::PARAM_STR);
-    $stmt->execute();
-    $fl = $stmt->fetchColumn();
-  }
-  catch (PDOException $e){
-    print('Error : ' . $e->getMessage());
-    return false;
-  }
-  return $fl;
-}
-
-function generate_pass(int $length=9):string{
-  $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  $shuff = str_shuffle($characters);
-  return substr($shuff, 0, $length);
-}
-
-function emailExists($email, $pdo) {
-
-    $sql = "SELECT COUNT(*) FROM person WHERE email = :email"; 
-    $stmt = $pdo->prepare($sql);
-
-
-    if ($stmt === false) {
-        error_log("Ошибка подготовки запроса: " . $pdo->errorInfo()[2]);
-        return true; 
-    }
-
-
-    $stmt->bindValue(':email', $email, PDO::PARAM_STR);
-
-
-    if (!$stmt->execute()) {
-
-        error_log("Ошибка выполнения запроса: " . $stmt->errorInfo()[2]); 
-        return true; 
-    }
-    // 4. Получение результата запроса.
-    $count = $stmt->fetchColumn(); // Получаем сразу значение COUNT(*)
-    // 5. Закрытие курсора (необязательно, но рекомендуется)
-    $stmt->closeCursor();
-
-    // 6. Возврат true, если email найден в базе, иначе false.
-    return $count > 0;
-}//функция для проверки почты
-
-
 
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
 // и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].

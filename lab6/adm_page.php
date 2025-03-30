@@ -1,5 +1,6 @@
 <?php
     require_once 'db.php';
+    require_once 'functions.php';
     $query = "SELECT login FROM LOGIN where role='ADMIN'"; // Запрос с параметром
 
         $stmt = $db->prepare($query); // Подготавливаем запрос

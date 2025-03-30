@@ -1,5 +1,6 @@
 <?php
 require_once 'db.php';
+require_once 'functions.php';
 /**
  * Файл login.php для не авторизованного пользователя выводит форму логина.
  * При отправке формы проверяет логин/пароль и создает сессию,
@@ -11,19 +12,7 @@ require_once 'db.php';
 // Отправляем браузеру правильную кодировку,
 // файл login.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
-function isValid($login, $db) {
-  $count;
-  try{
-    $stmt = $db->prepare("SELECT COUNT(*) FROM person_LOGIN WHERE login = ?");
-    $stmt->execute([$login]);
-    $count = $stmt->fetchColumn();
-  } 
-  catch (PDOException $e){
-    print('Error : ' . $e->getMessage());
-    exit();
-  }
-  return $count > 0;
-}
+
 
 // В суперглобальном массиве $_SESSION хранятся переменные сессии.
 // Будем сохранять туда логин после успешной авторизации.

@@ -1,5 +1,5 @@
 <?php
-
+require_once 'db.php';
 /**
  * Реализовать возможность входа с паролем и логином с использованием
  * сессии для изменения отправленных данных в предыдущей задаче,
@@ -221,14 +221,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // }
   // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
   // ранее в сессию записан факт успешного логина.
+  $session_started=false;
   if(!empty($_GET['uid']))
   {
-    $user = 'u68598'; // Заменить на ваш логин uXXXXX
-    $pass = '8795249'; // Заменить на пароль
-    $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
-    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
-
-    session_start();
+    // $user = 'u68598'; // Заменить на ваш логин uXXXXX
+    // $pass = '8795249'; // Заменить на пароль
+    // $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
+    // [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
     $update_id = $_GET['uid'];
         $update_query = "SELECT login FROM person_LOGIN WHERE id = :id";
         try {
@@ -242,15 +241,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             exit();
         }
         session_start();
+        $session_started=true;
         $_SESSION['login']=$doplog;
         $_SESSION['uid']=$_GET['uid'];
   }
-  if (isset($_COOKIE[session_name()]) &&
-      session_start() && !empty($_SESSION['login'])) {
-        $user = 'u68598'; // Заменить на ваш логин uXXXXX
-        $pass = '8795249'; // Заменить на пароль
-        $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
-          [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
+
+  if (isset($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
+    if(!$session_started)
+    {
+      session_start();
+    }
+        // $user = 'u68598'; // Заменить на ваш логин uXXXXX
+        // $pass = '8795249'; // Заменить на пароль
+        // $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
+        //   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
       
         $sql = "SELECT fio FROM person join person_LOGIN using(id) WHERE login = :login"; 
         $stmt = $db->prepare($sql);

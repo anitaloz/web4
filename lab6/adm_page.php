@@ -17,7 +17,7 @@
         $stmt->execute();// Выполняем запрос с параметром
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $query_languages = "SELECT
-                            pl.id,
+                            pl.pers_id,
                             l.namelang
                         FROM
                             personlang pl

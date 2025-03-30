@@ -49,7 +49,7 @@
                 <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
                 <button type="submit">Удалить</button>
                 </form>
-                <a href="index.php/?uid=<?= htmlspecialchars($row['id']) ?>">Изменить</a>
+                <a href="index.php?uid=<?= htmlspecialchars($row['id']) ?>">Изменить</a>
             </td>
             </tr>
         <?php endforeach; ?>

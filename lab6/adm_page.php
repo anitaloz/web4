@@ -41,7 +41,7 @@
         $languages_by_person[$person_id][] = $language_name; // Добавляем название языка
     }
     include 'htmlcssmodules.php';
-    print("<p>Вы видите защищенные паролем данные</p>");
+    print("<h1>Вы видите защищенные паролем данные</h1>");
     ?>
         
         <table border='1'>

@@ -127,8 +127,12 @@ footer {
     width:100%;
 }
 
+.stat{
+    width:75%;
+}
+
 a:hover {
-    color: rgb(255, 176, 57);
+    color: rgb(214, 86, 27);
 }
 
 tr.tb{

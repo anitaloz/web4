@@ -41,51 +41,51 @@
         $languages_by_person[$person_id][] = $language_name; // Добавляем название языка
     }
     include 'htmlcssmodules.php';
-    print("<h3>Вы видите защищенные паролем данные</h3>");
     ?>
         <div class="content container-fluid mt-sm-0" >
-        <table border='1'>
-        <tr>
-            <th>ID</th>
-            <th>FIO</th>
-            <th>Tel</th>
-            <th>Email</th>
-            <th>Bdate</th>
-            <th>Gender</th>
-            <th>Biography</th>
-            <th>Languages</th>
-            <th>Действия</th>
-        </tr>
-
-        <?php foreach ($results as $row): ?>
+            <h3>Вы видите защищенные паролем данные</h3>
+            <table>
             <tr>
-            <td><?= htmlspecialchars($row['id']) ?></td>
-            <td><?= htmlspecialchars($row['fio']) ?></td>
-            <td><?= htmlspecialchars($row['tel']) ?></td>
-            <td><?= htmlspecialchars($row['email']) ?></td>
-            <td><?= htmlspecialchars($row['bdate']) ?></td>
-            <td><?= htmlspecialchars($row['gender']) ?></td>
-            <td><?= htmlspecialchars($row['biography']) ?></td>
-            <td>
-            <?php
-                // 3. Используем implode для объединения языков
-                $person_id = $row['id'];
-                if (isset($languages_by_person[$person_id])) {
-                    $languages_string = implode(', ', $languages_by_person[$person_id]);
-                    echo htmlspecialchars($languages_string);
-                } else {
-                    echo "Нет данных";
-                }
-                ?>
-                </td>
-                <td>
-                <form method="post" action="">
-                <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
-                <button type="submit">Удалить</button>
-                </form>
-                <a href="index.php?uid=<?= htmlspecialchars($row['id']) ?>">Изменить</a>
-            </td>
+                <th>ID</th>
+                <th>FIO</th>
+                <th>Tel</th>
+                <th>Email</th>
+                <th>Bdate</th>
+                <th>Gender</th>
+                <th>Biography</th>
+                <th>Languages</th>
+                <th>Действия</th>
             </tr>
+
+            <?php foreach ($results as $row): ?>
+                <tr>
+                <td><?= htmlspecialchars($row['id']) ?></td>
+                <td><?= htmlspecialchars($row['fio']) ?></td>
+                <td><?= htmlspecialchars($row['tel']) ?></td>
+                <td><?= htmlspecialchars($row['email']) ?></td>
+                <td><?= htmlspecialchars($row['bdate']) ?></td>
+                <td><?= htmlspecialchars($row['gender']) ?></td>
+                <td><?= htmlspecialchars($row['biography']) ?></td>
+                <td>
+                <?php
+                    // 3. Используем implode для объединения языков
+                    $person_id = $row['id'];
+                    if (isset($languages_by_person[$person_id])) {
+                        $languages_string = implode(', ', $languages_by_person[$person_id]);
+                        echo htmlspecialchars($languages_string);
+                    } else {
+                        echo "Нет данных";
+                    }
+                    ?>
+                    </td>
+                    <td>
+                    <form method="post" action="">
+                    <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
+                    <button type="submit">Удалить</button>
+                    </form>
+                    <a href="index.php?uid=<?= htmlspecialchars($row['id']) ?>">Изменить</a>
+                </td>
+                </tr>
         <?php endforeach; ?>
         </table>
 

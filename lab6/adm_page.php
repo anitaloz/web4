@@ -32,7 +32,6 @@
     $stmt_languages = $db->prepare($query_languages);
     $stmt_languages->execute();
     $person_languages = $stmt_languages->fetchAll(PDO::FETCH_ASSOC);
-    // 2. Группируем данные в PHP
     $languages_by_person = [];
     foreach ($person_languages as $row) {
         $person_id = $row['pers_id'];
@@ -42,9 +41,9 @@
         }
         $languages_by_person[$person_id][] = $language_name; // Добавляем название языка
     }
-
+    include 'htmlcssmodules.php';
     ?>
-
+        
         <table border='1'>
         <tr>
             <th>ID</th>

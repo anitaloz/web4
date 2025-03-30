@@ -221,6 +221,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // }
   // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
   // ранее в сессию записан факт успешного логина.
+  if(!is_empty($_GET['uid']))
+  {
+    session_start();
+    $update_id = $_GET['uid'];
+        $update_query = "SELECT login FROM person_LOGIN WHERE id = :id";
+        try {
+            $update_stmt = $db->prepare($update_query);
+            $update_stmt->bindParam(':id', $update_id, PDO::PARAM_INT);
+            $update_stmt->execute();
+            $doplog=$update_stmt->fetchColumn();
+        }
+        catch (PDOException $e){
+            print('Error : ' . $e->getMessage());
+            exit();
+        }
+        session_start();
+        $_SESSION['login']=$doplog;
+        $_SESSION['uid']=$_GET['uid'];
+  }
   if (isset($_COOKIE[session_name()]) &&
       session_start() && !empty($_SESSION['login'])) {
         $user = 'u68598'; // Заменить на ваш логин uXXXXX

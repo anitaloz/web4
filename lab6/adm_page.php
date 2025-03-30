@@ -14,7 +14,7 @@
     print('<h1>401 Требуется авторизация</h1>');
     exit();
     }
-    print("Вы видите защищенные паролем данные");
+    print("<p>Вы видите защищенные паролем данные</p>");
     if($_SERVER['REQUEST_METHOD'] == 'GET')
     {
         $query = "SELECT id, fio, tel, email, bdate, gender, biography FROM person"; // Запрос с параметром

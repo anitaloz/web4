@@ -41,9 +41,9 @@
         $languages_by_person[$person_id][] = $language_name; // Добавляем название языка
     }
     include 'htmlcssmodules.php';
-    print("<h1>Вы видите защищенные паролем данные</h1>");
+    print("<h3>Вы видите защищенные паролем данные</h3>");
     ?>
-        
+        <div class="content container-fluid mt-sm-0" >
         <table border='1'>
         <tr>
             <th>ID</th>
@@ -101,6 +101,7 @@
                 echo "<tr><td>$row->namelang</td><td>$row->cnt</td></tr>";
             }
             echo "</table>";
+            echo"</div>";
         }
         catch (PDOException $e){
             print('ERROR : ' . $e->getMessage());

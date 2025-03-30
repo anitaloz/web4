@@ -14,7 +14,6 @@
     print('<h1>401 Требуется авторизация</h1>');
     exit();
     }
-    print("<p>Вы видите защищенные паролем данные</p>");
     if($_SERVER['REQUEST_METHOD'] == 'GET')
     {
         $query = "SELECT id, fio, tel, email, bdate, gender, biography FROM person"; // Запрос с параметром
@@ -42,6 +41,7 @@
         $languages_by_person[$person_id][] = $language_name; // Добавляем название языка
     }
     include 'htmlcssmodules.php';
+    print("<p>Вы видите защищенные паролем данные</p>");
     ?>
         
         <table border='1'>

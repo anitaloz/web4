@@ -395,8 +395,7 @@ else {
     setcookie('field-email_error', '1');
     $errors = TRUE;
   }
-  error_reporting(E_ALL);
-  ini_set('display_errors', 1);
+
 if (emailExists($email, $db) && session_start()) {
   $id = null;
   try {

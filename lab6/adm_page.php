@@ -11,7 +11,7 @@
     print("Вы видите защищенные паролем данные");
     if($_SERVER['REQUEST_METHOD'] == 'GET')
     {
-        $query = "SELECT id, name, number, email, bdate, gender, biography FROM application"; // Запрос с параметром
+        $query = "SELECT id, fio, tel, email, bdate, gender, biography FROM person"; // Запрос с параметром
 
         $stmt = $db->prepare($query); // Подготавливаем запрос
         $stmt->execute();// Выполняем запрос с параметром

@@ -9,7 +9,6 @@ require_once 'db.php';
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
-
 function check_login($login, $db)
 {
   try{
@@ -221,7 +220,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // }
   // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
   // ранее в сессию записан факт успешного логина.
-  $session_started=false;
   if(!empty($_GET['uid']))
   {
     $update_id = $_GET['uid'];
@@ -242,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $_SESSION['uid']=$_GET['uid'];
   }
 
-  if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
+  if (isset($_COOKIE[session_name()]) && $session_started && !empty($_SESSION['login'])) {
         // $user = 'u68598'; // Заменить на ваш логин uXXXXX
         // $pass = '8795249'; // Заменить на пароль
         // $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
@@ -397,7 +395,7 @@ else {
     $errors = TRUE;
   }
   
-  if (emailExists($email, $db) && session_start()) { 
+  if (emailExists($email, $db) && $session_started) { 
     $id;
         try {
           $dp=$db->prepare("SELECT id from person where email=?");
@@ -409,7 +407,6 @@ else {
             print('Error : ' . $e->getMessage());
             exit();
         }
-        echo($_SESSION['uid']);
         if($id!==$_SESSION['uid']) {
             setcookie('field-email_error', '2');
             $errors = TRUE;
@@ -467,7 +464,7 @@ else {
   }
 
   // Проверяем меняются ли ранее сохраненные данные или отправляются новые.
-  if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
+  if (isset($_COOKIE[session_name()]) && $session_started && !empty($_SESSION['login'])) {
     try {
         $dop=$db->prepare("SELECT id from person_LOGIN where login=:login");
         $dop->bindParam(':login', $_SESSION['login']);

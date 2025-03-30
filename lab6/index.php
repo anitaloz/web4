@@ -223,6 +223,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // ранее в сессию записан факт успешного логина.
   if(!empty($_GET['uid']))
   {
+    $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
+    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
+
     session_start();
     $update_id = $_GET['uid'];
         $update_query = "SELECT login FROM person_LOGIN WHERE id = :id";

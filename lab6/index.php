@@ -247,7 +247,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         //   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
         if(!empty($_COOKIE['login']))
         {
-          $_SESSION['login']=$_COOKIE['login']
+          $_SESSION['login']=$_COOKIE['login'];
           $_SESSION['uid']=$_GET['uid'];
         }
         $sql = "SELECT fio FROM person join person_LOGIN using(id) WHERE login = :login"; 

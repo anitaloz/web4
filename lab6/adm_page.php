@@ -55,8 +55,8 @@
         <?php foreach ($results as $row): ?>
             <tr>
             <td><?= htmlspecialchars($row['id']) ?></td>
-            <td><?= htmlspecialchars($row['name']) ?></td>
-            <td><?= htmlspecialchars($row['number']) ?></td>
+            <td><?= htmlspecialchars($row['fio']) ?></td>
+            <td><?= htmlspecialchars($row['tele']) ?></td>
             <td><?= htmlspecialchars($row['email']) ?></td>
             <td><?= htmlspecialchars($row['bdate']) ?></td>
             <td><?= htmlspecialchars($row['gender']) ?></td>

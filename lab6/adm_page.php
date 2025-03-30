@@ -93,7 +93,10 @@
         <?php
         try {
             echo "<table><thead> <tr><td>LANGUAGE</td><td>Q</td></tr></thead> ";
-            $stmt = $db->prepare("SELECT namelang, COUNT(pers_id) as cnt from personlang join languages using (lang_id=id) GROUP BY pers_id");
+            $stmt = $db->prepare("SELECT l.namelang, COUNT(pl.pers_id) AS cnt
+            FROM personlang pl
+            JOIN languages l ON pl.lang_id = l.id
+            GROUP BY l.namelang");
             $stmt->execute();
             while($row = $stmt->fetch(PDO::FETCH_OBJ)){
                 echo "<tr><td>$row->namelang</td><td>$row->cnt</td></tr>";

@@ -241,11 +241,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   }
 
   if (isset($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
-        // $user = 'u68598'; // Заменить на ваш логин uXXXXX
-        // $pass = '8795249'; // Заменить на пароль
-        // $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
-        //   [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
-      
         $sql = "SELECT fio FROM person join person_LOGIN using(id) WHERE login = :login"; 
         $stmt = $db->prepare($sql);
         if ($stmt === false) {
@@ -349,11 +344,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в базе данных.
 else {
-  $user = 'u68598'; // Заменить на ваш логин uXXXXX
-  $pass = '8795249'; // Заменить на пароль
-  $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
-    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
-
   $fav_languages = $_POST['languages'] ?? [];
   // Проверяем ошибки.
   $errors = FALSE;

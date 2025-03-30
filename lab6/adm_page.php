@@ -1,4 +1,4 @@
-
+require_once 'db.php';
 <?php
     if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] != 'admin' || md5($_SERVER['PHP_AUTH_PW']) != md5('123')) 
     {
@@ -8,19 +8,35 @@
     exit();
     }
     print("Вы видите защищенные паролем данные");
-    $user = 'u68598'; // Заменить на ваш логин uXXXXX
-    $pass = '8795249'; // Заменить на пароль
-    $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
-      [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-    
     if($_SERVER['REQUEST_METHOD'] == 'GET')
     {
-        $query = "SELECT id, fio, tel, email, bdate, gender, biography FROM person"; // Запрос с параметром
+        $query = "SELECT id, name, number, email, bdate, gender, biography FROM application"; // Запрос с параметром
 
         $stmt = $db->prepare($query); // Подготавливаем запрос
         $stmt->execute();// Выполняем запрос с параметром
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        ?>
+        $query_languages = "SELECT
+                            pl.id,
+                            l.namelang
+                        FROM
+                            personlang pl
+                        JOIN
+                            languages l ON pl.lang_id = l.id";
+    $stmt_languages = $db->prepare($query_languages);
+    $stmt_languages->execute();
+    $person_languages = $stmt_languages->fetchAll(PDO::FETCH_ASSOC);
+    // 2. Группируем данные в PHP
+    $languages_by_person = [];
+    foreach ($person_languages as $row) {
+        $person_id = $row['id'];
+        $language_name = $row['lang_name']; // Используем language_name
+        if (!isset($languages_by_person[$person_id])) {
+            $languages_by_person[$person_id] = [];
+        }
+        $languages_by_person[$person_id][] = $language_name; // Добавляем название языка
+    }
+
+    ?>
 
         <table border='1'>
         <tr>
@@ -38,13 +54,25 @@
         <?php foreach ($results as $row): ?>
             <tr>
             <td><?= htmlspecialchars($row['id']) ?></td>
-            <td><?= htmlspecialchars($row['fio']) ?></td>
-            <td><?= htmlspecialchars($row['tel']) ?></td>
+            <td><?= htmlspecialchars($row['name']) ?></td>
+            <td><?= htmlspecialchars($row['number']) ?></td>
             <td><?= htmlspecialchars($row['email']) ?></td>
             <td><?= htmlspecialchars($row['bdate']) ?></td>
             <td><?= htmlspecialchars($row['gender']) ?></td>
             <td><?= htmlspecialchars($row['biography']) ?></td>
             <td>
+            <?php
+                // 3. Используем implode для объединения языков
+                $person_id = $row['id'];
+                if (isset($languages_by_person[$person_id])) {
+                    $languages_string = implode(', ', $languages_by_person[$person_id]);
+                    echo htmlspecialchars($languages_string);
+                } else {
+                    echo "Нет данных";
+                }
+                ?>
+                </td>
+                <td>
                 <form method="post" action="">
                 <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
                 <button type="submit">Удалить</button>
@@ -53,7 +81,6 @@
             </td>
             </tr>
         <?php endforeach; ?>
-
         </table>
 
 <?php

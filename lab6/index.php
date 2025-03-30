@@ -341,7 +341,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $messages[] = "<div>Вход с логином " . htmlspecialchars($_SESSION['login']) . ", uid " . (int)$_SESSION['uid'] . "</div>";
 
   }
-  session_abort();
 
   // Включаем содержимое файла form.php.
   // В нем будут доступны переменные $messages, $errors и $values для вывода 

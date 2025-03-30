@@ -394,7 +394,9 @@ else {
     setcookie('field-email_error', '1');
     $errors = TRUE;
   }
-  
+  echo "Session UID: " . $_SESSION['uid']; // Простой вывод
+  var_dump($_SESSION['uid']); // Вывод с типом данных
+
   if (emailExists($email, $db)) { 
     $id;
         try {

@@ -221,7 +221,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // }
   // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
   // ранее в сессию записан факт успешного логина.
-  $session_started=false;
+  session_start();
   if(!empty($_GET['uid']))
   {
     $update_id = $_GET['uid'];
@@ -236,13 +236,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         print('Error : ' . $e->getMessage());
         exit();
     }
-    session_start();
-    $session_started=true;
     $_SESSION['login']=$doplog;
     $_SESSION['uid']=$_GET['uid'];
   }
 
-  if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
+  if (isset($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
         // $user = 'u68598'; // Заменить на ваш логин uXXXXX
         // $pass = '8795249'; // Заменить на пароль
         // $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
@@ -397,7 +395,7 @@ else {
     $errors = TRUE;
   }
   
-  if (emailExists($email, $db) && session_start()) { 
+  if (emailExists($email, $db)) { 
     $id;
         try {
           $dp=$db->prepare("SELECT id from person where email=?");

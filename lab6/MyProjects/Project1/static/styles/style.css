@@ -167,6 +167,10 @@ tr.tb{
         
     }
 
+    .stat{
+        width:75%;
+    }
+
     nav ul{margin:0;}
 
     nav{

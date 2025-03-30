@@ -339,6 +339,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             exit();
         }
         $messages[] = "<div>Вход с логином " . htmlspecialchars($_SESSION['login']) . ", uid " . (int)$_SESSION['uid'] . "</div>";
+
   }
 
   // Включаем содержимое файла form.php.
@@ -394,26 +395,34 @@ else {
     setcookie('field-email_error', '1');
     $errors = TRUE;
   }
-  echo "Session UID: " . $_SESSION['uid']; // Простой вывод
-  var_dump($_SESSION['uid']); // Вывод с типом данных
 
-  if (emailExists($email, $db)) { 
-    $id;
-        try {
-          $dp=$db->prepare("SELECT id from person where email=?");
-          // $dp->bindParam(':email', $email);
-          $dp->execute([$email]);
-          $id = $dp->fetchColumn();
-        }
-        catch(PDOException $e){
-            print('Error : ' . $e->getMessage());
-            exit();
-        }
-        if($id!==$_SESSION['uid']) {
-            setcookie('field-email_error', '2');
-            $errors = TRUE;
-        }
+if (emailExists($email, $db)) {
+    $id = null; // Инициализируем переменную $id
+    try {
+        $dp = $db->prepare("SELECT id FROM person WHERE email = ?");
+        $dp->execute([$email]);
+        $id = $dp->fetchColumn(); // Получаем значение id
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+        print('Error : ' . $e->getMessage());
+        exit();
     }
+
+    // Отладка: Вывод значений и типов
+    echo "id: " . $id . " (type: " . gettype($id) . ")<br>";
+    echo "_SESSION['uid']: " . $_SESSION['uid'] . " (type: " . gettype($_SESSION['uid']) . ")<br>";
+
+
+    // Приведение типов к integer для надежного сравнения
+    $id = (int)$id;
+    $_SESSION['uid'] = (int)$_SESSION['uid'];
+
+
+    if ($id !== $_SESSION['uid']) {
+        setcookie('field-email_error', '2');
+        $errors = TRUE;
+    }
+}
 
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
 

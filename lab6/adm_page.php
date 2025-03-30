@@ -92,7 +92,7 @@
 
         <?php
         try {
-            echo "<table><thead> <tr><td>LANGUAGE</td><td>Q</td></tr></thead> ";
+            echo "<table border='1'><thead> <tr><td>LANGUAGE</td><td>Q</td></tr></thead> ";
             $stmt = $db->prepare("SELECT l.namelang, COUNT(pl.pers_id) AS cnt
             FROM personlang pl
             JOIN languages l ON pl.lang_id = l.id

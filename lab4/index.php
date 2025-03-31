@@ -8,6 +8,21 @@
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
+function getLangs($db){
+  try{
+    $allowed_lang=[];
+    $data = $db->query("SELECT lang_name FROM prog_lang")->fetchAll();
+    foreach ($data as $lang) {
+      $lang_name = $lang['lang_name'];
+      $allowed_lang[$lang_name] = $lang_name;
+    }
+    return $allowed_lang;
+  } catch(PDOException $e){
+    print('Error: ' . $e->getMessage());
+    exit();
+  }
+}
+$allowed_lang=getLangs($db);
 function emailExists($email, $pdo) {
 
   $sql = "SELECT COUNT(*) FROM person WHERE email = :email"; 
@@ -140,11 +155,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   }
 
   if ($errors['languages']) {
-    // Удаляем куки, указывая время устаревания в прошлом.
+    if($_COOKIE['languages_error']=='1'){
+      $messages[] = '<div class="error">Укажите любимый(ые) язык(и) программирования.</div>';
+    }
+    elseif($_COOKIE['languages_error']=='2'){
+      $messages[] = '<div class="error">Указан недопустимый язык.</div>';
+    }
     setcookie('languages_error', '', 100000);
     setcookie('languages_value', '', 100000);
-    // Выводим сообщение.
-    $messages[] = '<div class="messages">Отметьте любимый язык программирования.</div>';
   }
 
   if ($errors['bio'] AND  $_COOKIE['bio_error']==1) {
@@ -194,17 +212,17 @@ else {
   $errors = FALSE;
   if (empty($_POST['fio'])) {
     // Выдаем куку на день с флажком об ошибке в поле fio.
-    setcookie('fio_error', '1');
+    setcookie('fio_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
 
   if(!empty($_POST['fio']) && strlen($_POST['fio'])>150) {
-    setcookie('fio_error', '2');
+    setcookie('fio_error', '2', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
   
   if(!empty($_POST['fio']) && !preg_match('/^[а-яА-Яa-zA-Z ]+$/u', $_POST['fio'])) {
-    setcookie('fio_error', '3');
+    setcookie('fio_error', '3', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
 
@@ -214,55 +232,61 @@ else {
   // $_POST['field-tel']=trim($_POST['field-tel']);
   //$_POST['field-tel']=trim($_POST['field-tel']);
   if(!preg_match('/^[0-9+]+$/', $_POST['field-tel'])) {
-    setcookie('field-tel_error', '1');
+    setcookie('field-tel_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
   setcookie('field-tel_value', $_POST['field-tel'], time() + 365 * 24 * 60 * 60);
 
   if(!isset($_POST['radio-group-1']) || empty($_POST['radio-group-1'])) {
-    setcookie('radio-group-1_error', '1');
+    setcookie('radio-group-1_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
   setcookie('radio-group-1_value', $_POST['radio-group-1'], time() + 365 * 24 * 60 * 60);
 
   $email=trim($_POST['field-email']);
   if(!preg_match('/^[a-zA-Z1-9._@]+$/u', $email) || !preg_match('/@.*\./', $email)) {
-    setcookie('field-email_error', '1');
+    setcookie('field-email_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
   if (emailExists($email, $db)) { 
-    setcookie('field-email_error', '2');
+    setcookie('field-email_error', '2', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
 
-  if (empty($fav_languages)) {
-    setcookie('languages_error', "1");
+  if(empty($fav_languages)) {
+    setcookie('languages_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
+  } else {
+    foreach ($fav_languages as $lang) {
+      if (!in_array($lang, $allowed_lang)) {
+          setcookie('languages_error', '2', time() + 24 * 60 * 60);
+          $errors = TRUE;
+      }
+    }
   }
-
   $langs_value =(implode(",", $fav_languages));
   setcookie('languages_value', $langs_value, time() + 365 * 24 * 60 * 60);
 
   if (empty($_POST['field-date'])) {
-    setcookie('field-date_error', '1');
+    setcookie('field-date_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
   setcookie('field-date_value', $_POST['field-date'], time() + 365 * 24 * 60 * 60);
 
   if(!isset($_POST['check-1']) || empty($_POST['check-1'])) {
-    setcookie('check-1_error', '1');
+    setcookie('check-1_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
   setcookie('check-1_value', $_POST['check-1'], time() + 365 * 24 * 60 * 60);
 
   if (empty($_POST['bio'])) {
-    setcookie('bio_error', '1');
+    setcookie('bio_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
 
   if (!empty($_POST['bio']) && !preg_match('/^[а-яА-Яa-zA-Z1-9.,?!:()]+$/u', $_POST['bio'])) {
-    setcookie('bio_error', '2');
+    setcookie('bio_error', '2', time() + 24 * 60 * 60);
     $errors = TRUE;
   }
   setcookie('bio_value', $_POST['bio'], time() + 365 * 24 * 60 * 60);

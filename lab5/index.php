@@ -492,10 +492,14 @@ else {
         $erasure->bindParam(':pers_id', $pers_id, PDO::PARAM_INT);
         $erasure->execute();
         foreach($_POST['languages'] as $lang) {
-        $stmt1 = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-        $stmt1->bindParam(':pers_id', $pers_id, PDO::PARAM_INT);
-        $stmt1->bindParam(':lang_id', $lang);
-        $stmt1->execute();
+          $stmt = $db->prepare("SELECT id FROM languages WHERE namelang = :namelang");
+          $stmt->bindParam(':namelang', $lang);
+          $stmt->execute();
+          $lang_id=$stmt->fetchColumn();
+          $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
+          $stmt->bindParam(':pers_id', $lastInsertId);
+          $stmt->bindParam(':lang_id', $lang_id);
+          $stmt->execute();
         }
     }
     catch(PDOException $e){

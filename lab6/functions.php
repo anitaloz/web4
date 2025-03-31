@@ -202,5 +202,5 @@ function adminlog($db)
     $stmt = $db->prepare($query); // Подготавливаем запрос
     $stmt->execute();// Выполняем запрос с параметром
     $adminlogin = $stmt->fetchColumn();
-    return $adminlog;
+    return $adminlogin;
 }

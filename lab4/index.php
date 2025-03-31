@@ -161,10 +161,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
   if ($errors['languages']) {
     if($_COOKIE['languages_error']=='1'){
-      $messages[] = '<div class="error">Укажите любимый(ые) язык(и) программирования.</div>';
+      $messages[] = '<div>Укажите любимый(ые) язык(и) программирования.</div>';
     }
     elseif($_COOKIE['languages_error']=='2'){
-      $messages[] = '<div class="error">Указан недопустимый язык.</div>';
+      $messages[] = '<div>Указан недопустимый язык.</div>';
     }
     setcookie('languages_error', '', 100000);
     setcookie('languages_value', '', 100000);

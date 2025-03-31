@@ -96,9 +96,9 @@ function password_check($login, $password, $db) {
     }
   }
   //$_SESSION['login']
-  function insertData($login)
+  function insertData($login, $db)
   {
-    $sql = "SELECT fio FROM person join person_LOGIN using(id) WHERE login = :login"; 
+        $sql = "SELECT fio FROM person join person_LOGIN using(id) WHERE login = :login"; 
         $stmt = $db->prepare($sql);
         if ($stmt === false) {
             error_log("Ошибка подготовки запроса: " . $db->errorInfo()[2]);
@@ -194,3 +194,13 @@ function password_check($login, $password, $db) {
             exit();
         }
   }
+
+function adminlog()
+{
+    $query = "SELECT login FROM LOGIN where role='ADMIN'"; // Запрос с параметром
+
+    $stmt = $db->prepare($query); // Подготавливаем запрос
+    $stmt->execute();// Выполняем запрос с параметром
+    $adminlogin = $stmt->fetchColumn();
+    return $adminlog;
+}

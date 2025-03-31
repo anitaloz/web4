@@ -1,7 +1,7 @@
 <?php
     require_once 'db.php';
     require_once 'functions.php';
-    require_once 'admdata.php';
+    $adminlogin=adminlog();
     if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] !=  $adminlogin || !password_check($adminlogin, $_SERVER['PHP_AUTH_PW'], $db)) 
     {
         header('HTTP/1.1 401 Unanthorized');

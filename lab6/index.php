@@ -1,7 +1,6 @@
 <?php
 require_once 'db.php';
 require_once 'functions.php';
-require_once 'admdata.php';
 /**
  * Реализовать возможность входа с паролем и логином с использованием
  * сессии для изменения отправленных данных в предыдущей задаче,
@@ -174,6 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // }
   // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
   // ранее в сессию записан факт успешного логина.
+  $adminlogin=adminlog();
   if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  $adminlogin && password_check($adminlogin, $_SERVER['PHP_AUTH_PW'], $db))
     {
       if(!empty($_GET['uid']))
@@ -190,12 +190,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             print('Error : ' . $e->getMessage());
             exit();
         }
-        insertData($doplog);
+        insertData($doplog, $db);
       }
   }
 
   if (isset($_COOKIE[session_name()]) && session_start() &&!empty($_SESSION['login'])) {
-        insertData($_SESSION['login']);
+        insertData($_SESSION['login'], $db);
         $messages[] = "<div>Вход с логином " . htmlspecialchars($_SESSION['login']) . ", uid " . (int)$_SESSION['uid'] . "</div>";
 
   }

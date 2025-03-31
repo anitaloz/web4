@@ -185,12 +185,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $update_stmt->bindParam(':id', $update_id, PDO::PARAM_INT);
             $update_stmt->execute();
             $doplog=$update_stmt->fetchColumn();
+            insertData($doplog, $db);
         }
         catch (PDOException $e){
             print('Error : ' . $e->getMessage());
             exit();
         }
-        insertData($doplog, $db);
+        
       }
   }
 

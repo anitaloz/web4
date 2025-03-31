@@ -336,7 +336,7 @@ else {
     $stmt->execute();
     $lastInsertId = $db->lastInsertId();
     foreach($_POST['languages'] as $lang) {
-      $stmt = $db->prepare("SELECT id FROM languages WHERE namelang = :namelang")
+      $stmt = $db->prepare("SELECT id FROM languages WHERE namelang = :namelang");
       $stmt->bindParam(':namelang', $lang);
       $stmt->execute();
       $lang_id=$stmt->fetchColumn();

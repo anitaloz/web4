@@ -109,29 +109,24 @@ function insertData($login, $db) {
         'radio-group-1' => "SELECT gender FROM person JOIN person_LOGIN USING(id) WHERE login = :login",
         'bio' => "SELECT biography FROM person JOIN person_LOGIN USING(id) WHERE login = :login"
     ];
-
-    // Выполняем запросы в цикле
     foreach ($queries as $key => $sql) {
         try {
             $stmt = $db->prepare($sql);
             if ($stmt === false) {
                 error_log("Ошибка подготовки запроса: " . print_r($db->errorInfo(), true));
-                throw new Exception("Ошибка подготовки запроса"); // Выбрасываем исключение
+                throw new Exception("Ошибка подготовки запроса"); 
             }
             $stmt->bindValue(':login', $login, PDO::PARAM_STR);
             if (!$stmt->execute()) {
                 error_log("Ошибка выполнения запроса: " . print_r($stmt->errorInfo(), true));
-                throw new Exception("Ошибка выполнения запроса"); // Выбрасываем исключение
+                throw new Exception("Ошибка выполнения запроса"); 
             }
             $values[$key] = $stmt->fetchColumn();
         } catch (Exception $e) {
             error_log("Ошибка при выполнении запроса для ключа " . $key . ": " . $e->getMessage());
-            // Можно добавить дополнительную логику обработки ошибок, например, установить значение по умолчанию
-            $values[$key] = null; // Или другое значение по умолчанию
+            $values[$key] = null;
         }
     }
-
-    // Обрабатываем языки отдельно
     $sql = "SELECT lang.namelang
             FROM personlang pl
             JOIN person_LOGIN l ON pl.pers_id = l.id
@@ -145,10 +140,48 @@ function insertData($login, $db) {
         $values['languages'] = implode(",", $lang);
     } catch (PDOException $e) {
         error_log("Ошибка при получении языков: " . $e->getMessage());
-        $values['languages'] = null; // Или другое значение по умолчанию
+        $values['languages'] = null; 
     }
 
-    return $values; // Возвращаем массив $values
+    return $values;
+}
+
+function insertDB($login, $db)
+{
+  $dop=$db->prepare("SELECT id from person_LOGIN where login=:login");
+  $dop->bindParam(':login', $login);
+  $dop->execute();
+  $stmt = $db->prepare("UPDATE person set fio=:fio, tel=:tel, email=:email, bdate=:bdate, gender=:gender, biography=:biography where id=:id");
+  $stmt->bindParam(':fio', $_POST['fio']);
+  $stmt->bindParam(':id', $dop->fetchColumn());
+  $stmt->bindParam(':tel', $tel);
+  $stmt->bindParam(':email', $email);
+  $stmt->bindParam(':bdate', $bdate);
+  $stmt->bindParam(':gender', $gender);
+  $stmt->bindParam(':biography', $biography);
+  $tel = ($_POST['field-tel']);
+  $email = ($_POST['field-email']);
+  $bdate = ($_POST['field-date']);
+  $gender = ($_POST['radio-group-1']);
+  $biography = ($_POST['bio']);
+  $stmt->execute();
+  $lastInsertId = $db->prepare("SELECT id from person_LOGIN where login=:login");
+  $lastInsertId->bindParam(':login', $login);
+  $lastInsertId->execute();
+  $pers_id=$lastInsertId->fetchColumn();
+  $erasure=$db->prepare("DELETE from personlang where pers_id=:pers_id");
+  $erasure->bindParam(':pers_id', $pers_id, PDO::PARAM_INT);
+  $erasure->execute();
+  foreach($_POST['languages'] as $lang) {
+    $stmt = $db->prepare("SELECT id FROM languages WHERE namelang = :namelang");
+    $stmt->bindParam(':namelang', $lang);
+    $stmt->execute();
+    $lang_id=$stmt->fetchColumn();
+    $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
+    $stmt->bindParam(':pers_id', $pers_id);
+    $stmt->bindParam(':lang_id', $lang_id);
+    $stmt->execute();
+  }
 }
 
 

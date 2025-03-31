@@ -315,20 +315,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         }
 
 
-        $sql = "SELECT pl.lang_id FROM personlang pl JOIN person_LOGIN l ON pl.pers_id = l.id  WHERE l.login = :login;";
-        $sql2="SELECT namelang FROM languages WHERE id=:lang_id";
+        $sql = "SELECT lang.namelang FROM (personlang pl JOIN person_LOGIN l ON pl.pers_id = l.id WHERE l.login = :login;) j JOIN languages lang ON j.lan_id=lang.id";
         try{
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':login', $_SESSION['login'], PDO::PARAM_STR);
             $stmt->execute();
             $lang = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-            foreach($lang as $lang_id)
-            {
-              $stmt = $db->prepare($sql2);
-              $stmt->bindValue(':lang_id', $lang_id);
-              $stmt->execute();
-              $lang_id=$stmt->fetchColumn();
-            }
             $langs_value1 =(implode(",", $lang));
             $values['languages']=$langs_value1;
         }

@@ -96,6 +96,8 @@ function password_check($login, $password, $db) {
     }
   }
   //$_SESSION['login']
+
+  
   function insertData($login, $db)
   {
         $sql = "SELECT fio FROM person join person_LOGIN using(id) WHERE login = :login"; 

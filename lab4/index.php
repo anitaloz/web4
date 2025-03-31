@@ -22,6 +22,11 @@ function getLangs($db){
     exit();
   }
 }
+$user = 'u68598'; // Заменить на ваш логин uXXXXX
+  $pass = '8795249'; // Заменить на пароль
+  $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
+    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
+
 $allowed_lang=getLangs($db);
 function emailExists($email, $pdo) {
 
@@ -202,11 +207,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.
 else {
-  $user = 'u68598'; // Заменить на ваш логин uXXXXX
-  $pass = '8795249'; // Заменить на пароль
-  $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
-    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
-
   $fav_languages = $_POST['languages'] ?? [];
   // Проверяем ошибки.
   $errors = FALSE;

@@ -497,7 +497,7 @@ else {
           $stmt->execute();
           $lang_id=$stmt->fetchColumn();
           $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-          $stmt->bindParam(':pers_id', $lastInsertId);
+          $stmt->bindParam(':pers_id', $pers_id);
           $stmt->bindParam(':lang_id', $lang_id);
           $stmt->execute();
         }

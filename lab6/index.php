@@ -348,41 +348,7 @@ else {
     setcookie('login', $login);
     setcookie('pass', $pass);
     try {
-        $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
-        $stmt->bindParam(':fio', $fio);
-        $stmt->bindParam(':tel', $tel);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':bdate', $bdate);
-        $stmt->bindParam(':gender', $gender);
-        $stmt->bindParam(':biography', $biography);
-        $fio = ($_POST['fio']);
-        $tel = ($_POST['field-tel']);
-        $email = ($_POST['field-email']);
-        $bdate = ($_POST['field-date']);
-        $gender = ($_POST['radio-group-1']);
-        $biography = ($_POST['bio']);
-        $stmt->execute();
-        $lastInsertId = $db->lastInsertId();
-        foreach($_POST['languages'] as $lang) {
-          $stmt = $db->prepare("SELECT id FROM languages WHERE namelang = :namelang");
-          $stmt->bindParam(':namelang', $lang);
-          $stmt->execute();
-          $lang_id=$stmt->fetchColumn();
-          $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-          $stmt->bindParam(':pers_id', $lastInsertId);
-          $stmt->bindParam(':lang_id', $lang_id);
-          $stmt->execute();
-        }
-        // Генерируем уникальный логин и пароль.
-        // TODO: сделать механизм генерации, например функциями rand(), uniquid(), md5(), substr().
-        $stmt = $db->prepare("INSERT INTO LOGIN (login, pass) VALUES (:login, :pass)");
-        $stmt->bindParam(':login', $login);
-        $stmt->bindParam(':pass', $hash_pass);
-        $stmt->execute();
-        $stmt = $db->prepare("INSERT INTO person_LOGIN (id, login) VALUES (:id, :login)");
-        $stmt->bindParam(':id', $lastInsertId);
-        $stmt->bindParam(':login', $login);
-        $stmt->execute();
+          insertDB($db);
     }
     catch(PDOException $e){
         print('Error : ' . $e->getMessage());

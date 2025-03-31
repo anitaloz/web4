@@ -321,6 +321,9 @@ else {
     try {
       if(!empty($_COOKIE['login']))
         updateDB($_COOKIE['login'], $db);
+      else{
+        print('Вы не выбрали пользователя для изменения')
+      }
     }
     catch(PDOException $e){
         print('Error : ' . $e->getMessage());

@@ -28,6 +28,11 @@ $user = 'u68598'; // Заменить на ваш логин uXXXXX
     [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
 $allowed_lang=getLangs($db);
+foreach($allowed_lang as $lang)
+    {
+      
+  echo $lang;
+    }
 function emailExists($email, $pdo) {
 
   $sql = "SELECT COUNT(*) FROM person WHERE email = :email"; 
@@ -253,11 +258,7 @@ else {
     $errors = TRUE;
   }
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
-  foreach($allowed_lang as $lang)
-    {
-      
-  echo $lang;
-    }
+
   if(empty($fav_languages)) {
     setcookie('languages_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;

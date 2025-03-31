@@ -11,7 +11,7 @@ header('Content-Type: text/html; charset=UTF-8');
 function getLangs($db){
   try{
     $allowed_lang=[];
-    $data = $db->query("SELECT namelang FROM personlang")->fetchAll();
+    $data = $db->query("SELECT namelang FROM languages")->fetchAll();
     foreach ($data as $lang) {
       $lang_name = $lang['lang_name'];
       $allowed_lang[$lang_name] = $lang_name;

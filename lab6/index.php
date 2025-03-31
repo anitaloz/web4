@@ -185,7 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $update_stmt->bindParam(':id', $update_id, PDO::PARAM_INT);
             $update_stmt->execute();
             $doplog=$update_stmt->fetchColumn();
-            insertData($doplog, $db);
+            $values=insertData($doplog, $db);
         }
         catch (PDOException $e){
             print('Error : ' . $e->getMessage());
@@ -196,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   }
 
   if (isset($_COOKIE[session_name()]) && session_start() &&!empty($_SESSION['login'])) {
-        insertData($_SESSION['login'], $db);
+        $values=insertData($_SESSION['login'], $db);
         $messages[] = "<div>Вход с логином " . htmlspecialchars($_SESSION['login']) . ", uid " . (int)$_SESSION['uid'] . "</div>";
 
   }

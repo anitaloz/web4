@@ -146,7 +146,7 @@ function insertData($login, $db) {
     return $values;
 }
 
-function insertDB($login, $db)
+function updateDB($login, $db)
 {
   $dop=$db->prepare("SELECT id from person_LOGIN where login=:login");
   $dop->bindParam(':login', $login);

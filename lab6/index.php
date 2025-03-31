@@ -316,16 +316,17 @@ else {
   if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  adminlog($db) && password_check(adminlog($db), $_SERVER['PHP_AUTH_PW'], $db))
   {
     try {
-      insertDB($_COOKIE['login'], $db);
+      updateDB($_COOKIE['login'], $db);
     }
     catch(PDOException $e){
         print('Error : ' . $e->getMessage());
         exit();
       }
   }
+  else{
   if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
     try {
-          insertDB($_SESSION['login'], $db);
+          updateDB($_SESSION['login'], $db);
     }
     catch(PDOException $e){
         print('Error : ' . $e->getMessage());
@@ -384,6 +385,7 @@ else {
         print('Error : ' . $e->getMessage());
         exit();
     }
+  }
 }
 
   // Сохраняем куку с признаком успешного сохранения.

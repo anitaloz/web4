@@ -315,7 +315,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         }
 
 
-        $sql = "SELECT lang.namelang FROM (personlang pl JOIN person_LOGIN l ON pl.pers_id = l.id WHERE l.login = :login;) j JOIN languages lang ON j.lan_id=lang.id";
+        $sql = "SELECT l.namelang
+        FROM personlang pl
+        JOIN person_LOGIN l ON pl.pers_id = l.id
+        JOIN languages lang ON pl.lang_id = lang.id
+        WHERE l.login = :login;";
         try{
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':login', $_SESSION['login'], PDO::PARAM_STR);

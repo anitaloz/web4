@@ -116,7 +116,7 @@
                         require_once 'db.php';
                         if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  adminlog($db) && password_check(adminlog($db), $_SERVER['PHP_AUTH_PW'], $db))
                         {
-                            print('<a class="admhref" href="adm_page.php">Страница администратора</a>');
+                            print('<a class="admhref" href="adm_page.php">Страница администратора</a></br>');
                         }
                         if (!empty($messages)) {
                         print('<div id="messages">');

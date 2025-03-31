@@ -112,12 +112,6 @@
                 <form class="pl-sm-3" action=""
                     method="POST">
                     <?php
-                        require_once 'functions.php';
-                        require_once 'db.php';
-                        if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  adminlog($db) && password_check(adminlog($db), $_SERVER['PHP_AUTH_PW'], $db))
-                        {
-                            print('<a class="admhref" href="adm_page.php">Страница администратора</a></br>');
-                        }
                         if (!empty($messages)) {
                         print('<div id="messages">');
                         // Выводим все сообщения.
@@ -199,6 +193,12 @@
                  ?>
                 </form>
                 <?php 
+                    require_once 'functions.php';
+                    require_once 'db.php';
+                    if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  adminlog($db) && password_check(adminlog($db), $_SERVER['PHP_AUTH_PW'], $db))
+                    {
+                        print('<a class="admhref" href="adm_page.php">Страница администратора</a></br>');
+                    }
                     if(isset($_COOKIE[session_name()]) && !empty($_SESSION['login'])){
                         print('<form class="logout_form" action="login.php" method="POST">
                         <input type="submit" name="logout" value="Выйти"/> 

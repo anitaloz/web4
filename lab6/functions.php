@@ -195,7 +195,7 @@ function password_check($login, $password, $db) {
         }
   }
 
-function adminlog()
+function adminlog($db)
 {
     $query = "SELECT login FROM LOGIN where role='ADMIN'"; // Запрос с параметром
 

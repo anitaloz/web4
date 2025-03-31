@@ -31,7 +31,7 @@ $allowed_lang=getLangs($db);
 foreach($allowed_lang as $lang)
     {
       
-  echo $lang;
+      echo $lang;
     }
 function emailExists($email, $pdo) {
 

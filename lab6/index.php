@@ -319,7 +319,8 @@ else {
   if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  adminlog($db) && password_check(adminlog($db), $_SERVER['PHP_AUTH_PW'], $db))
   {
     try {
-      updateDB($_COOKIE['login'], $db);
+      if(!empty($_COOKIE['login']))
+        updateDB($_COOKIE['login'], $db);
     }
     catch(PDOException $e){
         print('Error : ' . $e->getMessage());

@@ -148,6 +148,7 @@ function insertData($login, $db) {
 
 function updateDB($login, $db)
 {
+  try {
   $dop=$db->prepare("SELECT id from person_LOGIN where login=:login");
   $dop->bindParam(':login', $login);
   $dop->execute();
@@ -182,6 +183,11 @@ function updateDB($login, $db)
     $stmt->bindParam(':lang_id', $lang_id);
     $stmt->execute();
   }
+}
+catch(PDOException $e){
+  print('Error : ' . $e->getMessage());
+  exit();
+}
 }
 function insertDB($db)
 {

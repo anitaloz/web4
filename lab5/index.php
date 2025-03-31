@@ -315,7 +315,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         }
 
 
-        $sql = "SELECT lang.namelang
+        $sql = "SELECT l.namelang
         FROM personlang pl
         JOIN person_LOGIN l ON pl.pers_id = l.id
         JOIN languages lang ON pl.lang_id = lang.id

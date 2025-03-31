@@ -159,22 +159,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $values['bio'] = empty($_COOKIE['bio_value']) ? '' : strip_tags($_COOKIE['bio_value']);
   $values['languages'] = empty($_COOKIE['languages_value']) ? '' : strip_tags($_COOKIE['languages_value']);
 
-
-
-  // if (isset($_COOKIE[session_name()]) && session_start()) {
-  //   $session_started = true;
-  //   if (!empty($_SESSION['login'])) {
-  //     if(isset($_POST['update_id'])){
-
-  //     }
-  //     header('Location: ./');
-  //     exit();
-  //   }
-  // }
-  // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
-  // ранее в сессию записан факт успешного логина.
-  $adminlogin=adminlog($db);
-  if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  $adminlogin && password_check($adminlogin, $_SERVER['PHP_AUTH_PW'], $db))
+  //вставка для админа
+  if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  adminlog($db) && password_check(adminlog($db), $_SERVER['PHP_AUTH_PW'], $db))
     {
       if(!empty($_GET['uid']))
       {
@@ -186,6 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $update_stmt->execute();
             $doplog=$update_stmt->fetchColumn();
             $values=insertData($doplog, $db);
+            setcookie('login', $doplog);
         }
         catch (PDOException $e){
             print('Error : ' . $e->getMessage());
@@ -194,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         
       }
   }
-
+  //вставка для ползователя
   if (isset($_COOKIE[session_name()]) && session_start() &&!empty($_SESSION['login'])) {
         $values=insertData($_SESSION['login'], $db);
         $messages[] = "<div>Вход с логином " . htmlspecialchars($_SESSION['login']) . ", uid " . (int)$_SESSION['uid'] . "</div>";
@@ -324,42 +311,19 @@ if (emailExists($email, $db) && session_start()) {
 
   // Проверяем меняются ли ранее сохраненные данные или отправляются новые.
 
+  if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  adminlog($db) && password_check(adminlog($db), $_SERVER['PHP_AUTH_PW'], $db))
+  {
+    try {
+      insertDB($_COOKIE['login'], $db);
+    }
+    catch(PDOException $e){
+        print('Error : ' . $e->getMessage());
+        exit();
+      }
+  }
   if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
     try {
-        $dop=$db->prepare("SELECT id from person_LOGIN where login=:login");
-        $dop->bindParam(':login', $_SESSION['login']);
-        $dop->execute();
-        $stmt = $db->prepare("UPDATE person set fio=:fio, tel=:tel, email=:email, bdate=:bdate, gender=:gender, biography=:biography where id=:id");
-        $stmt->bindParam(':fio', $_POST['fio']);
-        $stmt->bindParam(':id', $dop->fetchColumn());
-        $stmt->bindParam(':tel', $tel);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':bdate', $bdate);
-        $stmt->bindParam(':gender', $gender);
-        $stmt->bindParam(':biography', $biography);
-        $tel = ($_POST['field-tel']);
-        $email = ($_POST['field-email']);
-        $bdate = ($_POST['field-date']);
-        $gender = ($_POST['radio-group-1']);
-        $biography = ($_POST['bio']);
-        $stmt->execute();
-        $lastInsertId = $db->prepare("SELECT id from person_LOGIN where login=:login");
-        $lastInsertId->bindParam(':login', $_SESSION['login']);
-        $lastInsertId->execute();
-        $pers_id=$lastInsertId->fetchColumn();
-        $erasure=$db->prepare("DELETE from personlang where pers_id=:pers_id");
-        $erasure->bindParam(':pers_id', $pers_id, PDO::PARAM_INT);
-        $erasure->execute();
-        foreach($_POST['languages'] as $lang) {
-          $stmt = $db->prepare("SELECT id FROM languages WHERE namelang = :namelang");
-          $stmt->bindParam(':namelang', $lang);
-          $stmt->execute();
-          $lang_id=$stmt->fetchColumn();
-          $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-          $stmt->bindParam(':pers_id', $pers_id);
-          $stmt->bindParam(':lang_id', $lang_id);
-          $stmt->execute();
-        }
+          insertDB($_SESSION['login'], $db);
     }
     catch(PDOException $e){
         print('Error : ' . $e->getMessage());

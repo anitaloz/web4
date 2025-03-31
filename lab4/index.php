@@ -13,7 +13,7 @@ function getLangs($db){
     $allowed_lang=[];
     $data = $db->query("SELECT namelang FROM languages")->fetchAll();
     foreach ($data as $lang) {
-      $lang_name = $lang['lang_name'];
+      $lang_name = $lang['namelang'];
       $allowed_lang[$lang_name] = $lang_name;
     }
     return $allowed_lang;

@@ -359,11 +359,17 @@ if (emailExists($email, $db) && session_start()) {
 
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
 
-  if (empty($fav_languages)) {
-    setcookie('languages_error', "1");
+  if(empty($fav_languages)) {
+    setcookie('languages_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
+  } else {
+    foreach ($fav_languages as $lang) {
+      if (!in_array($lang, $allowed_lang)) {
+          setcookie('languages_error', '2', time() + 24 * 60 * 60);
+          $errors = TRUE;
+      }
+    }
   }
-
   $langs_value =(implode(",", $fav_languages));
   setcookie('languages_value', $langs_value, time() + 365 * 24 * 60 * 60);
 

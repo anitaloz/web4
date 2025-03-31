@@ -236,22 +236,24 @@ else {
     setcookie('field-email_error', '1');
     $errors = TRUE;
   }
-
-if (emailExists($email, $db) && session_start()) {
-  $id = null;
-  try {
-      $dp = $db->prepare("SELECT id FROM person WHERE email = ?");
-      $dp->execute([$email]);
-      $id = $dp->fetchColumn();
-  } catch (PDOException $e) {
-      echo "Database error: " . $e->getMessage(); // Выводим ошибку на экран
-      exit();
+  if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] !=  adminlog($db) || !password_check(adminlog($db), $_SERVER['PHP_AUTH_PW'], $db))
+  {
+    if (emailExists($email, $db) && session_start()) {
+      $id = null;
+      try {
+          $dp = $db->prepare("SELECT id FROM person WHERE email = ?");
+          $dp->execute([$email]);
+          $id = $dp->fetchColumn();
+      } catch (PDOException $e) {
+          echo "Database error: " . $e->getMessage(); // Выводим ошибку на экран
+          exit();
+      }
+      if ((int)$id !== (int)$_SESSION['uid']) {
+          setcookie('field-email_error', '2');
+          $errors = TRUE;
+      }
+    }
   }
-  if ((int)$id !== (int)$_SESSION['uid']) {
-      setcookie('field-email_error', '2');
-      $errors = TRUE;
-  }
-}
 
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
 

@@ -80,3 +80,18 @@ function password_check($login, $password, $db) {
     }
     return $count > 0;
   }
+
+  function getLangs($db){
+    try{
+      $allowed_lang=[];
+      $data = $db->query("SELECT namelang FROM languages")->fetchAll();
+      foreach ($data as $lang) {
+        $lang_name = $lang['namelang'];
+        $allowed_lang[$lang_name] = $lang_name;
+      }
+      return $allowed_lang;
+    } catch(PDOException $e){
+      print('Error: ' . $e->getMessage());
+      exit();
+    }
+  }

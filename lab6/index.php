@@ -10,7 +10,7 @@ require_once 'functions.php';
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
-
+$allowed_lang=getLangs($db);
 // В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
 // и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -122,11 +122,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   }
 
   if ($errors['languages']) {
-    // Удаляем куки, указывая время устаревания в прошлом.
+    if($_COOKIE['languages_error']=='1'){
+      $messages[] = '<div>Укажите любимый(ые) язык(и) программирования.</div>';
+    }
+    elseif($_COOKIE['languages_error']=='2'){
+      $messages[] = '<div>Указан недопустимый язык.</div>';
+    }
     setcookie('languages_error', '', 100000);
     setcookie('languages_value', '', 100000);
-    // Выводим сообщение.
-    $messages[] = '<div class="messages">Отметьте любимый язык программирования.</div>';
   }
 
   if ($errors['bio'] AND  $_COOKIE['bio_error']==1) {
@@ -268,8 +271,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             exit();
         }
 
-
-        $sql = "SELECT pl.lang_id FROM personlang pl JOIN person_LOGIN l ON pl.pers_id = l.id  WHERE l.login = :login;";
+        $sql = "SELECT lang.namelang
+        FROM personlang pl
+        JOIN person_LOGIN l ON pl.pers_id = l.id
+        JOIN languages lang ON pl.lang_id = lang.id
+        WHERE l.login = :login;";
         try{
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':login', $_SESSION['login'], PDO::PARAM_STR);
@@ -430,10 +436,14 @@ if (emailExists($email, $db) && session_start()) {
         $erasure->bindParam(':pers_id', $pers_id, PDO::PARAM_INT);
         $erasure->execute();
         foreach($_POST['languages'] as $lang) {
-        $stmt1 = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-        $stmt1->bindParam(':pers_id', $pers_id, PDO::PARAM_INT);
-        $stmt1->bindParam(':lang_id', $lang);
-        $stmt1->execute();
+          $stmt = $db->prepare("SELECT id FROM languages WHERE namelang = :namelang");
+          $stmt->bindParam(':namelang', $lang);
+          $stmt->execute();
+          $lang_id=$stmt->fetchColumn();
+          $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
+          $stmt->bindParam(':pers_id', $pers_id);
+          $stmt->bindParam(':lang_id', $lang_id);
+          $stmt->execute();
         }
     }
     catch(PDOException $e){
@@ -469,10 +479,14 @@ if (emailExists($email, $db) && session_start()) {
         $stmt->execute();
         $lastInsertId = $db->lastInsertId();
         foreach($_POST['languages'] as $lang) {
-        $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-        $stmt->bindParam(':pers_id', $lastInsertId);
-        $stmt->bindParam(':lang_id', $lang);
-        $stmt->execute();
+          $stmt = $db->prepare("SELECT id FROM languages WHERE namelang = :namelang");
+          $stmt->bindParam(':namelang', $lang);
+          $stmt->execute();
+          $lang_id=$stmt->fetchColumn();
+          $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
+          $stmt->bindParam(':pers_id', $lastInsertId);
+          $stmt->bindParam(':lang_id', $lang_id);
+          $stmt->execute();
         }
         // Генерируем уникальный логин и пароль.
         // TODO: сделать механизм генерации, например функциями rand(), uniquid(), md5(), substr().

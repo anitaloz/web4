@@ -81,7 +81,7 @@ else {
     }
 
     // Делаем перенаправление.
-    header('Location: index.php?uid=' . $_SESSION['uid']);
+    header('Location: index.php');
   }
   else {
     print('Неверный логин или пароль');

@@ -336,9 +336,13 @@ else {
     $stmt->execute();
     $lastInsertId = $db->lastInsertId();
     foreach($_POST['languages'] as $lang) {
+      $stmt = $db->prepare("SELECT id FROM languages WHERE namelang = :namelang")
+      $stmt->bindParam(':namelang', $lang);
+      $stmt->execute();
+      $lang_id=$stmt->fetchColumn();
       $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
       $stmt->bindParam(':pers_id', $lastInsertId);
-      $stmt->bindParam(':lang_id', $lang);
+      $stmt->bindParam(':lang_id', $lang_id);
       $stmt->execute();
     }
   }

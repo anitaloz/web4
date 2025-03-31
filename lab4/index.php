@@ -253,7 +253,11 @@ else {
     $errors = TRUE;
   }
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
-
+  foreach($allowed_lang as $lang)
+    {
+      
+  echo $lang;
+    }
   if(empty($fav_languages)) {
     setcookie('languages_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;

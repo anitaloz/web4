@@ -174,6 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
   // ранее в сессию записан факт успешного логина.
   global $adminlogin;
+  echo $adminlogin;
   if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  $adminlogin && password_check($adminlogin, $_SERVER['PHP_AUTH_PW'], $db))
     {
       if(!empty($_GET['uid']))

@@ -28,11 +28,6 @@ $user = 'u68598'; // Заменить на ваш логин uXXXXX
     [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
 $allowed_lang=getLangs($db);
-foreach($allowed_lang as $lang)
-    {
-      
-      echo $lang;
-    }
 function emailExists($email, $pdo) {
 
   $sql = "SELECT COUNT(*) FROM person WHERE email = :email"; 

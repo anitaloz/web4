@@ -9,7 +9,26 @@
 // Отправляем браузеру правильную кодировку,
 // файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
+function getLangs($db){
+  try{
+    $allowed_lang=[];
+    $data = $db->query("SELECT namelang FROM languages")->fetchAll();
+    foreach ($data as $lang) {
+      $lang_name = $lang['namelang'];
+      $allowed_lang[$lang_name] = $lang_name;
+    }
+    return $allowed_lang;
+  } catch(PDOException $e){
+    print('Error: ' . $e->getMessage());
+    exit();
+  }
+}
+$user = 'u68598'; // Заменить на ваш логин uXXXXX
+  $pass = '8795249'; // Заменить на пароль
+  $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
+    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
 
+$allowed_lang=getLangs($db);
 function check_login($login, $db)
 {
   try{
@@ -173,11 +192,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   }
 
   if ($errors['languages']) {
-    // Удаляем куки, указывая время устаревания в прошлом.
+    if($_COOKIE['languages_error']=='1'){
+      $messages[] = '<div>Укажите любимый(ые) язык(и) программирования.</div>';
+    }
+    elseif($_COOKIE['languages_error']=='2'){
+      $messages[] = '<div>Указан недопустимый язык.</div>';
+    }
     setcookie('languages_error', '', 100000);
     setcookie('languages_value', '', 100000);
-    // Выводим сообщение.
-    $messages[] = '<div class="messages">Отметьте любимый язык программирования.</div>';
   }
 
   if ($errors['bio'] AND  $_COOKIE['bio_error']==1) {
@@ -214,11 +236,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   // ранее в сессию записан факт успешного логина.
   if (isset($_COOKIE[session_name()]) &&
       session_start() && !empty($_SESSION['login'])) {
-        $user = 'u68598'; // Заменить на ваш логин uXXXXX
-        $pass = '8795249'; // Заменить на пароль
-        $db = new PDO('mysql:host=localhost;dbname=u68598', $user, $pass,
-          [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
-      
         $sql = "SELECT fio FROM person join person_LOGIN using(id) WHERE login = :login"; 
         $stmt = $db->prepare($sql);
         if ($stmt === false) {
@@ -388,11 +405,17 @@ else {
 
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
 
-  if (empty($fav_languages)) {
-    setcookie('languages_error', "1");
+  if(empty($fav_languages)) {
+    setcookie('languages_error', '1', time() + 24 * 60 * 60);
     $errors = TRUE;
+  } else {
+    foreach ($fav_languages as $lang) {
+      if (!in_array($lang, $allowed_lang)) {
+          setcookie('languages_error', '2', time() + 24 * 60 * 60);
+          $errors = TRUE;
+      }
+    }
   }
-
   $langs_value =(implode(",", $fav_languages));
   setcookie('languages_value', $langs_value, time() + 365 * 24 * 60 * 60);
 
@@ -504,10 +527,15 @@ else {
         $stmt->execute();
         $lastInsertId = $db->lastInsertId();
         foreach($_POST['languages'] as $lang) {
-        $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
-        $stmt->bindParam(':pers_id', $lastInsertId);
-        $stmt->bindParam(':lang_id', $lang);
-        $stmt->execute();
+          $stmt = $db->prepare("SELECT id FROM languages WHERE namelang = :namelang");
+          $stmt->bindParam(':namelang', $lang);
+          $stmt->execute();
+          $lang_id=$stmt->fetchColumn();
+          $stmt = $db->prepare("INSERT INTO personlang (pers_id, lang_id) VALUES (:pers_id, :lang_id)");
+          $stmt->bindParam(':pers_id', $lastInsertId);
+          $stmt->bindParam(':lang_id', $lang_id);
+          $stmt->execute();
+        }
         }
         // Генерируем уникальный логин и пароль.
         // TODO: сделать механизм генерации, например функциями rand(), uniquid(), md5(), substr().

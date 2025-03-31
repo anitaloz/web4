@@ -212,17 +212,17 @@ else {
   $errors = FALSE;
   if (empty($_POST['fio'])) {
     // Выдаем куку на день с флажком об ошибке в поле fio.
-    setcookie('fio_error', '1', time() + 24 * 60 * 60);
+    setcookie('fio_error', '1');
     $errors = TRUE;
   }
 
   if(!empty($_POST['fio']) && strlen($_POST['fio'])>150) {
-    setcookie('fio_error', '2', time() + 24 * 60 * 60);
+    setcookie('fio_error', '2');
     $errors = TRUE;
   }
   
   if(!empty($_POST['fio']) && !preg_match('/^[а-яА-Яa-zA-Z ]+$/u', $_POST['fio'])) {
-    setcookie('fio_error', '3', time() + 24 * 60 * 60);
+    setcookie('fio_error', '3');
     $errors = TRUE;
   }
 
@@ -232,35 +232,35 @@ else {
   // $_POST['field-tel']=trim($_POST['field-tel']);
   //$_POST['field-tel']=trim($_POST['field-tel']);
   if(!preg_match('/^[0-9+]+$/', $_POST['field-tel'])) {
-    setcookie('field-tel_error', '1', time() + 24 * 60 * 60);
+    setcookie('field-tel_error', '1');
     $errors = TRUE;
   }
   setcookie('field-tel_value', $_POST['field-tel'], time() + 365 * 24 * 60 * 60);
 
   if(!isset($_POST['radio-group-1']) || empty($_POST['radio-group-1'])) {
-    setcookie('radio-group-1_error', '1', time() + 24 * 60 * 60);
+    setcookie('radio-group-1_error', '1');
     $errors = TRUE;
   }
   setcookie('radio-group-1_value', $_POST['radio-group-1'], time() + 365 * 24 * 60 * 60);
 
   $email=trim($_POST['field-email']);
   if(!preg_match('/^[a-zA-Z1-9._@]+$/u', $email) || !preg_match('/@.*\./', $email)) {
-    setcookie('field-email_error', '1', time() + 24 * 60 * 60);
+    setcookie('field-email_error', '1');
     $errors = TRUE;
   }
   if (emailExists($email, $db)) { 
-    setcookie('field-email_error', '2', time() + 24 * 60 * 60);
+    setcookie('field-email_error', '2');
     $errors = TRUE;
   }
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
 
   if(empty($fav_languages)) {
-    setcookie('languages_error', '1', time() + 24 * 60 * 60);
+    setcookie('languages_error', '1');
     $errors = TRUE;
   } else {
     foreach ($fav_languages as $lang) {
       if (!in_array($lang, $allowed_lang)) {
-          setcookie('languages_error', '2', time() + 24 * 60 * 60);
+          setcookie('languages_error', '2');
           $errors = TRUE;
       }
     }
@@ -269,24 +269,24 @@ else {
   setcookie('languages_value', $langs_value, time() + 365 * 24 * 60 * 60);
 
   if (empty($_POST['field-date'])) {
-    setcookie('field-date_error', '1', time() + 24 * 60 * 60);
+    setcookie('field-date_error', '1');
     $errors = TRUE;
   }
   setcookie('field-date_value', $_POST['field-date'], time() + 365 * 24 * 60 * 60);
 
   if(!isset($_POST['check-1']) || empty($_POST['check-1'])) {
-    setcookie('check-1_error', '1', time() + 24 * 60 * 60);
+    setcookie('check-1_error', '1');
     $errors = TRUE;
   }
   setcookie('check-1_value', $_POST['check-1'], time() + 365 * 24 * 60 * 60);
 
   if (empty($_POST['bio'])) {
-    setcookie('bio_error', '1', time() + 24 * 60 * 60);
+    setcookie('bio_error', '1');
     $errors = TRUE;
   }
 
   if (!empty($_POST['bio']) && !preg_match('/^[а-яА-Яa-zA-Z1-9.,?!:()]+$/u', $_POST['bio'])) {
-    setcookie('bio_error', '2', time() + 24 * 60 * 60);
+    setcookie('bio_error', '2');
     $errors = TRUE;
   }
   setcookie('bio_value', $_POST['bio'], time() + 365 * 24 * 60 * 60);

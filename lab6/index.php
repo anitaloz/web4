@@ -349,7 +349,7 @@ else {
     setcookie('login', $login);
     setcookie('pass', $pass);
     try {
-          insertDB($db);
+          insertDB($db, $login, $hash_pass);
     }
     catch(PDOException $e){
         print('Error : ' . $e->getMessage());

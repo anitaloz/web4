@@ -189,7 +189,7 @@ catch(PDOException $e){
   exit();
 }
 }
-function insertDB($db)
+function insertDB($db, $login, $hash_pass)
 {
   $stmt = $db->prepare("INSERT INTO person (fio, tel, email, bdate, gender, biography) VALUES (:fio, :tel, :email, :bdate, :gender, :biography)");
   $stmt->bindParam(':fio', $fio);

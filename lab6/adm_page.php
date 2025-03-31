@@ -91,7 +91,7 @@
 
         <?php
         try {
-            echo "<table class='stat'><thead> <tr class="nametb px-sm-2 pt-sm-2 pb-sm-2"><td>LANGUAGE</td><td>COUNT</td></tr></thead> ";
+            echo "<table class='stat'><thead> <tr class="nametb"><td>LANGUAGE</td><td>COUNT</td></tr></thead> ";
             $stmt = $db->prepare("SELECT l.namelang, COUNT(pl.pers_id) AS cnt
             FROM personlang pl
             JOIN languages l ON pl.lang_id = l.id

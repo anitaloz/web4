@@ -1,6 +1,7 @@
 <?php
     require_once 'db.php';
     require_once 'functions.php';
+    global $adminlogin;
     $query = "SELECT login FROM LOGIN where role='ADMIN'"; // Запрос с параметром
 
         $stmt = $db->prepare($query); // Подготавливаем запрос
@@ -113,7 +114,7 @@
 
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_id'])) {
-        if($_SERVER['PHP_AUTH_USER'] == 'admin' || md5($_SERVER['PHP_AUTH_PW']) == md5('123'))
+        if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  $adminlogin && password_check($adminlogin, $_SERVER['PHP_AUTH_PW'], $db))
         {
         $delete_id = $_POST['delete_id'];
         $delete_query = "DELETE FROM person WHERE id = :id";

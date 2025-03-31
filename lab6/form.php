@@ -113,7 +113,8 @@
                     method="POST">
                     <?php
                         require_once 'functions.php';
-                        if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  $adminlogin && password_check($adminlogin, $_SERVER['PHP_AUTH_PW'], $db))
+                        require_once 'db.php';
+                        if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  adminlog($db) && password_check(adminlog($db), $_SERVER['PHP_AUTH_PW'], $db))
                         {
                             print('<a class="admhref" href="adm_page.php">Страница администратора</a>');
                         }

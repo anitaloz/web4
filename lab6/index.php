@@ -329,6 +329,7 @@ else {
       $update_id = $_POST['uid'];
       $doplog=findLoginByUid($update_id, $db);
       updateDB($doplog, $db);
+      header('Location: adm_page.php');
       }
       
     else{

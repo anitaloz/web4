@@ -12,7 +12,7 @@ function findLoginByUid($update_id, $db)
     $update_query = "SELECT login FROM person_LOGIN WHERE id = :id";
     try {
         $update_stmt = $db->prepare($update_query);
-        $update_stmt->bindParam(':id', $update_id, PDO::PARAM_INT);
+        $update_stmt->bindParam(':id', $update_id);
         $update_stmt->execute();
         $doplog=$update_stmt->fetchColumn();
     }

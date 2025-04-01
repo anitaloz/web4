@@ -334,11 +334,6 @@ else {
     else{
       print('Вы не выбрали пользователя для изменения');
     }
-    }
-    catch(PDOException $e){
-        print('Error : ' . $e->getMessage());
-        exit();
-      }
   }
   else{
   if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {

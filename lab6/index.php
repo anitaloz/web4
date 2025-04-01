@@ -175,7 +175,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $update_stmt->execute();
             $doplog=$update_stmt->fetchColumn();
             $values=insertData($doplog, $db);
-            setcookie('login', $doplog);
+            $values['login']=$doplog;
+            $values['uid']=$_GET['uid'];
+            //setcookie('login', $doplog);
         }
         catch (PDOException $e){
             print('Error : ' . $e->getMessage());
@@ -257,6 +259,25 @@ else {
       }
     }
   }
+  else 
+  {
+    if (emailExists($email, $db)) {
+      $id = null;
+      try {
+          $dp = $db->prepare("SELECT id FROM person WHERE email = ?");
+          $dp->execute([$email]);
+          $id = $dp->fetchColumn();
+      } catch (PDOException $e) {
+          echo "Database error: " . $e->getMessage(); // Выводим ошибку на экран
+          exit();
+      }
+      if ((int)$id !== (int)$values['uid']) {
+          setcookie('field-email_error', '2');
+          $errors = TRUE;
+      }
+    }
+
+  }
 
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
 
@@ -319,8 +340,8 @@ else {
   if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  adminlog($db) && password_check(adminlog($db), $_SERVER['PHP_AUTH_PW'], $db))
   {
     try {
-      if(!empty($_COOKIE['login']))
-        updateDB($_COOKIE['login'], $db);
+      if(!empty($values['login']))
+        updateDB($values['login'], $db);
       else{
         print('Вы не выбрали пользователя для изменения');
       }

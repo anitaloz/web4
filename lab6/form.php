@@ -122,7 +122,7 @@
                         }
                     ?>
                     <label>
-                        <input type="hidden" name="uid" value="<?php print $values['uid']; ?>" />
+                        <input type="hidden" name="uid" value='<?php print $values['uid'];?>' />
                     </label><br />
                     <label>
                         ФИО:<br />

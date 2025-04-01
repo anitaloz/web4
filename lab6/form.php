@@ -121,7 +121,9 @@
                         print('</div>');
                         }
                     ?>
-
+                    <label>
+                        <input type="hidden" name="uid" value="<?php print $values['uid']; ?>" />
+                    </label><br />
                     <label>
                         ФИО:<br />
                         <input name="fio" <?php if ($errors['fio']) {print 'class="error"';} ?> value="<?php print $values['fio']; ?>" />

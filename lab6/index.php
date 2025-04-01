@@ -168,22 +168,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       if(!empty($_GET['uid']))
       {
         $update_id = $_GET['uid'];
-        $update_query = "SELECT login FROM person_LOGIN WHERE id = :id";
-        try {
-            $update_stmt = $db->prepare($update_query);
-            $update_stmt->bindParam(':id', $update_id, PDO::PARAM_INT);
-            $update_stmt->execute();
-            $doplog=$update_stmt->fetchColumn();
-            $values=insertData($doplog, $db);
-            $values['login']=$doplog;
-            $values['uid']=$_GET['uid'];
-            //setcookie('login', $doplog);
-        }
-        catch (PDOException $e){
-            print('Error : ' . $e->getMessage());
-            exit();
-        }
-        
+        $doplog=findLoginByUid($update_id)
+        $values=insertData($doplog, $db);
+        $values['uid']=$update_id;
       }
   }
   //вставка для ползователя
@@ -259,8 +246,7 @@ else {
       }
     }
   }
-  else 
-  {
+  else {
     if (emailExists($email, $db)) {
       $id = null;
       try {
@@ -271,14 +257,11 @@ else {
           echo "Database error: " . $e->getMessage(); // Выводим ошибку на экран
           exit();
       }
-      print($values['uid']);
-      exit();
-      if ((int)$id !== (int)$values['uid']) {
+      if ((int)$id !== (int)$_POST['uid']) {
           setcookie('field-email_error', '2');
           $errors = TRUE;
       }
     }
-
   }
 
   setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
@@ -341,12 +324,16 @@ else {
 
   if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  adminlog($db) && password_check(adminlog($db), $_SERVER['PHP_AUTH_PW'], $db))
   {
-    try {
-      if(!empty($values['login']))
-        updateDB($values['login'], $db);
-      else{
-        print('Вы не выбрали пользователя для изменения');
+    if(!empty($_POST['uid']))
+    {
+      $update_id = $_POST['uid'];
+      $doplog=findLoginByUid($update_id)
+      updateDB($doplog, $db);
       }
+      
+    else{
+      print('Вы не выбрали пользователя для изменения');
+    }
     }
     catch(PDOException $e){
         print('Error : ' . $e->getMessage());

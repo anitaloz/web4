@@ -125,7 +125,7 @@
                     {
                         print("<label>
                             <input type='hidden' name='uid' value='<?php print $values['uid'];?>' />
-                        </label>'");
+                        </label>");
                     }
                     ?>
                     <label>

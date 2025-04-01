@@ -168,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       if(!empty($_GET['uid']))
       {
         $update_id = $_GET['uid'];
-        $doplog=findLoginByUid($update_id)
+        $doplog=findLoginByUid($update_id);
         $values=insertData($doplog, $db);
         $values['uid']=$update_id;
       }

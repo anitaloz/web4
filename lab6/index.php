@@ -330,6 +330,7 @@ else {
       $doplog=findLoginByUid($update_id, $db);
       updateDB($doplog, $db);
       header('Location: adm_page.php');
+      exit();
       }
       
     else{

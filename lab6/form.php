@@ -123,9 +123,9 @@
                     
                     if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  adminlog($db) && password_check(adminlog($db), $_SERVER['PHP_AUTH_PW'], $db))
                     {
-                        print("<label>
-                            <input type='hidden' name='uid' value='<?php print $values['uid'];?>' />
-                        </label>");
+                        print('<label>
+                            <input type="hidden" name="uid" value="<?php print $values["uid"];?>" />
+                        </label>');
                     }
                     ?>
                     <label>

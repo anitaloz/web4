@@ -327,7 +327,7 @@ else {
     if(!empty($_POST['uid']))
     {
       $update_id = $_POST['uid'];
-      $doplog=findLoginByUid($update_id)
+      $doplog=findLoginByUid($update_id);
       updateDB($doplog, $db);
       }
       

@@ -120,14 +120,10 @@
                         }
                         print('</div>');
                         }
-                    
-                    if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  adminlog($db) && password_check(adminlog($db), $_SERVER['PHP_AUTH_PW'], $db))
-                    {
-                        print('<label>
-                            <input type="hidden" name="uid" value="<?php print $values["uid"];?>" />
-                        </label>');
-                    }
                     ?>
+                    <label>
+                        <input type="hidden" name="uid" value='<?php print $values['uid'];?>' />
+                    </label>
                     <label>
                         ФИО:<br />
                         <input name="fio" <?php if ($errors['fio']) {print 'class="error"';} ?> value="<?php print $values['fio']; ?>" />

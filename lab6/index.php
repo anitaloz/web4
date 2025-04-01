@@ -271,6 +271,8 @@ else {
           echo "Database error: " . $e->getMessage(); // Выводим ошибку на экран
           exit();
       }
+      print($values['uid']);
+      exit();
       if ((int)$id !== (int)$values['uid']) {
           setcookie('field-email_error', '2');
           $errors = TRUE;

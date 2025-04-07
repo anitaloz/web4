@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $messages[] = sprintf('Вы можете <a href="login.php">войти</a> с логином <strong>%s</strong>
           и паролем <strong>%s</strong> для изменения данных.',
           strip_tags($_COOKIE['login']),
-          strip_tags($_COOKIE['pass']));
+          strip_tags($_COOKIE['pass']));//XSS
       }
     }
   }
@@ -167,16 +167,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     {
       if(!empty($_GET['uid']))
       {
-        $update_id = strip_tags($_GET['uid']);
+        $update_id = strip_tags($_GET['uid']);//XSS
         $doplog=findLoginByUid($update_id, $db);
         $values=insertData($doplog, $db);
-        $values['uid']=strip_tags($update_id);
+        $values['uid']=$update_id;
       }
   }
   //вставка для ползователя
   if (isset($_COOKIE[session_name()]) && session_start() &&!empty($_SESSION['login'])) {
-        $values=insertData($_SESSION['login'], $db);
-        $messages[] = "<div>Вход с логином " . htmlspecialchars($_SESSION['login']) . ", uid " . (int)$_SESSION['uid'] . "</div>";
+        $values=insertData(strip_tags($_SESSION['login']), $db);//XSS
+        $messages[] = "<div>Вход с логином " . htmlspecialchars(strip_tags($_SESSION['login'])) . ", uid " . (int)strip_tags($_SESSION['uid']) . "</div>";//XSS
 
   }
 
@@ -187,43 +187,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в базе данных.
 else {
-  $fav_languages = $_POST['languages'] ?? [];
+  $fav_languages = strip_tags($_POST['languages']) ?? [];
   // Проверяем ошибки.
   $errors = FALSE;
-  if (empty($_POST['fio'])) {
+  if (empty(strip_tags($_POST['fio']))) {
     // Выдаем куку на день с флажком об ошибке в поле fio.
     setcookie('fio_error', '1');
     $errors = TRUE;
   }
 
-  if(!empty($_POST['fio']) && strlen($_POST['fio'])>150) {
+  if(!empty(strip_tags($_POST['fio'])) && strlen(strip_tags($_POST['fio']))>150) {//XSS
     setcookie('fio_error', '2');
     $errors = TRUE;
   }
   
-  if(!empty($_POST['fio']) && !preg_match('/^[а-яА-Яa-zA-Z ]+$/u', $_POST['fio'])) {
+  if(!empty(strip_tags($_POST['fio'])) && !preg_match('/^[а-яА-Яa-zA-Z ]+$/u', strip_tags($_POST['fio']))) {
     setcookie('fio_error', '3');
     $errors = TRUE;
   }
 
   // Сохраняем ранее введенное в форму значение на год.
-  setcookie('fio_value', $_POST['fio'], time() + 365 * 24 * 60 * 60);
+  setcookie('fio_value', strip_tags($_POST['fio']), time() + 365 * 24 * 60 * 60);
 
   // $_POST['field-tel']=trim($_POST['field-tel']);
-  //$_POST['field-tel']=trim($_POST['field-tel']);
+  $_POST['field-tel']=strip_tags(trim($_POST['field-tel']));//XSS
   if(!preg_match('/^[0-9+]+$/', $_POST['field-tel'])) {
     setcookie('field-tel_error', '1');
     $errors = TRUE;
   }
-  setcookie('field-tel_value', $_POST['field-tel'], time() + 365 * 24 * 60 * 60);
+  setcookie('field-tel_value', strip_tags($_POST['field-tel']), time() + 365 * 24 * 60 * 60);
 
   if(!isset($_POST['radio-group-1']) || empty($_POST['radio-group-1'])) {
     setcookie('radio-group-1_error', '1');
     $errors = TRUE;
   }
-  setcookie('radio-group-1_value', $_POST['radio-group-1'], time() + 365 * 24 * 60 * 60);
+  setcookie('radio-group-1_value', strip_tags($_POST['radio-group-1']), time() + 365 * 24 * 60 * 60);
 
-  $email=($_POST['field-email']);
+  $email=strip_tags($_POST['field-email']);
   if(!preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/u', $email)) {
     setcookie('field-email_error', '1');
     $errors = TRUE;
@@ -235,12 +235,12 @@ else {
       try {
           $dp = $db->prepare("SELECT id FROM person WHERE email = ?");
           $dp->execute([$email]);
-          $id = $dp->fetchColumn();
+          $id = strip_tags($dp->fetchColumn());
       } catch (PDOException $e) {
           echo "Database error: " . $e->getMessage(); // Выводим ошибку на экран
           exit();
       }
-      if ((int)$id !== (int)$_SESSION['uid']) {
+      if ((int)$id !== (int)strip_tags($_SESSION['uid'])) {
           setcookie('field-email_error', '2');
           $errors = TRUE;
       }
@@ -264,7 +264,7 @@ else {
     }
   }
 
-  setcookie('field-email_value', $_POST['field-email'], time() + 365 * 24 * 60 * 60);
+  setcookie('field-email_value', strip_tags($_POST['field-email']), time() + 365 * 24 * 60 * 60);
 
   if(empty($fav_languages)) {
     setcookie('languages_error', '1');
@@ -277,20 +277,20 @@ else {
       }
     }
   }
-  $langs_value =(implode(",", $fav_languages));
+  $langs_value =strip_tags(implode(",", $fav_languages));
   setcookie('languages_value', $langs_value, time() + 365 * 24 * 60 * 60);
 
   if (empty($_POST['field-date'])) {
     setcookie('field-date_error', '1');
     $errors = TRUE;
   }
-  setcookie('field-date_value', $_POST['field-date'], time() + 365 * 24 * 60 * 60);
+  setcookie('field-date_value', strip_tags($_POST['field-date']), time() + 365 * 24 * 60 * 60);//XSS
 
   if(!isset($_POST['check-1']) || empty($_POST['check-1'])) {
     setcookie('check-1_error', '1');
     $errors = TRUE;
   }
-  setcookie('check-1_value', $_POST['check-1'], time() + 365 * 24 * 60 * 60);
+  setcookie('check-1_value', strip_tags($_POST['check-1']), time() + 365 * 24 * 60 * 60);
 
   if (empty($_POST['bio'])) {
     setcookie('bio_error', '1');
@@ -301,7 +301,7 @@ else {
     setcookie('bio_error', '2');
     $errors = TRUE;
   }
-  setcookie('bio_value', $_POST['bio'], time() + 365 * 24 * 60 * 60);
+  setcookie('bio_value', strip_tags($_POST['bio']), time() + 365 * 24 * 60 * 60);
 
 
   if ($errors) {
@@ -327,7 +327,7 @@ else {
     if(!empty($_POST['uid']))
     {
       try{
-      $update_id = $_POST['uid'];
+      $update_id = strip_tags($_POST['uid']);//XSS
       $doplog=findLoginByUid($update_id, $db);
       updateDB($doplog, $db);
       header('Location: adm_page.php');
@@ -346,7 +346,7 @@ else {
   else{
   if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
     try {
-          updateDB($_SESSION['login'], $db);
+          updateDB(strip_tags($_SESSION['login']), $db);//XSS
     }
     catch(PDOException $e){
         print('Error : ' . $e->getMessage());

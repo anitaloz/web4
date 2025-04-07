@@ -326,15 +326,21 @@ else {
   {
     if(!empty($_POST['uid']))
     {
+      try{
       $update_id = $_POST['uid'];
       $doplog=findLoginByUid($update_id, $db);
       updateDB($doplog, $db);
       header('Location: adm_page.php');
       exit();
       }
-      
+      catch{
+        header('Location:adm_page.php');
+        exit();
+      }
+    }
     else{
       print('Вы не выбрали пользователя для изменения');
+      exit();
     }
   }
   else{

@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     setcookie('login', '', 100000);
     setcookie('pass', '', 100000);
     // Выводим сообщение пользователю.
-    $messages[] = 'Спасибо, результаты сохранены.';
+    $messages[] = strip_tags('Спасибо, результаты сохранены.');
     // Если в куках есть пароль, то выводим сообщение.
     if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] !=  adminlog($db) || !password_check(adminlog($db), $_SERVER['PHP_AUTH_PW'], $db))
     {
@@ -167,10 +167,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     {
       if(!empty($_GET['uid']))
       {
-        $update_id = $_GET['uid'];
+        $update_id = strip_tags($_GET['uid']);
         $doplog=findLoginByUid($update_id, $db);
         $values=insertData($doplog, $db);
-        $values['uid']=$update_id;
+        $values['uid']=strip_tags($update_id);
       }
   }
   //вставка для ползователя

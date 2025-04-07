@@ -187,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в базе данных.
 else {
-  $fav_languages = strip_tags($_POST['languages']) ?? [];
+  $fav_languages = ($_POST['languages']) ?? [];
   // Проверяем ошибки.
   $errors = FALSE;
   if (empty(strip_tags($_POST['fio']))) {
@@ -196,7 +196,7 @@ else {
     $errors = TRUE;
   }
 
-  if(!empty(strip_tags($_POST['fio'])) && strlen(strip_tags($_POST['fio']))>150) {//XSS
+  if(!empty(strip_tags($_POST['fio'])) && strip_tags(strlen($_POST['fio']))>150) {//XSS
     setcookie('fio_error', '2');
     $errors = TRUE;
   }

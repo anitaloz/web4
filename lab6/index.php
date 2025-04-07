@@ -333,7 +333,7 @@ else {
       header('Location: adm_page.php');
       exit();
       }
-      catch{
+      catch(PDOException $e){
         header('Location:adm_page.php');
         exit();
       }

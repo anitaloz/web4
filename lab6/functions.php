@@ -66,7 +66,7 @@ function password_check($login, $password, $db) {
         // 6. Возврат true, если email найден в базе, иначе false.
         return $count > 0;
     }//функция для проверки почты
-    function dbEmailChecking($db)
+    function dbEmailChecking($db, $email)
     {
         $id = null;
               try {

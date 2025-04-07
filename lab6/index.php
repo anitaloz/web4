@@ -236,7 +236,7 @@ else {
   }
   else {
     if (emailExists($email, $db)) {
-      dbEmailChecking($db, $email, $_SESSION['uid']);
+      dbEmailChecking($db, $email, (int)$_POST['uid']));
     }
   }
 

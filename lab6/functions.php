@@ -66,7 +66,7 @@ function password_check($login, $password, $db) {
         // 6. Возврат true, если email найден в базе, иначе false.
         return $count > 0;
     }//функция для проверки почты
-    function dbEmailChecking($db, $email)
+    function dbEmailChecking($db, $email, $uid)
     {
         $id = null;
               try {
@@ -77,7 +77,7 @@ function password_check($login, $password, $db) {
                   echo "Database error: " . $e->getMessage(); // Выводим ошибку на экран
                   exit();
               }
-              if ((int)$id !== (int)strip_tags($_SESSION['uid'])) {
+              if ((int)$id !== (int)strip_tags($uid)) {
                   setcookie('field-email_error', '2');
                   $errors = TRUE;
       }

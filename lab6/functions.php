@@ -66,7 +66,22 @@ function password_check($login, $password, $db) {
         // 6. Возврат true, если email найден в базе, иначе false.
         return $count > 0;
     }//функция для проверки почты
-
+function dbEmailChecking($db)
+    {
+$id = null;
+      try {
+          $dp = $db->prepare("SELECT id FROM person WHERE email = ?");
+          $dp->execute([$email]);
+          $id = strip_tags($dp->fetchColumn());
+      } catch (PDOException $e) {
+          echo "Database error: " . $e->getMessage(); // Выводим ошибку на экран
+          exit();
+      }
+      if ((int)$id !== (int)strip_tags($_SESSION['uid'])) {
+          setcookie('field-email_error', '2');
+          $errors = TRUE;
+      }
+    }
     function isValid($login, $db) {
     $count;
     try{

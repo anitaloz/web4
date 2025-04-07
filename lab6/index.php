@@ -231,12 +231,12 @@ else {
   if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] !=  adminlog($db) || !password_check(adminlog($db), $_SERVER['PHP_AUTH_PW'], $db))
   {
     if (emailExists($email, $db) && session_start()) {
-      dbEmailChecking($db);
+      dbEmailChecking($db, $email, $_SESSION['uid']);
     }
   }
   else {
     if (emailExists($email, $db)) {
-      dbEmailChecking($db);
+      dbEmailChecking($db, $email, $_SESSION['uid']);
     }
   }
 

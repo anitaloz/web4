@@ -256,7 +256,6 @@ function adminlog($db)
 
 //CSRF
 function generateCsrfToken() {
-  session_start();
   if (function_exists('random_bytes')) {
     $token = bin2hex(random_bytes(32));
   } else {

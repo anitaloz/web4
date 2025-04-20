@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                   </label>
                   <br />
                   <input type="submit" value="Войти" />
-                  <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
+                  <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generateCsrfToken()); ?>">
                 </form>
                 <a href="adm_page.php">Вход для администратора</a>
               </div>
@@ -63,6 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно сделать авторизацию с записью логина в сессию.
 else {
+  if (!validateCsrfToken()) {
+    http_response_code(403);
+    die('CSRF token validation failed.');
+}
   $login = $_POST['login'];
   $password = $_POST['pass'];
   if (!$session_started) {

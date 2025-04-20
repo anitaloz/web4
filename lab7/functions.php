@@ -232,8 +232,6 @@ function insertDB($db, $login, $hash_pass)
     $stmt->bindParam(':lang_id', $lang_id);
     $stmt->execute();
   }
-  // Генерируем уникальный логин и пароль.
-  // TODO: сделать механизм генерации, например функциями rand(), uniquid(), md5(), substr().
   $stmt = $db->prepare("INSERT INTO LOGIN (login, pass) VALUES (:login, :pass)");
   $stmt->bindParam(':login', $login);
   $stmt->bindParam(':pass', $hash_pass);
@@ -253,6 +251,8 @@ function adminlog($db)
     $adminlogin = $stmt->fetchColumn();
     return $adminlogin;
 }
+
+function ($db)
 
 //CSRF
 function generateCsrfToken() {

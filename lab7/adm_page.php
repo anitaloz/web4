@@ -11,10 +11,10 @@
     }
     if($_SERVER['REQUEST_METHOD'] == 'GET')
     {
-        $query = "SELECT id, fio, tel, email, bdate, gender, biography FROM person"; // Запрос с параметром
+        $query = "SELECT id, fio, tel, email, bdate, gender, biography FROM person"; 
 
-        $stmt = $db->prepare($query); // Подготавливаем запрос
-        $stmt->execute();// Выполняем запрос с параметром
+        $stmt = $db->prepare($query); 
+        $stmt->execute();аметром
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $query_languages = "SELECT
                             pl.pers_id,
@@ -23,19 +23,19 @@
                             personlang pl
                         JOIN
                             languages l ON pl.lang_id = l.id";
-    $stmt_languages = $db->prepare($query_languages);
-    $stmt_languages->execute();
-    $person_languages = $stmt_languages->fetchAll(PDO::FETCH_ASSOC);
-    $languages_by_person = [];
-    foreach ($person_languages as $row) {
-        $person_id = $row['pers_id'];
-        $language_name = $row['namelang']; // Используем language_name
-        if (!isset($languages_by_person[$person_id])) {
-            $languages_by_person[$person_id] = [];
+        $stmt_languages = $db->prepare($query_languages);
+        $stmt_languages->execute();
+        $person_languages = $stmt_languages->fetchAll(PDO::FETCH_ASSOC);
+        $languages_by_person = [];
+        foreach ($person_languages as $row) {
+            $person_id = $row['pers_id'];
+            $language_name = $row['namelang'];
+            if (!isset($languages_by_person[$person_id])) {
+                $languages_by_person[$person_id] = [];
+            }
+            $languages_by_person[$person_id][] = $language_name; 
         }
-        $languages_by_person[$person_id][] = $language_name; // Добавляем название языка
-    }
-    include 'htmlcssmodules.php';
+        include 'htmlcssmodules.php';
     ?>
         <div class="content container-fluid mt-sm-0" >
             <h3>Вы видите защищенные паролем данные</h3>
@@ -63,7 +63,6 @@
                 <td><?= htmlspecialchars($row['biography']) ?></td>
                 <td>
                 <?php
-                    // 3. Используем implode для объединения языков
                     $person_id = $row['id'];
                     if (isset($languages_by_person[$person_id])) {
                         $languages_string = implode(', ', $languages_by_person[$person_id]);
@@ -76,6 +75,7 @@
                     <td>
                     <form method="post" action="">
                     <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generateCsrfToken()); ?>">
                     <button type="submit">Удалить</button>
                     </form>
                     <a href="index.php?uid=<?= htmlspecialchars($row['id']) ?>">Изменить</a>
@@ -93,13 +93,13 @@
             GROUP BY l.namelang");
             $stmt->execute();
             while($row = $stmt->fetch(PDO::FETCH_OBJ)){
-                echo "<tr><td>$row->namelang</td><td>$row->cnt</td></tr>";
+                echo "<tr><td>" . htmlspecialchars($row->namelang, ENT_QUOTES, 'UTF-8'). "</td><td>" . htmlspecialchars($row->cnt, ENT_QUOTES, 'UTF-8') . "</td></tr>";
             }
             echo "</table>";
             echo"</div>";
         }
         catch (PDOException $e){
-            print('ERROR : ' . $e->getMessage());
+            error_log('Database error: ' . $e->getMessage());
             exit();
         }
     ?>
@@ -108,9 +108,18 @@
 
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_id'])) {
+        if (!validateCsrfToken()) {
+            http_response_code(403);
+            die('CSRF token validation failed.');
+        }
         if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  $adminlogin && password_check($adminlogin, $_SERVER['PHP_AUTH_PW'], $db))
         {
-        $delete_id = $_POST['delete_id'];
+        $delete_id = filter_var($_POST['delete_id'], FILTER_VALIDATE_INT);
+
+        if ($delete_id === false) {
+            echo "<p style='color: red;'>Недопустимый ID для удаления.</p>";
+            exit;
+        }
         $delete_query = "DELETE FROM person WHERE id = :id";
         $delete_querylang="DELETE FROM personlang WHERE pers_id=:id";
         $delete_querylogin="DELETE FROM person_LOGIN WHERE id=:id";
@@ -134,13 +143,11 @@
             $delete_stmt->bindParam(':id', $delete_id, PDO::PARAM_INT);
             $delete_stmt->execute();
         
-            //echo "<p style='color: green;'>Строка с ID " . htmlspecialchars($delete_id) . " успешно удалена.</p>";
-            //$messAction[] = '<p style="color: green;">Строка с ID " . htmlspecialchars($delete_id) . " успешно удалена.</p>';
             header("Location: adm_page.php");
             exit;
         
             } catch (PDOException $e) {
-            echo "<p style='color: red;'>Ошибка удаления: " . $e->getMessage() . "</p>";
+                error_log('Database error: ' . $e->getMessage());
             }
         }
     }

@@ -17,7 +17,7 @@ function findLoginByUid($update_id, $db)
         $doplog=$update_stmt->fetchColumn();
     }
     catch (PDOException $e){
-        print('Error : ' . $e->getMessage());
+        error_log('Database error: ' . $e->getMessage());
         exit();
     }
     return $doplog;

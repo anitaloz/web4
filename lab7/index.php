@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     setcookie('field-date_error', '', 100000);
     setcookie('field-date_value', '', 100000);
     // Выводим сообщение.
-    $messages[] = '<div>Заполните дату</div>';//XSS
+    $messages[] = '<div>Заполните дату</div>';
   }
 
   
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     setcookie('radio-group-1_error', '', 100000);
     setcookie('radio-group-1_value', '', 100000);
     // Выводим сообщение.
-    $messages[] = '<div>Выберите пол</div>';//XSS
+    $messages[] = '<div>Выберите пол</div>';
   }
 
   if ($errors['check-1']) {
@@ -122,15 +122,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     setcookie('check-1_error', '', 100000);
     setcookie('check-1_value', '', 100000);
     // Выводим сообщение.
-    $messages[] = '<div>Ознакомьтесь с контрактом</div>';//XSS
+    $messages[] = '<div>Ознакомьтесь с контрактом</div>'
   }
 
   if ($errors['languages']) {
     if($_COOKIE['languages_error']=='1'){
-      $messages[] = '<div>Укажите любимый(ые) язык(и) программирования.</div>';//XSS
+      $messages[] = '<div>Укажите любимый(ые) язык(и) программирования.</div>';
     }
     elseif($_COOKIE['languages_error']=='2'){
-      $messages[] = '<div>Указан недопустимый язык.</div>';//XSS
+      $messages[] = '<div>Указан недопустимый язык.</div>';
     }
     setcookie('languages_error', '', 100000);
     setcookie('languages_value', '', 100000);
@@ -184,16 +184,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в базе данных.
 else {
-    // Сначала проверяем CSRF-токен
     if (!validateCsrfToken()) {
-      http_response_code(403); // Forbidden
-      die('CSRF token validation failed.'); // Завершаем выполнение скрипта
+      http_response_code(403); 
+      die('CSRF token validation failed.');
     }
   $fav_languages = ($_POST['languages']) ?? [];
   // Проверяем ошибки.
   $errors = FALSE;
   if (empty(strip_tags($_POST['fio']))) {
-    // Выдаем куку на день с флажком об ошибке в поле fio.
     setcookie('fio_error', '1');
     $errors = TRUE;
   }

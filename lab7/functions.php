@@ -294,10 +294,8 @@ function generateCsrfToken2($form_id) {
       $_SESSION['csrf_tokens'] = [];
   }
 
-  if (!isset($_SESSION['csrf_tokens'][$form_id])) {
       $_SESSION['csrf_tokens'][$form_id] = bin2hex(random_bytes(32));
-  }
-
+  
   return $_SESSION['csrf_tokens'][$form_id];
 }
 

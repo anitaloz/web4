@@ -252,7 +252,6 @@ function adminlog($db)
     return $adminlogin;
 }
 
-function ($db)
 
 //CSRF
 function generateCsrfToken() {

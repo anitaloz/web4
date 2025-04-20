@@ -52,7 +52,9 @@
                 <th>Действия</th>
             </tr>
 
-            <?php foreach ($results as $row): ?>
+            <?php 
+            $csrf_token=generateCsrfToken();
+            foreach ($results as $row): ?>
                 <tr>
                 <td><?= htmlspecialchars($row['id']) ?></td>
                 <td><?= htmlspecialchars($row['fio']) ?></td>
@@ -64,7 +66,6 @@
                 <td>
                 <?php
                     $person_id = $row['id'];
-                    $csrf_token=generateCsrfToken();
                     if (isset($languages_by_person[$person_id])) {
                         $languages_string = implode(', ', $languages_by_person[$person_id]);
                         echo htmlspecialchars($languages_string);

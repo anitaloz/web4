@@ -289,21 +289,30 @@ function validateCsrfToken() {
   return true;
 }
 
-function generateCsrfToken2(): string
-{
-    return bin2hex(random_bytes(32)); // Генерация случайного токена
+function generateCsrfToken2($form_id) {
+  if (!isset($_SESSION['csrf_tokens'])) {
+      $_SESSION['csrf_tokens'] = [];
+  }
+
+  if (!isset($_SESSION['csrf_tokens'][$form_id])) {
+      $_SESSION['csrf_tokens'][$form_id] = bin2hex(random_bytes(32));
+  }
+
+  return $_SESSION['csrf_tokens'][$form_id];
 }
 
 
-function validateCsrfToken2(string $token): bool
-{
-    if (empty($_SESSION['csrf_tokens']) || !in_array($token, $_SESSION['csrf_tokens'])) {
-        return false;
-    }
-    $key = array_search($token, $_SESSION['csrf_tokens']);
-    if ($key !== false) {
-        unset($_SESSION['csrf_tokens'][$key]);
-    }
-    return true;
+function validateCsrfToken2($form_id, $token) {
+  if (!isset($_SESSION['csrf_tokens'][$form_id])) {
+      return false; // Нет токена для этой формы
+  }
+
+  if (!hash_equals($_SESSION['csrf_tokens'][$form_id], $token)) {
+      return false; // Токены не совпадают
+  }
+
+  unset($_SESSION['csrf_tokens'][$form_id]); // Удаляем токен только для этой формы
+
+  return true;
 }
 ?>

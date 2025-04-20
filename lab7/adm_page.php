@@ -76,8 +76,12 @@
                     <td>
                     <form method="post" action="">
                     <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
-                    <?php $csrff_token = generateCsrfToken2(); ?>
+                    <?php
+                    $form_id = 'delete_form_' . htmlspecialchars($row['id']); // Уникальный ID для каждой формы
+                    $csrf_token = generateCsrfToken($form_id);
+                    ?>
                     <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrff_token); ?>">
+                    <input type="hidden" name="form_id" value="<?php echo htmlspecialchars($form_id); ?>">
                     <button type="submit">Удалить</button>
                     </form>
                     <a href="index.php?uid=<?= htmlspecialchars($row['id']) ?>">Изменить</a>
@@ -111,12 +115,14 @@
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_id'])) {
         $delete_id = intval($_POST['delete_id']); // Преобразуем в целое число
-        $csrf_token = $_POST['csrf_token'] ?? ''; // Получаем токен
 
         // Проверяем CSRF токен
-        if (!validateCsrfToken2($csrf_token)) {
+        $csrf_token = $_POST['csrf_token'] ?? '';
+        $form_id = $_POST['form_id'] ?? ''; // Получаем ID формы
+
+        if (!validateCsrfToken($form_id, $csrf_token)) {
             http_response_code(403);
-            die('CSRF token validation failed.');
+            die('CSRF token validation failed for form: ' . htmlspecialchars($form_id));
         }
         if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  $adminlogin && password_check($adminlogin, $_SERVER['PHP_AUTH_PW'], $db))
         {

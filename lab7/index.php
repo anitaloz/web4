@@ -232,7 +232,7 @@ else {
   }
   if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) || $_SERVER['PHP_AUTH_USER'] !=  adminlog($db) || !password_check(adminlog($db), $_SERVER['PHP_AUTH_PW'], $db))
   {
-    if (emailExists($email, $db) && session_start()) {
+    if (emailExists($email, $db)) {
             $id = null;
        try {
            $dp = $db->prepare("SELECT id FROM person WHERE email = ?");
@@ -259,7 +259,7 @@ else {
            echo "Database error: " . $e->getMessage(); // Выводим ошибку на экран
            exit();
        }
-       if ((int)$id !== (int)$_POST['uid']) {
+       if ((int)$id !== (int)strip_tags($_POST['uid'])) {
            setcookie('field-email_error', '2');
            $errors = TRUE;
        }

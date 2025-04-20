@@ -78,7 +78,7 @@
                     <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
                     <?php
                     $form_id = 'delete_form_' . htmlspecialchars($row['id']); // Уникальный ID для каждой формы
-                    $csrf_token = generateCsrfToken2($form_id);
+                    $csrff_token = generateCsrfToken2($form_id);
                     ?>
                     <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrff_token); ?>">
                     <input type="hidden" name="form_id" value="<?php echo htmlspecialchars($form_id); ?>">

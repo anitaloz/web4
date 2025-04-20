@@ -1,6 +1,7 @@
 <?php
 require_once 'db.php';
 require_once 'functions.php';
+session_start();
 /**
  * Реализовать возможность входа с паролем и логином с использованием
  * сессии для изменения отправленных данных в предыдущей задаче,
@@ -183,7 +184,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в базе данных.
 else {
-    session_start();
     // Сначала проверяем CSRF-токен
     if (!validateCsrfToken()) {
       http_response_code(403); // Forbidden

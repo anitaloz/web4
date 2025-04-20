@@ -64,6 +64,7 @@
                 <td>
                 <?php
                     $person_id = $row['id'];
+                    $csrf_token=generateCsrfToken();
                     if (isset($languages_by_person[$person_id])) {
                         $languages_string = implode(', ', $languages_by_person[$person_id]);
                         echo htmlspecialchars($languages_string);
@@ -75,7 +76,7 @@
                     <td>
                     <form method="post" action="">
                     <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
-                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generateCsrfToken()); ?>">
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
                     <button type="submit">Удалить</button>
                     </form>
                     <a href="index.php?uid=<?= htmlspecialchars($row['id']) ?>">Изменить</a>

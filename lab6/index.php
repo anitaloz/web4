@@ -327,7 +327,7 @@ else {
     if(!empty($_POST['uid']))
     {
       try{
-      $update_id = strip_tags($_POST['uid']);//XSS
+      $update_id = ($_POST['uid']);//XSS
       $doplog=findLoginByUid($update_id, $db);
       updateDB($doplog, $db);
       header('Location: adm_page.php');
@@ -346,7 +346,7 @@ else {
   else{
   if (isset($_COOKIE[session_name()]) && session_start() && !empty($_SESSION['login'])) {
     try {
-          updateDB(strip_tags($_SESSION['login']), $db);//XSS
+          updateDB(($_SESSION['login']), $db);//XSS
     }
     catch(PDOException $e){
         print('Error : ' . $e->getMessage());

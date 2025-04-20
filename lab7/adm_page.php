@@ -11,6 +11,7 @@
     }
     if($_SERVER['REQUEST_METHOD'] == 'GET')
     {
+        session_start();
         $query = "SELECT id, fio, tel, email, bdate, gender, biography FROM person"; 
 
         $stmt = $db->prepare($query); 

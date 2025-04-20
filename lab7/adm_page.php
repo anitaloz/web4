@@ -120,7 +120,7 @@
         $csrf_token = $_POST['csrf_token'] ?? '';
         $form_id = $_POST['form_id'] ?? ''; // Получаем ID формы
 
-        if (!validateCsrfToken($form_id, $csrf_token)) {
+        if (!validateCsrfToken2($form_id, $csrf_token)) {
             http_response_code(403);
             die('CSRF token validation failed for form: ' . htmlspecialchars($form_id));
         }

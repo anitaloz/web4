@@ -76,8 +76,8 @@
                     <td>
                     <form method="post" action="">
                     <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
-                    <?php $csrf_token = generateCsrfToken2(); ?>
-                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
+                    <?php $csrff_token = generateCsrfToken2(); ?>
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrff_token); ?>">
                     <button type="submit">Удалить</button>
                     </form>
                     <a href="index.php?uid=<?= htmlspecialchars($row['id']) ?>">Изменить</a>
@@ -120,7 +120,6 @@
         }
         if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  $adminlogin && password_check($adminlogin, $_SERVER['PHP_AUTH_PW'], $db))
         {
-        $delete_id = filter_var($_POST['delete_id'], FILTER_VALIDATE_INT);
 
         if ($delete_id === false) {
             echo "<p style='color: red;'>Недопустимый ID для удаления.</p>";

@@ -259,34 +259,33 @@ function generateCsrfToken() {
   if (function_exists('random_bytes')) {
     $token = bin2hex(random_bytes(32));
   } else {
-    $token = md5(uniqid(rand(), true)); // Менее безопасно, но допустимо, если нет random_bytes
+    $token = md5(uniqid(rand(), true)); 
   }
   $_SESSION['csrf_token'] = $token;
-  $_SESSION['csrf_token_time'] = time();  // Добавляем время генерации
+  $_SESSION['csrf_token_time'] = time();
   return $token;
 }
 
 function validateCsrfToken() {
   if (empty($_POST['csrf_token'])) {
-    return false; // Нет токена в запросе
+    return false; 
   }
 
   if (empty($_SESSION['csrf_token'])) {
-    return false; // Нет токена в сессии
+    return false; 
   }
 
   if ($_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-    return false; // Токены не совпадают
+    return false; 
   }
 
-  // Добавим проверку времени жизни токена (например, 1 час)
   $token_age = time() - $_SESSION['csrf_token_time'];
-  if ($token_age > 3600) { // 3600 секунд = 1 час
-    return false; // Токен устарел
+  if ($token_age > 3600) {
+    return false; 
   }
 
-  unset($_SESSION['csrf_token']); // Удаляем токен, чтобы нельзя было использовать повторно
-  unset($_SESSION['csrf_token_time']); // Удаляем время
+  unset($_SESSION['csrf_token']); 
+  unset($_SESSION['csrf_token_time']);
 
   return true;
 }

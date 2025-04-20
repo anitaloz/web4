@@ -17,7 +17,8 @@ header('Content-Type: text/html; charset=UTF-8');
 // В суперглобальном массиве $_SESSION хранятся переменные сессии.
 // Будем сохранять туда логин после успешной авторизации.
 $session_started = false;
-
+$p=true;
+$l=true;
 if (isset($_COOKIE[session_name()]) && session_start()) {
   $session_started = true;
   if (!empty($_SESSION['login'])) {
@@ -66,7 +67,14 @@ else {
   if (!$session_started) {
     session_start();
   }
-
+  if(!isValid($login, $db))
+  {
+    $l=false
+  }
+  if(!password_check($login, $password, $db))
+  {
+    $p=false
+  }
   if (isValid($login, $db) && password_check($login, $password, $db)){
     $_SESSION['login'] = $_POST['login'];
 
@@ -85,5 +93,7 @@ else {
   }
   else {
     print('Неверный логин или пароль');
+    print($l);
+    print($p);
   }
 }

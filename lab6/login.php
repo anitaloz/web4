@@ -69,11 +69,11 @@ else {
   }
   if(!isValid($login, $db))
   {
-    $l=false
+    $l=false;
   }
   if(!password_check($login, $password, $db))
   {
-    $p=false
+    $p=false;
   }
   if (isValid($login, $db) && password_check($login, $password, $db)){
     $_SESSION['login'] = $_POST['login'];

@@ -183,6 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в базе данных.
 else {
+    session_start();
     // Сначала проверяем CSRF-токен
     if (!validateCsrfToken()) {
       http_response_code(403); // Forbidden

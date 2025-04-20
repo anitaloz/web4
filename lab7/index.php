@@ -175,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       }
   }
   //вставка для ползователя
-  if (isset($_COOKIE[session_name()]) && session_start() &&!empty($_SESSION['login'])) {
+  if (isset($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
         $values=insertData($_SESSION['login'],  $db);
         $messages[] = ("<div>Вы успешно вошли в аккаунт.</div>");//Information Disclosure
 

@@ -288,4 +288,22 @@ function validateCsrfToken() {
 
   return true;
 }
+
+function generateCsrfToken2(): string
+{
+    return bin2hex(random_bytes(32)); // Генерация случайного токена
+}
+
+
+function validateCsrfToken2(string $token): bool
+{
+    if (empty($_SESSION['csrf_tokens']) || !in_array($token, $_SESSION['csrf_tokens'])) {
+        return false;
+    }
+    $key = array_search($token, $_SESSION['csrf_tokens']);
+    if ($key !== false) {
+        unset($_SESSION['csrf_tokens'][$key]);
+    }
+    return true;
+}
 ?>

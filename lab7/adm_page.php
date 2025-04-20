@@ -52,8 +52,7 @@
                 <th>Действия</th>
             </tr>
 
-            <?php 
-            $csrf_token=generateCsrfToken();
+            <?php
             foreach ($results as $row): ?>
                 <tr>
                 <td><?= htmlspecialchars($row['id']) ?></td>
@@ -77,6 +76,7 @@
                     <td>
                     <form method="post" action="">
                     <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
+                    <?php $csrf_token = generateCsrfToken(); ?>
                     <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrf_token); ?>">
                     <button type="submit">Удалить</button>
                     </form>
@@ -110,7 +110,11 @@
 
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_id'])) {
-        if (!validateCsrfToken()) {
+        $delete_id = intval($_POST['delete_id']); // Преобразуем в целое число
+        $csrf_token = $_POST['csrf_token'] ?? ''; // Получаем токен
+
+        // Проверяем CSRF токен
+        if (!validateCsrfToken($csrf_token)) {
             http_response_code(403);
             die('CSRF token validation failed.');
         }

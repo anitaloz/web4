@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     setcookie('check-1_error', '', 100000);
     setcookie('check-1_value', '', 100000);
     // Выводим сообщение.
-    $messages[] = '<div>Ознакомьтесь с контрактом</div>'
+    $messages[] = '<div>Ознакомьтесь с контрактом</div>';
   }
 
   if ($errors['languages']) {

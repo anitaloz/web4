@@ -13,6 +13,7 @@ function password_check($login, $password, $db) {
     } 
     catch (PDOException $e){
       print('Error : ' . $e->getMessage());
+      exit();
       return false;
     }
   }

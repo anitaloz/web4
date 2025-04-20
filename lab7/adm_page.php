@@ -14,7 +14,7 @@
         $query = "SELECT id, fio, tel, email, bdate, gender, biography FROM person"; 
 
         $stmt = $db->prepare($query); 
-        $stmt->execute();аметром
+        $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $query_languages = "SELECT
                             pl.pers_id,

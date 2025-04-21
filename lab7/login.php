@@ -65,14 +65,6 @@ else {
   if (!$session_started) {
     session_start();
   }
-  if(!isValid($login, $db))
-  {
-    $l=false;
-  }
-  if(!password_check($login, $password, $db))
-  {
-    $p=0;
-  }
   if (isValid($login, $db) && password_check($login, $password, $db)){
     $_SESSION['login'] = $_POST['login'];
 

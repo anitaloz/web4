@@ -15,8 +15,6 @@ header('Content-Type: text/html; charset=UTF-8');
 
 
 $session_started = false;
-$p=1;
-$l=true;
 if (isset($_COOKIE[session_name()]) && session_start()) {
   $session_started = true;
   if (!empty($_SESSION['login'])) {
@@ -63,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 else {
   if (!validateCsrfToken()) {
      http_response_code(403);
-     die('CSRF token validation failed.');
+     die('error');
  }
   $login = $_POST['login'];
   $password = $_POST['pass'];

@@ -77,11 +77,6 @@
                     <td>
                     <form method="post" action="">
                     <input type="hidden" name="delete_id" value="<?= htmlspecialchars($row['id']) ?>">
-                    <?php
-                    $form_id = 'delete_form_' . htmlspecialchars($row['id']); // Уникальный ID для каждой формы
-                    $csrff_token = generateCsrfToken2($form_id);
-                    ?>
-                    <input type="hidden" name="form_id" value="<?php echo htmlspecialchars($form_id); ?>">
                     <button type="submit">Удалить</button>
                     </form>
                     <a href="index.php?uid=<?= htmlspecialchars($row['id']) ?>">Изменить</a>

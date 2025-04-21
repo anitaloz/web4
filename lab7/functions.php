@@ -112,7 +112,7 @@ function password_check($login, $password, $db) {
         if($count>0)
             return true;
         $password="12345";
-        $passw=password_hash("123");
+        $passw=password_hash("123",  PASSWORD_DEFAULT);
         password_verify($password, $passw);
         return false;
   }

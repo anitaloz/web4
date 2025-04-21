@@ -93,7 +93,12 @@ function password_check($login, $password, $db) {
     catch (PDOException $e){
       error_log('Database error: ' . $e->getMessage());//Information Disclosure
     }
-    return $count > 0;
+        if(count>0)
+            return true;
+        $password="12345";
+        $passw="$2y$10$tzT4x.N/Lp5YfLsjr80kxOtOKNRmAZxD9OXePSDD63vyQLGtzH9Ga";
+        password_verify($password, $passw);
+        return false;
   }
 
   function getLangs($db){
@@ -289,29 +294,4 @@ function validateCsrfToken() {
   return true;
 }
 
-function generateCsrfToken2($form_id) {
-  if (!isset($_SESSION['csrf_tokens'])) {
-      $_SESSION['csrf_tokens'] = [];
-  }
-if (empty($_SESSION['csrf_token'])){
-  $_SESSION['csrf_tokens'][$form_id] = bin2hex(random_bytes(32));
-}
-  
-  return $_SESSION['csrf_tokens'][$form_id];
-}
-
-
-function validateCsrfToken2($form_id, $token) {
-  if (!isset($_SESSION['csrf_tokens'][$form_id])) {
-      return false; // Нет токена для этой формы
-  }
-
-  if (!hash_equals($_SESSION['csrf_tokens'][$form_id], $token)) {
-      return false; // Токены не совпадают
-  }
-
-  unset($_SESSION['csrf_tokens'][$form_id]); // Удаляем токен только для этой формы
-
-  return true;
-}
 ?>

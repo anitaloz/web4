@@ -237,7 +237,7 @@ else {
            $dp->execute([$email]);
            $id = strip_tags($dp->fetchColumn());
        } catch (PDOException $e) {
-           echo "Database error: " . $e->getMessage(); // Выводим ошибку на экран
+           error_log('Database error: ' . $e->getMessage());//Information Disclosure
            exit();
        }
        if ((int)$id !== (int)strip_tags($_SESSION['uid'])) {
@@ -254,7 +254,7 @@ else {
            $dp->execute([$email]);
            $id = $dp->fetchColumn();
        } catch (PDOException $e) {
-           echo "Database error: " . $e->getMessage(); // Выводим ошибку на экран
+          error_log('Database error: ' . $e->getMessage());//Information Disclosure
            exit();
        }
        if ((int)$id !== (int)strip_tags($_POST['uid'])) {

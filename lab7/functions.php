@@ -99,7 +99,7 @@ function password_check($login, $password, $db) {
       }
     }
     function isValid($login, $db) {
-    $count;
+    $count=0;
     try{
       $stmt = $db->prepare("SELECT COUNT(*) FROM person_LOGIN WHERE login = :login");
       $stmt->bindParam(':login', $login, PDO::PARAM_STR);

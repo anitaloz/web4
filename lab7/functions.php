@@ -109,7 +109,7 @@ function password_check($login, $password, $db) {
     catch (PDOException $e){
       error_log('Database error: ' . $e->getMessage());//Information Disclosure
     }
-        if(count>0)
+        if($count>0)
             return true;
         $password="12345";
         $passw="$2y$10$tzT4x.N/Lp5YfLsjr80kxOtOKNRmAZxD9OXePSDD63vyQLGtzH9Ga";

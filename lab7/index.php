@@ -186,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 else {
     if (!validateCsrfToken()) {
       http_response_code(403); 
-      die('CSRF token validation failed.');
+     
     }
   $fav_languages = ($_POST['languages']) ?? [];
   // Проверяем ошибки.

@@ -81,7 +81,6 @@
                     $form_id = 'delete_form_' . htmlspecialchars($row['id']); // Уникальный ID для каждой формы
                     $csrff_token = generateCsrfToken2($form_id);
                     ?>
-                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrff_token); ?>">
                     <input type="hidden" name="form_id" value="<?php echo htmlspecialchars($form_id); ?>">
                     <button type="submit">Удалить</button>
                     </form>
@@ -121,10 +120,7 @@
         $csrf_token = $_POST['csrf_token'] ?? '';
         $form_id = $_POST['form_id'] ?? ''; // Получаем ID формы
 
-        if (!validateCsrfToken2($form_id, $csrf_token)) {
-            http_response_code(403);
-            die('CSRF token validation failed for form: ' . htmlspecialchars($form_id));
-        }
+    
         if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  $adminlogin && password_check($adminlogin, $_SERVER['PHP_AUTH_PW'], $db))
         {
 

@@ -115,11 +115,6 @@
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_id'])) {
         $delete_id = intval($_POST['delete_id']); // Преобразуем в целое число
-
-        // Проверяем CSRF токен
-        $csrf_token = $_POST['csrf_token'] ?? '';
-        $form_id = $_POST['form_id'] ?? ''; // Получаем ID формы
-
     
         if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  $adminlogin && password_check($adminlogin, $_SERVER['PHP_AUTH_PW'], $db))
         {

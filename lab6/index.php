@@ -305,7 +305,11 @@ else {
 
 
   if ($errors) {
-    
+    if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW']) && $_SERVER['PHP_AUTH_USER'] ==  adminlog($db) && password_check(adminlog($db), $_SERVER['PHP_AUTH_PW'], $db))
+  {
+    header('Location: index.php?=' . $_POST['uid'] . '')
+  }
+
     header('Location: index.php');
     exit();
   }
